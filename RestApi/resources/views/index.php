@@ -3,8 +3,8 @@
     <head>
         <title>Laravel 5 AngularJS CRUD Example</title>
 
-        <!-- Load Bootstrap CSS -->
-        <link href="<?= asset('css/bootstrap.min.css') ?>" rel="stylesheet">
+        <!-- Load Bootstrap CSS -->        
+        <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     </head>
     <body>
         <h2>Employees Database</h2>
@@ -98,13 +98,14 @@
             </div>
         </div>
 
+        <script src=""></script>
         <!-- Load Javascript Libraries (AngularJS, JQuery, Bootstrap) -->
-        <script src="<?= asset('app/lib/angular/angular.min.js') ?>"></script>
-        <script src="<?= asset('js/jquery.min.js') ?>"></script>
-        <script src="<?= asset('js/bootstrap.min.js') ?>"></script>
+        <script src="../bower_components/angular/angular.min.js"></script>
+        <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
         
         <!-- AngularJS Application Scripts -->
-        <script src="<?= asset('app/app.js') ?>"></script>
-        <script src="<?= asset('app/controllers/employees.js') ?>"></script>
+        <script src="./app/app.js"></script>
+        <script src="./app/controllers/employees.js"></script>
     </body>
 </html>

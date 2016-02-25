@@ -15,6 +15,7 @@ Route::get('/', function () {
     return view('index');
 });
 
+
 Route::get('/api/v1/employees/{id?}', 'Employees@index');
 Route::post('/api/v1/employees', 'Employees@store');
 Route::post('/api/v1/employees/{id}', 'Employees@update');
