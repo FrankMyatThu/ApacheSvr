@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Log;
 
 class ProductModel extends Model
 {
@@ -12,16 +13,20 @@ class ProductModel extends Model
     // Retrieve
     public function SelectProductAll()
     {    	
+        Log::info('[ProductModel][SelectProductAll()]');
     	return $this::all();    	
     }
 
     // Retrieve
     public function SelectProductByProductName($ProductName)
     {
+        Log::info('[ProductModel][SelectProductByProductName()]');
+        
         //return $this::where('ProductID' , '=', 1)->first();
         //return $this::where('ProductID' , '=', 2)->get();
         //return $this::where('ProductName' , 'like', '%'.$ProductName.'%')->get();
 
+        Log::info('$ProductName: '.$ProductName);
         $query = $this::where('ProductName' , 'like', '%'.$ProductName.'%');
 
         //if (this == that) {
