@@ -15,8 +15,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('hello', 'Hello@index');
-Route::get('hello/{name}', 'Hello@show');
+Route::get('/product', array('as' => 'product', 'uses' => 'ProductController@SelectProduct'));
+
 
 /*
 |--------------------------------------------------------------------------
