@@ -9,8 +9,13 @@ use App\Model\ProductModel;
 
 class ProductController extends Controller
 {
-    public function SelectProduct()
+    public function SelectProductAll()
 	{
-		return (new ProductModel())->SelectProduct();
+		return (new ProductModel())->SelectProductAll();
+	}
+
+	public function SelectProductByProductName($ProductName)
+	{
+		return (new ProductModel())->SelectProductByProductName($ProductName);
 	}
 }
