@@ -15,7 +15,6 @@ class ProductController extends Controller
 		Log::info('[ProductController][SelectProductAll()]');
 		return (new ProductModel())->SelectProductAll();
 	}
-
 	public function SelectProductByProductName($ProductName)
 	{
 		Log::info('[ProductController][SelectProductByProductName()]');

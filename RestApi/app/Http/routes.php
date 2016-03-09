@@ -15,6 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/test', function () {
+    return "****";
+});
+
 Route::get('/product', array('as' => 'product', 'uses' => 'ProductController@SelectProductAll'));
 Route::get('/product/{ProductName}', array('as' => 'product', 'uses' => 'ProductController@SelectProductByProductName'));
 
