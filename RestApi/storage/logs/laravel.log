@@ -1,0 +1,8 @@
+[2016-03-15 09:33:29] local.INFO: [ProductController][SelectProductAll()]  
+[2016-03-15 09:33:29] local.INFO: [ProductModel][SelectProductAll()]  
+[2016-03-15 09:33:33] local.INFO: [ProductController][SelectProductByProductName()]  
+[2016-03-15 09:33:33] local.INFO: [ProductModel][SelectProductByProductName()]  
+[2016-03-15 09:33:33] local.INFO: $ProductName: fi  
+[2016-03-15 09:33:37] local.INFO: [ProductController][SelectProductByProductName()]  
+[2016-03-15 09:33:37] local.INFO: [ProductModel][SelectProductByProductName()]  
+[2016-03-15 09:33:37] local.INFO: $ProductName: -fi  
