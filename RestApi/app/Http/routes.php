@@ -29,6 +29,10 @@ Route::get('/one', function () {
     return "this is one ..";
 });
 
+Route::get('/two', function () {
+    return "this is tw0 ..";
+});
+
 Route::get('/product', array('as' => 'product', 'uses' => 'ProductController@SelectProductAll'));
 Route::get('/product/{ProductName}', array('as' => 'product', 'uses' => 'ProductController@SelectProductByProductName'));
 
