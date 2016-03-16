@@ -36,6 +36,9 @@ Route::get('/two', function () {
 Route::get('/product', array('as' => 'product', 'uses' => 'ProductController@SelectProductAll'));
 Route::get('/product/{ProductName}', array('as' => 'product', 'uses' => 'ProductController@SelectProductByProductName'));
 
+Route::get('/order', array('as' => 'order', 'uses' => 'OrderController@SelectOrderAll'));
+
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
