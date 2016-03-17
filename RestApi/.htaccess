@@ -3,8 +3,7 @@
         Options -MultiViews
     </IfModule>
 
-    RewriteEngine On
-    RewriteBase /restapi/public
+    RewriteEngine On    
 
     # Redirect Trailing Slashes If Not A Folder...
     RewriteCond %{REQUEST_FILENAME} !-d
