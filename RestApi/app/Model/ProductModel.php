@@ -7,12 +7,13 @@ use Log;
 
 class ProductModel extends Model
 {
-    public $table = 'products';
+    public $table = 'Products';
     // Create
     // Retrieve
     public function SelectProductAll()
     {    	
         Log::info('[ProductModel][SelectProductAll()]');
+        Log::info('[ProductModel][SelectProductAll()]Products...');
     	return $this::all();    	
     }
     // Retrieve

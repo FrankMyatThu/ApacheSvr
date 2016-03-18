@@ -10,7 +10,11 @@ use Log;
 
 class ProductController extends Controller
 {
-    public function SelectProductAll()
+	// Create	
+    //public 
+
+	// Retrieve
+	public function SelectProductAll()
 	{
 		Log::info('[ProductController][SelectProductAll()]');
 		return (new ProductModel())->SelectProductAll();
@@ -20,4 +24,7 @@ class ProductController extends Controller
 		Log::info('[ProductController][SelectProductByProductName()]');
 		return (new ProductModel())->SelectProductByProductName($ProductName);
 	}
+	
+	// Update
+	// Delete
 }
