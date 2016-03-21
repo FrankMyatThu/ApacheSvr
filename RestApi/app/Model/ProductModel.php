@@ -3,12 +3,28 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use App\ViewModel\ProductViewModel;
 use Log;
 
 class ProductModel extends Model
 {
     public $table = 'Products';
     // Create
+    public function CreateProduct(ProductViewModel $ProductViewModel)
+    {
+        try {
+            $ProductModel = new ProductModel;
+            $ProductModel->ProductName = $ProductViewModel->ProductName;
+            $ProductModel->Description = $ProductViewModel->Description;
+            $ProductModel->Price = $ProductViewModel->Price;
+            $ProductModel->save();
+            return "Product is successfully created.";
+        }
+        catch(Exception $e) {
+            Log::error('[ProductModel/Create]'.$e);
+        }
+    }
+
     // Retrieve
     public function SelectProductAll()
     {    	
@@ -35,6 +51,8 @@ class ProductModel extends Model
         $results = $query->get();
         return $results;
     }
+
+
     // Update
     // Delete
 }

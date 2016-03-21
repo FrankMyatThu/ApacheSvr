@@ -34,7 +34,8 @@ Route::get('/two', function () {
 });
 
 Route::get('/product', array('as' => 'product', 'uses' => 'ProductController@SelectProductAll'));
-Route::get('/product/{ProductName}', array('as' => 'product', 'uses' => 'ProductController@SelectProductByProductName'));
+//Route::get('/product/{ProductName}', array('as' => 'product', 'uses' => 'ProductController@SelectProductByProductName'));
+Route::post('/product/CreateProduct', array('as' => 'CreateProduct', 'uses' => 'ProductController@CreateProduct'));
 
 Route::get('/order', array('as' => 'order', 'uses' => 'OrderController@SelectOrderAll'));
 
