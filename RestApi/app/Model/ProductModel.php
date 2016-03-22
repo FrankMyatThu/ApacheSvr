@@ -9,6 +9,8 @@ use Log;
 class ProductModel extends Model
 {
     public $table = 'Products';
+    public $timestamps = false;
+    
     // Create
     public function CreateProduct(ProductViewModel $ProductViewModel)
     {

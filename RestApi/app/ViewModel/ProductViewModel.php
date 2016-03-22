@@ -13,15 +13,24 @@ class ProductViewModel extends Model
 	public $ProductName;
 	public $Description;
 	public $Price;
+
+	 protected $fillable = array(
+	 	'SrNo', 
+	 	'TotalRecordCount', 
+	 	'ProductID',
+	 	'ProductName',
+	 	'Description',
+	 	'Price',
+	 	);
 	
-	protected function validate($data){
-		$returnValue = true;		
+	protected function validate($data){	
+		$validator = "";	
 		$rules = array(
 					'SrNo'     				=> 'sometimes|regex:/^[0-9.]*$/',
 					'TotalRecordCount'     	=> 'sometimes|regex:/^[0-9.]*$/',
 					'ProductID' 			=> 'sometimes|regex:/^[0-9.]*$/',
-					'ProductName'  			=> 'required|regex:/^[A-Za-z0-9 ,.\'-]+$/|min:1|max:250',
-					'Description'  			=> 'required|regex:/^[A-Za-z0-9 ,.\'-]+$/|min:1|max:250',
+					'ProductName'  			=> 'required|regex:/^[A-Za-z0-9 ,.\'\-\(\)\/]+$/|min:1|max:250',
+					'Description'  			=> 'required|regex:/^[A-Za-z0-9 ,.\'\-\(\)\/]+$/|min:1|max:250',
 					'Price'  				=> 'required|regex:/^[0-9.]*$/'
 				);	
 		$messages = array(
@@ -40,21 +49,32 @@ class ProductViewModel extends Model
 					'Price.regex'   			=> 'Invalid Price',
 				);
 				
-		Log::info('[ProductViewModel/validate] validate function start');
-		//Log::info('[ProductViewModel/validate] First line message. \r\nSecond line message.');
-		log::info(gettype($data));
-		Log::info('[ProductViewModel/validate] $data'.PHP_EOL.$data);				
+		Log::info('[ProductViewModel/validate] validate function start');				
+		Log::info('[ProductViewModel/validate] $data'.PHP_EOL.$data);
+
 		foreach (json_decode($data, true) as $row) {
-			foreach($row as $value){
-				Log::info('[ProductViewModel/validate/foreachLines] $value ' . $value);
+			
+			$validator = \Validator::make($row, $rules, $messages);
+			if($validator->fails()){
+				Log::info('[ProductViewModel/validate/foreachLines] $validator '.$validator->messages());
+				return $validator;				
 			}
-			if(\Validator::make($row, $rules, $messages) == false){
-				$returnValue = false;
-				break;
+
+			/*
+			for ($i=0; $i < sizeof(array_keys($row)); $i++) {				
+				$ColumnName = array_keys($row)[$i];
+				$this->{$ColumnName} = $row[$ColumnName];					
 			}
+
+			Log::info("SrNo = ".$this->SrNo);
+			Log::info("TotalRecordCount = ".$this->TotalRecordCount);
+			Log::info("ProductID = ".$this->ProductID);			
+			Log::info("ProductName = ".$this->ProductName);
+			Log::info("Description = ".$this->Description);
+			Log::info("Price = ".$this->Price);
+			*/
 		}
-		Log::info('[ProductViewModel/validate] loop end');
-		
-		return $returnValue;
+		Log::info('[ProductViewModel/validate] loop end');		
+		return $validator;
 	}
 }

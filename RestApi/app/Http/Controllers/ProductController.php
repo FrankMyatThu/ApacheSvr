@@ -14,19 +14,21 @@ class ProductController extends Controller
 	// Create	
     public function CreateProduct(Request $request)
 	{
-		Log::info('[ProductController/Create]');
-		
-		//$requestContent = json_decode($request->getContent());
+		Log::info('[ProductController/CreateProduct]');
 		$requestContent = $request->getContent();
 
 		$validation = ProductViewModel::validate($requestContent);	
-		Log::info('$validation ' . $validation->messages());	
+		Log::info('[ProductController/CreateProduct] $validation ' . $validation->messages());	
 
 		if($validation->fails()){
 			Log::info('fails');
 			return "fails";
 		}else{
-			return (new ProductModel())->CreateProduct($requestContent);			
+			$ProductViewModel = new ProductViewModel();
+			$ProductViewModel->fill(json_decode($requestContent, true)[0]);
+			Log::info("ProductViewModel.ProductName = ".$ProductViewModel->ProductName);
+			return (new ProductModel())->CreateProduct($ProductViewModel);
+			return "";			
 		}
 		
 	}
