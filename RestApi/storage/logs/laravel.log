@@ -1,6 +1,6 @@
-[2016-03-23 04:08:02] local.INFO: [ProductController/CreateProduct]  
-[2016-03-23 04:08:02] local.INFO: [ProductViewModel/validate] validate function start  
-[2016-03-23 04:08:02] local.INFO: [ProductViewModel/validate] $data
+[2016-03-23 04:50:16] local.INFO: [ProductController/CreateProduct]  
+[2016-03-23 04:50:16] local.INFO: [ProductViewModel/validate] validate function start  
+[2016-03-23 04:50:16] local.INFO: [ProductViewModel/validate] $data
 Array
 (
     [0] => Array
@@ -12,5 +12,5 @@ Array
 
 )
   
-[2016-03-23 04:08:02] local.INFO: [ProductViewModel/validate] loop end  
-[2016-03-23 04:08:02] local.INFO: [ProductController/CreateProduct] $validation []  
+[2016-03-23 04:50:16] local.INFO: [ProductViewModel/validate] loop end  
+[2016-03-23 04:50:16] local.INFO: ProductViewModel Json = {"ProductName":"Dell Inspiron 14 Laptop, 14 inch HD (1366 x 768) LED-Backlit","Description":"Display, Celeron Processor N3050 up to 2.16 GHz, 2GB DDR3 RAM, 32GB eMMC, No DVD\/CD Drive, Windows 10 Home (Certified Refurbished)","Price":"239.00"}  

@@ -16,17 +16,17 @@ class ProductController extends Controller
 	{
 		Log::info('[ProductController/CreateProduct]');
 		$requestContent = json_decode($request->getContent(), true);
-
 		$validation = ProductViewModel::validate($requestContent);	
-		Log::info('[ProductController/CreateProduct] $validation '.$validation->messages());	
-
-		if($validation->fails()){
-			Log::info('fails');
+		
+		if($validation->fails()){			
 			return "fails";
 		}else{
 			$ProductViewModel = new ProductViewModel();
 			$ProductViewModel->fill($requestContent[0]);
-			return (new ProductModel())->CreateProduct($ProductViewModel);			
+			// create model to json conversion.
+			Log::info("ProductViewModel Json = ".$ProductViewModel->toJson());
+			return "success";
+			//return (new ProductModel())->CreateProduct($ProductViewModel);			
 		}
 	}
 

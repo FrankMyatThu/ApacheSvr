@@ -45,27 +45,12 @@ class ProductViewModel extends Model
 		Log::info('[ProductViewModel/validate] validate function start');				
 		Log::info('[ProductViewModel/validate] $data'.PHP_EOL. print_r($data, true));
 
-		foreach ($data as $row) {
-			
+		foreach ($data as $row) {			
 			$validator = \Validator::make($row, $rules, $messages);
 			if($validator->fails()){
 				Log::info('[ProductViewModel/validate/foreachLines] $validator '.$validator->messages());
 				return $validator;				
 			}
-
-			/*
-			for ($i=0; $i < sizeof(array_keys($row)); $i++) {				
-				$ColumnName = array_keys($row)[$i];
-				$this->{$ColumnName} = $row[$ColumnName];					
-			}
-
-			Log::info("SrNo = ".$this->SrNo);
-			Log::info("TotalRecordCount = ".$this->TotalRecordCount);
-			Log::info("ProductID = ".$this->ProductID);			
-			Log::info("ProductName = ".$this->ProductName);
-			Log::info("Description = ".$this->Description);
-			Log::info("Price = ".$this->Price);
-			*/
 		}
 		Log::info('[ProductViewModel/validate] loop end');		
 		return $validator;
