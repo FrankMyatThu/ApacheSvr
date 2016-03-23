@@ -13,34 +13,15 @@
 
 
 Route::get('/', function () {
-    //return view('welcome');
-    return "Hello...";
+    return view('welcome');    
 });
 
-Route::get('/hello', function () {
-    return "this is hello ..";
-});
-
-Route::get('/helloworld', function () {
-    return "Hello world ... ";
-});
-
-Route::get('/one', function () {
-    return "this is one ..";
-});
-
-Route::get('/two', function () {
-    return "this is tw0 ..";
-});
-
-Route::get('/product', array('as' => 'product', 'uses' => 'ProductController@SelectProductAll'));
-//Route::get('/product/{ProductName}', array('as' => 'product', 'uses' => 'ProductController@SelectProductByProductName'));
 Route::post('/product/CreateProduct', array('as' => 'CreateProduct', 'uses' => 'ProductController@CreateProduct'));
+Route::post('/product/SelectProductWithoutPager', array('as' => 'SelectProductWithoutPager', 'uses' => 'ProductController@SelectProductWithoutPager'));
+Route::post('/product/SelectProductWithPager', array('as' => 'SelectProductWithPager', 'uses' => 'ProductController@SelectProductWithPager'));
 
 
 Route::get('/order', array('as' => 'order', 'uses' => 'OrderController@SelectOrderAll'));
-
-
 /*
 |--------------------------------------------------------------------------
 | Application Routes

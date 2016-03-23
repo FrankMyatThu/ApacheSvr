@@ -5,16 +5,23 @@ namespace App\ViewModel;
 use Illuminate\Database\Eloquent\Model;
 use Log;
 
-// To bind data
-class ProductViewModel extends Model
+// To search data
+class ProductCriteriaViewModel extends Model
 {
-	protected $fillable = array(
+    protected $fillable = array(
 						 	'SrNo', 
 						 	'TotalRecordCount', 
 						 	'ProductID',
 						 	'ProductName',
 						 	'Description',
-						 	'Price'
+						 	'Price',
+						 	'BatchIndex',
+						 	'BatchIndex',
+						 	'BatchIndex',
+						 	'BatchIndex',
+						 	'BatchIndex',
+						 	'BatchIndex',
+
 						   );
 	
 	protected function validate($data){	
@@ -23,23 +30,20 @@ class ProductViewModel extends Model
 					'SrNo'     				=> 'sometimes|regex:/^[0-9.]*$/',
 					'TotalRecordCount'     	=> 'sometimes|regex:/^[0-9.]*$/',
 					'ProductID' 			=> 'sometimes|regex:/^[0-9.]*$/',
-					'ProductName'  			=> 'required|regex:/^[A-Za-z0-9 ,.\'\-\(\)\/]+$/|min:1|max:250',
-					'Description'  			=> 'required|regex:/^[A-Za-z0-9 ,.\'\-\(\)\/]+$/|min:1|max:250',
-					'Price'  				=> 'required|regex:/^[0-9.]*$/'
+					'ProductName'  			=> 'sometimes|regex:/^[A-Za-z0-9 ,.\'\-\(\)\/]+$/|min:0|max:250',
+					'Description'  			=> 'sometimes|regex:/^[A-Za-z0-9 ,.\'\-\(\)\/]+$/|min:0|max:250',
+					'Price'  				=> 'sometimes|regex:/^[0-9.]*$/'
 				);	
 		$messages = array(
 					'SrNo.regex' 				=> 'Invalid SrNo.',
 					'TotalRecordCount.regex'	=> 'Invalid TotalRecordCount.',
-					'ProductID.regex' 			=> 'Invalid ProductID.',
-					'ProductName.required' 		=> 'Product Name is required.',
+					'ProductID.regex' 			=> 'Invalid ProductID.',					
 					'ProductName.regex'			=> 'Invalid Product Name.',
 					'ProductName.min'			=> 'Product Name\'s length should be between 1 and 250.',
-					'ProductName.max'			=> 'Product Name\'s length should be between 1 and 250.',
-					'Description.required' 		=> 'Description is required.',
+					'ProductName.max'			=> 'Product Name\'s length should be between 1 and 250.',					
 					'Description.regex'			=> 'Invalid Description.',
 					'Description.min'			=> 'Description\'s length should be between 1 and 250.',
-					'Description.max'			=> 'Description\'s length should be between 1 and 250.',
-					'Price.required'			=> 'Price is required',
+					'Description.max'			=> 'Description\'s length should be between 1 and 250.',					
 					'Price.regex'   			=> 'Invalid Price',
 				);
 				

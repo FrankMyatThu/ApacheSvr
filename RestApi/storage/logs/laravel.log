@@ -1,6 +1,9 @@
-[2016-03-23 04:50:16] local.INFO: [ProductController/CreateProduct]  
-[2016-03-23 04:50:16] local.INFO: [ProductViewModel/validate] validate function start  
-[2016-03-23 04:50:16] local.INFO: [ProductViewModel/validate] $data
+[2016-03-23 08:28:38] local.INFO: [ProductController][SelectProductAll()]  
+[2016-03-23 08:28:38] local.INFO: [ProductModel][SelectProductAll()]  
+[2016-03-23 08:28:38] local.INFO: [ProductModel][SelectProductAll()]Products...  
+[2016-03-23 08:29:54] local.INFO: [ProductController/CreateProduct]  
+[2016-03-23 08:29:54] local.INFO: [ProductViewModel/validate] validate function start  
+[2016-03-23 08:29:54] local.INFO: [ProductViewModel/validate] $data
 Array
 (
     [0] => Array
@@ -12,5 +15,19 @@ Array
 
 )
   
-[2016-03-23 04:50:16] local.INFO: [ProductViewModel/validate] loop end  
-[2016-03-23 04:50:16] local.INFO: ProductViewModel Json = {"ProductName":"Dell Inspiron 14 Laptop, 14 inch HD (1366 x 768) LED-Backlit","Description":"Display, Celeron Processor N3050 up to 2.16 GHz, 2GB DDR3 RAM, 32GB eMMC, No DVD\/CD Drive, Windows 10 Home (Certified Refurbished)","Price":"239.00"}  
+[2016-03-23 08:29:54] local.INFO: [ProductModel/CreateProduct] Start  
+[2016-03-23 08:36:10] local.INFO: [ProductController/CreateProduct]  
+[2016-03-23 08:36:10] local.INFO: [ProductViewModel/validate] validate function start  
+[2016-03-23 08:36:10] local.INFO: [ProductViewModel/validate] $data
+Array
+(
+    [0] => Array
+        (
+            [ProductName] => HP 15-F211WM 15.6-Inch Touchscreen Laptop
+            [Description] => HP 15-F211WM 15.6-Inch Touchscreen Laptop (Intel Celeron N2840, Dual Core, 4GB, 500GB HDD, DVD-RW, WIFI, HDMI, Windows 10)
+            [Price] => 325.00
+        )
+
+)
+  
+[2016-03-23 08:36:10] local.INFO: [ProductModel/CreateProduct] Start  

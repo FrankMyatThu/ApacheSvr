@@ -19,27 +19,26 @@ class ProductController extends Controller
 		$validation = ProductViewModel::validate($requestContent);	
 		
 		if($validation->fails()){			
-			return "fails";
+			Log::info("validator fails message = ".$validator->messages()) ;
+			return $validator->messages();
 		}else{
 			$ProductViewModel = new ProductViewModel();
 			$ProductViewModel->fill($requestContent[0]);
-			// create model to json conversion.
-			Log::info("ProductViewModel Json = ".$ProductViewModel->toJson());
-			return "success";
-			//return (new ProductModel())->CreateProduct($ProductViewModel);			
+			return (new ProductModel())->CreateProduct($ProductViewModel);			
 		}
 	}
 
 	// Retrieve
-	public function SelectProductAll()
+	public function SelectProductWithoutPager(Request $request)
+	{
+		Log::info('[ProductController/SelectProductWithoutPager]');
+		$requestContent = json_decode($request->getContent(), true);
+		//return (new ProductModel())->SelectProductByProductName($ProductName);
+	}
+	public function SelectProductWithPager()
 	{
 		Log::info('[ProductController][SelectProductAll()]');
 		return (new ProductModel())->SelectProductAll();
-	}
-	public function SelectProductByProductName($ProductName)
-	{
-		Log::info('[ProductController][SelectProductByProductName()]');
-		return (new ProductModel())->SelectProductByProductName($ProductName);
 	}
 	
 	// Update

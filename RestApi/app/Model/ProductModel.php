@@ -14,16 +14,17 @@ class ProductModel extends Model
     // Create
     public function CreateProduct(ProductViewModel $ProductViewModel)
     {
+        Log::info("[ProductModel/CreateProduct] Start");
         try {
             $ProductModel = new ProductModel;
             $ProductModel->ProductName = $ProductViewModel->getAttribute('ProductName');
             $ProductModel->Description = $ProductViewModel->getAttribute('Description');
             $ProductModel->Price = $ProductViewModel->getAttribute('Price');
             $ProductModel->save();
-            return "Product is successfully created.";
+            return "Success";
         }
         catch(Exception $e) {
-            Log::error('[ProductModel/Create]'.$e);
+            Log::error('[ProductModel/Create] Error = '.$e);
         }
     }
 
