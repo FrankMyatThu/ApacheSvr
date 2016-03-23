@@ -7,21 +7,14 @@ use Log;
 
 class ProductViewModel extends Model
 {
-    public $SrNo;
-	public $TotalRecordCount;
-	public $ProductID;
-	public $ProductName;
-	public $Description;
-	public $Price;
-
-	 protected $fillable = array(
-	 	'SrNo', 
-	 	'TotalRecordCount', 
-	 	'ProductID',
-	 	'ProductName',
-	 	'Description',
-	 	'Price',
-	 	);
+	protected $fillable = array(
+						 	'SrNo', 
+						 	'TotalRecordCount', 
+						 	'ProductID',
+						 	'ProductName',
+						 	'Description',
+						 	'Price'
+						   );
 	
 	protected function validate($data){	
 		$validator = "";	
@@ -50,9 +43,9 @@ class ProductViewModel extends Model
 				);
 				
 		Log::info('[ProductViewModel/validate] validate function start');				
-		Log::info('[ProductViewModel/validate] $data'.PHP_EOL.$data);
+		Log::info('[ProductViewModel/validate] $data'.PHP_EOL. print_r($data, true));
 
-		foreach (json_decode($data, true) as $row) {
+		foreach ($data as $row) {
 			
 			$validator = \Validator::make($row, $rules, $messages);
 			if($validator->fails()){

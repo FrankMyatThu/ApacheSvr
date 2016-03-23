@@ -16,9 +16,9 @@ class ProductModel extends Model
     {
         try {
             $ProductModel = new ProductModel;
-            $ProductModel->ProductName = $ProductViewModel->ProductName;
-            $ProductModel->Description = $ProductViewModel->Description;
-            $ProductModel->Price = $ProductViewModel->Price;
+            $ProductModel->ProductName = $ProductViewModel->getAttribute('ProductName');
+            $ProductModel->Description = $ProductViewModel->getAttribute('Description');
+            $ProductModel->Price = $ProductViewModel->getAttribute('Price');
             $ProductModel->save();
             return "Product is successfully created.";
         }
