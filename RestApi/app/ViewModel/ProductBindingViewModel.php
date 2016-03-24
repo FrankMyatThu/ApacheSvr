@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Log;
 
 // To bind data
-class ProductViewModel extends Model
+class ProductBindingViewModel extends Model
 {
 	protected $fillable = array(
 						 	'SrNo', 

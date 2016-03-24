@@ -9,20 +9,20 @@ use Log;
 class ProductCriteriaViewModel extends Model
 {
     protected $fillable = array(
-						 	'SrNo', 
-						 	'TotalRecordCount', 
-						 	'ProductID',
-						 	'ProductName',
-						 	'Description',
-						 	'Price',
-						 	'BatchIndex',
-						 	'BatchIndex',
-						 	'BatchIndex',
-						 	'BatchIndex',
-						 	'BatchIndex',
-						 	'BatchIndex',
-
-						   );
+							 	'SrNo', 
+							 	'TotalRecordCount', 
+							 	'ProductID',
+							 	'ProductName',
+							 	'Description',
+							 	'Price',
+							 	
+							 	// Pager
+							 	'BatchIndex',
+							 	'PagerShowIndexOneUpToX',
+							 	'RecordPerPage',
+							 	'RecordPerBatch',
+							 	'OrderByClause'
+						   	);
 	
 	protected function validate($data){	
 		$validator = "";	
@@ -32,7 +32,8 @@ class ProductCriteriaViewModel extends Model
 					'ProductID' 			=> 'sometimes|regex:/^[0-9.]*$/',
 					'ProductName'  			=> 'sometimes|regex:/^[A-Za-z0-9 ,.\'\-\(\)\/]+$/|min:0|max:250',
 					'Description'  			=> 'sometimes|regex:/^[A-Za-z0-9 ,.\'\-\(\)\/]+$/|min:0|max:250',
-					'Price'  				=> 'sometimes|regex:/^[0-9.]*$/'
+					'Price'  				=> 'sometimes|regex:/^[0-9.]*$/',
+					'OrderByClause'			=> 'sometimes|regex:/^([A-Za-z0-9_]+\s(ASC|DESC),?\s?){1,}$/'
 				);	
 		$messages = array(
 					'SrNo.regex' 				=> 'Invalid SrNo.',
@@ -44,7 +45,8 @@ class ProductCriteriaViewModel extends Model
 					'Description.regex'			=> 'Invalid Description.',
 					'Description.min'			=> 'Description\'s length should be between 1 and 250.',
 					'Description.max'			=> 'Description\'s length should be between 1 and 250.',					
-					'Price.regex'   			=> 'Invalid Price',
+					'Price.regex'   			=> 'Invalid Price.',
+					'OrderByClause.regex'		=> 'Invalid OrderByClause.'
 				);
 				
 		Log::info('[ProductViewModel/validate] validate function start');				
