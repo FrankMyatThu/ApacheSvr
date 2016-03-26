@@ -5,7 +5,8 @@ namespace App\Model;
 use Illuminate\Database\Eloquent\Model;
 use App\ViewModel\ProductBindingViewModel;
 use App\ViewModel\ProductCriteriaViewModel;
-use App\ViewModel\CommonViewModel;
+use App\ViewModel\CommonViewModel_tbl_GridListing;
+use App\ViewModel\CommonViewModel_tbl_Pager_To_Client;
 use Log;
 
 class ProductModel extends Model
@@ -68,22 +69,23 @@ class ProductModel extends Model
     }
     public function SelectProductWithPager(ProductCriteriaViewModel $ProductCriteriaViewModel)
     {
-        Log::info("[ProductModel/SelectProductWithoutPager] Start");
+        Log::info("[ProductModel/SelectProductWithPager] Start");
         try {
-            $tbl_GridListing = new tbl_GridListing();
+            $tbl_GridListing = new CommonViewModel_tbl_GridListing();
             //$OrderByClause = $ProductCriteriaViewModel->getAttribute('OrderByClause'); // Make ASC, Year DESC  
-            $query = $this::query();
+            //$query = $this::query();
+            $query = \DB::table('Products');
             
             // where clauses
-            if(!IsNullOrEmptyString($ProductCriteriaViewModel->getAttribute('ProductID'))){
+            if(!$this->IsNullOrEmptyString($ProductCriteriaViewModel->getAttribute('ProductID'))){
                 $query = $query->where('ProductID', trim($ProductCriteriaViewModel->getAttribute('ProductID')));
             }
 
-            if(!IsNullOrEmptyString($ProductCriteriaViewModel->getAttribute('ProductName'))){
+            if(!$this->IsNullOrEmptyString($ProductCriteriaViewModel->getAttribute('ProductName'))){
                 $query = $query->where('ProductName', trim($ProductCriteriaViewModel->getAttribute('ProductName')));
             }
             
-            if(!IsNullOrEmptyString($ProductCriteriaViewModel->getAttribute('Description'))){
+            if(!$this->IsNullOrEmptyString($ProductCriteriaViewModel->getAttribute('Description'))){
                 $query = $query->where('Description', trim($ProductCriteriaViewModel->getAttribute('Description')));
             }
 
@@ -91,23 +93,53 @@ class ProductModel extends Model
             // ...
 
             // count clause
-            $queryCount = $query->count();
+            $TotalRecordCount = $query->count();
+            Log::info("TotalRecordCount... = ".$TotalRecordCount);
 
             // Bind tbl_GridListing
             // ----Bind data to tbl_Pager_To_Client
-            $tbl_GridListing->List_tbl_Pager_To_Client = "";            
+            //$tbl_GridListing->List_tbl_Pager_To_Client = "";            
+            $TotalPage = ceil($TotalRecordCount / $ProductCriteriaViewModel->getAttribute('RecordPerPage'));
+            $Pager_BatchIndex = 1;
+            $Pager_BehindTheScenseIndex = 1;
+            $List_tbl_Pager_To_Client = array();
+            for ($i = 1; $i <= $TotalPage; $i++) {
+
+                if($Pager_BehindTheScenseIndex > $ProductCriteriaViewModel->getAttribute('PagerShowIndexOneUpToX')){
+                    $Pager_BehindTheScenseIndex = 1;
+                }
+
+                $tbl_Pager_To_Client = new CommonViewModel_tbl_Pager_To_Client();
+                $tbl_Pager_To_Client->BatchIndex = $Pager_BatchIndex;
+                $tbl_Pager_To_Client->DisplayPageIndex = $i;
+                $tbl_Pager_To_Client->BehindTheScenesIndex = $Pager_BehindTheScenseIndex;
+                $List_tbl_Pager_To_Client[] = $tbl_Pager_To_Client;
+
+                $Pager_BehindTheScenseIndex++;
+
+                if (($i % $ProductCriteriaViewModel->getAttribute('PagerShowIndexOneUpToX')) == 0)
+                {
+                    $Pager_BatchIndex++;
+                }
+
+            }
+            $tbl_GridListing->List_tbl_Pager_To_Client = $List_tbl_Pager_To_Client;
+            Log::info('tbl_GridListing List_tbl_Pager_To_Client ... = '.print_r($tbl_GridListing->List_tbl_Pager_To_Client, true));
 
 
             // Bind tbl_GridListing
             // ----Bind data to List_Data
-            $tbl_GridListing->List_Data = "";
+            //$tbl_GridListing->List_Data = "";
+            $results =  $query
+                            ->take($ProductCriteriaViewModel->getAttribute('RecordPerBatch'))                
+                            ->skip(($ProductCriteriaViewModel->getAttribute('BatchIndex') - 1) * $ProductCriteriaViewModel->getAttribute('RecordPerBatch'))
+                            ->get();
+            
+            $tbl_GridListing->List_Data = $results;
+            Log::info('tbl_GridListing List_Data ... = '.print_r($tbl_GridListing->List_Data, true));
+            Log::info('tbl_GridListing ... = '.print_r($tbl_GridListing, true));
 
-
-
-            $results = $query->get();
-
-
-            return $results;
+            return $tbl_GridListing;
         }
         catch(Exception $e) {
             Log::error('[ProductModel/Create] Error = '.$e);
