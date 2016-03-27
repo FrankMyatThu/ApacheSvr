@@ -139,7 +139,7 @@ class ProductModel extends Model
             Log::info('tbl_GridListing List_Data ... = '.print_r($tbl_GridListing->List_Data, true));
             Log::info('tbl_GridListing ... = '.print_r($tbl_GridListing, true));
 
-            return $tbl_GridListing;
+            return json_encode((array)$tbl_GridListing);
         }
         catch(Exception $e) {
             Log::error('[ProductModel/Create] Error = '.$e);

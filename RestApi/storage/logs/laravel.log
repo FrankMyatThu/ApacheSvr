@@ -1,5 +1,5 @@
-[2016-03-26 16:35:35] local.INFO: [ProductController/SelectProductWithPager]  
-[2016-03-26 16:35:35] local.INFO: request content = [
+[2016-03-27 14:29:46] local.INFO: [ProductController/SelectProductWithPager]  
+[2016-03-27 14:29:46] local.INFO: request content = [
 {
 	"Srno" : "",
 	"TotalRecordCount" : "",
@@ -15,7 +15,7 @@
 	"OrderByClause" : ""	
 }
 ]  
-[2016-03-26 16:35:35] local.INFO: ... = Array
+[2016-03-27 14:29:46] local.INFO: ... = Array
 (
     [0] => Array
         (
@@ -34,8 +34,8 @@
 
 )
   
-[2016-03-26 16:35:35] local.INFO: [ProductViewModel/validate] validate function start  
-[2016-03-26 16:35:35] local.INFO: [ProductViewModel/validate] $data
+[2016-03-27 14:29:46] local.INFO: [ProductViewModel/validate] validate function start  
+[2016-03-27 14:29:46] local.INFO: [ProductViewModel/validate] $data
 Array
 (
     [0] => Array
@@ -55,9 +55,9 @@ Array
 
 )
   
-[2016-03-26 16:35:35] local.INFO: [ProductModel/SelectProductWithPager] Start  
-[2016-03-26 16:35:35] local.INFO: TotalRecordCount... = 2  
-[2016-03-26 16:35:35] local.INFO: tbl_GridListing List_tbl_Pager_To_Client ... = Array
+[2016-03-27 14:29:46] local.INFO: [ProductModel/SelectProductWithPager] Start  
+[2016-03-27 14:29:46] local.INFO: TotalRecordCount... = 2  
+[2016-03-27 14:29:46] local.INFO: tbl_GridListing List_tbl_Pager_To_Client ... = Array
 (
     [0] => App\ViewModel\CommonViewModel_tbl_Pager_To_Client Object
         (
@@ -68,7 +68,7 @@ Array
 
 )
   
-[2016-03-26 16:35:35] local.INFO: tbl_GridListing List_Data ... = Array
+[2016-03-27 14:29:46] local.INFO: tbl_GridListing List_Data ... = Array
 (
     [0] => stdClass Object
         (
@@ -92,7 +92,7 @@ Array
 
 )
   
-[2016-03-26 16:35:35] local.INFO: tbl_GridListing ... = App\ViewModel\CommonViewModel_tbl_GridListing Object
+[2016-03-27 14:29:46] local.INFO: tbl_GridListing ... = App\ViewModel\CommonViewModel_tbl_GridListing Object
 (
     [List_tbl_Pager_To_Client] => Array
         (
@@ -129,68 +129,5 @@ Array
 
         )
 
-    [connection:protected] => 
-    [table:protected] => 
-    [primaryKey:protected] => id
-    [perPage:protected] => 15
-    [incrementing] => 1
-    [timestamps] => 1
-    [attributes:protected] => Array
-        (
-        )
-
-    [original:protected] => Array
-        (
-        )
-
-    [relations:protected] => Array
-        (
-        )
-
-    [hidden:protected] => Array
-        (
-        )
-
-    [visible:protected] => Array
-        (
-        )
-
-    [appends:protected] => Array
-        (
-        )
-
-    [fillable:protected] => Array
-        (
-        )
-
-    [guarded:protected] => Array
-        (
-            [0] => *
-        )
-
-    [dates:protected] => Array
-        (
-        )
-
-    [dateFormat:protected] => 
-    [casts:protected] => Array
-        (
-        )
-
-    [touches:protected] => Array
-        (
-        )
-
-    [observables:protected] => Array
-        (
-        )
-
-    [with:protected] => Array
-        (
-        )
-
-    [morphClass:protected] => 
-    [exists] => 
-    [wasRecentlyCreated] => 
 )
   

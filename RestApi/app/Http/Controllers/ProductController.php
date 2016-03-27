@@ -61,7 +61,7 @@ class ProductController extends Controller
 		}else{
 			$ProductCriteriaViewModel = new ProductCriteriaViewModel();
 			$ProductCriteriaViewModel->fill($requestContent[0]);
-			return (new ProductModel())->SelectProductWithPager($ProductCriteriaViewModel)->toJson();			
+			return (new ProductModel())->SelectProductWithPager($ProductCriteriaViewModel);			
 		}
 		
 		//return (new ProductModel())->SelectProductByProductName($ProductName);
