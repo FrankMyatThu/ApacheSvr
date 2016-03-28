@@ -75,7 +75,7 @@ class ProductModel extends Model
             //$OrderByClause = $ProductCriteriaViewModel->getAttribute('OrderByClause'); // Make ASC, Year DESC  
             //$query = $this::query();            
             //$query = \DB::table('Products');
-            $query = \DB::table(\DB::raw('Products, (SELECT @row := 0) r'));
+            $query = \DB::table(\DB::raw('Products, (SELECT @row := 0) RowCounter'));
             $query = $query->select(
                                 \DB::raw('@row := @row + 1 AS SrNo'),                                
                                 'ProductID', 
@@ -98,7 +98,11 @@ class ProductModel extends Model
             }
 
             // orderby clauses
-            // ...
+            // ...            
+            $OrderByArray = $this->GetOrderByArray(trim($ProductCriteriaViewModel->getAttribute('OrderByClause')));            
+            foreach($OrderByArray as $rowArray) {
+                $query = $query->orderBy($rowArray[0], $rowArray[1]);    
+            }
 
             // count clause
             $TotalRecordCount = $query->count();
@@ -138,11 +142,17 @@ class ProductModel extends Model
             // Bind tbl_GridListing
             // ----Bind data to List_Data
             //$tbl_GridListing->List_Data = "";
+            $sqlLog =   $query
+                            ->take($ProductCriteriaViewModel->getAttribute('RecordPerBatch'))                
+                            ->skip(($ProductCriteriaViewModel->getAttribute('BatchIndex') - 1) * $ProductCriteriaViewModel->getAttribute('RecordPerBatch'))
+                            ->toSql();
+            Log::info("sqlLog = ".$sqlLog);
+
             $results =  $query
                             ->take($ProductCriteriaViewModel->getAttribute('RecordPerBatch'))                
                             ->skip(($ProductCriteriaViewModel->getAttribute('BatchIndex') - 1) * $ProductCriteriaViewModel->getAttribute('RecordPerBatch'))
                             ->get();
-            
+
             $tbl_GridListing->List_Data = $results;
             //Log::info('tbl_GridListing List_Data ... = '.print_r($tbl_GridListing->List_Data, true));
             //Log::info('tbl_GridListing ... = '.print_r($tbl_GridListing, true));
@@ -185,5 +195,15 @@ class ProductModel extends Model
     // Helpers    
     function IsNullOrEmptyString($value){
         return (!isset($value) || trim($value)==='');
+    }
+    function GetOrderByArray($value){
+        // $value = "ProductID DESC, ProductName ASC";
+
+        $OrderByArray = array(
+                       array("ProductID", "DESC"),
+                       array("ProductName", "ASC")
+                );
+
+        return $OrderByArray;
     }
 }
