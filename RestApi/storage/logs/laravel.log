@@ -1,6 +1,6 @@
-[2016-03-28 03:22:52] local.INFO: [ProductController/SelectProductWithPager]  
-[2016-03-28 03:22:52] local.INFO: [ProductViewModel/validate] validate function start  
-[2016-03-28 03:22:52] local.INFO: [ProductViewModel/validate] $data
+[2016-03-28 04:51:55] local.INFO: [ProductController/SelectProductWithPager]  
+[2016-03-28 04:51:55] local.INFO: [ProductViewModel/validate] validate function start  
+[2016-03-28 04:51:55] local.INFO: [ProductViewModel/validate] $data
 Array
 (
     [0] => Array
@@ -20,5 +20,5 @@ Array
 
 )
   
-[2016-03-28 03:22:52] local.INFO: [ProductModel/SelectProductWithPager] Start  
-[2016-03-28 03:22:52] local.INFO: TotalRecordCount... = 4  
+[2016-03-28 04:51:55] local.INFO: [ProductModel/SelectProductWithPager] Start  
+[2016-03-28 04:51:55] local.INFO: TotalRecordCount... = 4  

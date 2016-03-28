@@ -73,9 +73,11 @@ class ProductModel extends Model
         try {
             $tbl_GridListing = new CommonViewModel_tbl_GridListing();
             //$OrderByClause = $ProductCriteriaViewModel->getAttribute('OrderByClause'); // Make ASC, Year DESC  
-            //$query = $this::query();
-            $query = \DB::table('Products');
+            //$query = $this::query();            
+            //$query = \DB::table('Products');
+            $query = \DB::table(\DB::raw('Products, (SELECT @row := 0) r'));
             $query = $query->select(
+                                \DB::raw('@row := @row + 1 AS SrNo'),                                
                                 'ProductID', 
                                 'ProductName', 
                                 'Description',                 
