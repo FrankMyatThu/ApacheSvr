@@ -27,13 +27,13 @@ class ProductCriteriaViewModel extends Model
 	protected function validate($data){	
 		$validator = "";	
 		$rules = array(
-					'SrNo'     				=> 'sometimes|regex:/^[0-9.]*$/',
-					'TotalRecordCount'     	=> 'sometimes|regex:/^[0-9.]*$/',
-					'ProductID' 			=> 'sometimes|regex:/^[0-9.]*$/',
-					'ProductName'  			=> 'sometimes|regex:/^[A-Za-z0-9 ,.\'\-\(\)\/]+$/|min:0|max:250',
-					'Description'  			=> 'sometimes|regex:/^[A-Za-z0-9 ,.\'\-\(\)\/]+$/|min:0|max:250',
-					'Price'  				=> 'sometimes|regex:/^[0-9.]*$/',
-					'OrderByClause'			=> 'sometimes|regex:/^([A-Za-z0-9_]+\s(ASC|DESC),?\s?){1,}$/'
+					'SrNo'     				=> ['sometimes', 'regex:/^[0-9.]*$/'],
+					'TotalRecordCount'     	=> ['sometimes', 'regex:/^[0-9.]*$/'],
+					'ProductID' 			=> ['sometimes', 'regex:/^[0-9.]*$/'],
+					'ProductName'  			=> ['sometimes', 'regex:/^[A-Za-z0-9 ,.\'\"\-\(\)\/]+$/', 'min:0', 'max:250'],
+					'Description'  			=> ['sometimes', 'regex:/^[A-Za-z0-9 ,.\'\"\-\(\)\/]+$/', 'min:0', 'max:250'],
+					'Price'  				=> ['sometimes', 'regex:/^[0-9.]*$/'],
+					'OrderByClause'         => ['sometimes', 'regex:/^([A-Za-z0-9_]+\s(ASC|DESC),?\s?){1,}$/']
 				);	
 		$messages = array(
 					'SrNo.regex' 				=> 'Invalid SrNo.',

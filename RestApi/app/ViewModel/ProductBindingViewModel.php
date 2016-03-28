@@ -20,12 +20,12 @@ class ProductBindingViewModel extends Model
 	protected function validate($data){	
 		$validator = "";	
 		$rules = array(
-					'SrNo'     				=> 'sometimes|regex:/^[0-9.]*$/',
-					'TotalRecordCount'     	=> 'sometimes|regex:/^[0-9.]*$/',
-					'ProductID' 			=> 'sometimes|regex:/^[0-9.]*$/',
-					'ProductName'  			=> 'required|regex:/^[A-Za-z0-9 ,.\'\-\(\)\/]+$/|min:1|max:250',
-					'Description'  			=> 'required|regex:/^[A-Za-z0-9 ,.\'\-\(\)\/]+$/|min:1|max:250',
-					'Price'  				=> 'required|regex:/^[0-9.]*$/'
+					'SrNo'     				=> ['sometimes', 'regex:/^[0-9.]*$/'],
+					'TotalRecordCount'     	=> ['sometimes', 'regex:/^[0-9.]*$/'],
+					'ProductID' 			=> ['sometimes', 'regex:/^[0-9.]*$/'],
+					'ProductName'  			=> ['required', 'regex:/^[A-Za-z0-9 ,.\'\"\-\(\)\/]+$/', 'min:1', 'max:250'],					
+					'Description'  			=> ['required', 'regex:/^[A-Za-z0-9 ,.\'\"\-\(\)\/]+$/', 'min:1', 'max:250'],
+					'Price'  				=> ['required', 'regex:/^[0-9.]*$/']
 				);	
 		$messages = array(
 					'SrNo.regex' 				=> 'Invalid SrNo.',
