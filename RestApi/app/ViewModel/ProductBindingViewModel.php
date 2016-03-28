@@ -14,7 +14,8 @@ class ProductBindingViewModel extends Model
 						 	'ProductID',
 						 	'ProductName',
 						 	'Description',
-						 	'Price'
+						 	'Price',
+						 	'ProductImage'
 						   );
 	
 	protected function validate($data){	
@@ -25,7 +26,8 @@ class ProductBindingViewModel extends Model
 					'ProductID' 			=> ['sometimes', 'regex:/^[0-9.]*$/'],
 					'ProductName'  			=> ['required', 'regex:/^[A-Za-z0-9 ,.\'\"\-\(\)\/]+$/', 'min:1', 'max:250'],					
 					'Description'  			=> ['required', 'regex:/^[A-Za-z0-9 ,.\'\"\-\(\)\/]+$/', 'min:1', 'max:250'],
-					'Price'  				=> ['required', 'regex:/^[0-9.]*$/']
+					'Price'  				=> ['required', 'regex:/^[0-9.]*$/'],
+					//'ProductImage'			=> ['sometimes', 'regex:/^$/']
 				);	
 		$messages = array(
 					'SrNo.regex' 				=> 'Invalid SrNo.',
@@ -41,6 +43,7 @@ class ProductBindingViewModel extends Model
 					'Description.max'			=> 'Description\'s length should be between 1 and 250.',
 					'Price.required'			=> 'Price is required',
 					'Price.regex'   			=> 'Invalid Price',
+					//'ProductImage.regex'		=> 'Invalid ProductImage',
 				);
 				
 		Log::info('[ProductViewModel/validate] validate function start');				

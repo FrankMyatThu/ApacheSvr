@@ -77,7 +77,8 @@ class ProductModel extends Model
                                 \DB::raw('@row := @row + 1 AS SrNo'),                                
                                 'ProductID', 
                                 'ProductName', 
-                                'Description',                 
+                                'Description',
+                                'Price',                 
                                  \DB::raw('IFNULL(ProductImage,"") AS ProductImage')
                             );
             
@@ -151,6 +152,10 @@ class ProductModel extends Model
                             ->get();
 
             $tbl_GridListing->List_Data = $results;            
+
+            $ProductBindingViewModel = new ProductBindingViewModel();
+            //$ProductBindingViewModel->fill($tbl_GridListing[0]);
+            Log::info("ProductBindingViewModel = ".$ProductBindingViewModel->toJson());
 
             return json_encode((array)$tbl_GridListing);
         }
