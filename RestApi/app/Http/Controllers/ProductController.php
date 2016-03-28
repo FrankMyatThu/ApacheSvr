@@ -49,10 +49,8 @@ class ProductController extends Controller
 	}
 	public function SelectProductWithPager(Request $request)
 	{
-		Log::info('[ProductController/SelectProductWithPager]');
-		Log::info('request content = '.$request->getContent());
-		$requestContent = json_decode($request->getContent(), true);
-		Log::info('... = '.print_r($requestContent, true));
+		Log::info('[ProductController/SelectProductWithPager]');		
+		$requestContent = json_decode($request->getContent(), true);		
 		$validator = ProductCriteriaViewModel::validate($requestContent);	
 
 		if($validator->fails()){			

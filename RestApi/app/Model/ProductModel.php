@@ -75,6 +75,12 @@ class ProductModel extends Model
             //$OrderByClause = $ProductCriteriaViewModel->getAttribute('OrderByClause'); // Make ASC, Year DESC  
             //$query = $this::query();
             $query = \DB::table('Products');
+            $query = $query->select(
+                                'ProductID', 
+                                'ProductName', 
+                                'Description',                 
+                                 \DB::raw('IFNULL(ProductImage,"") AS ProductImage')
+                            );
             
             // where clauses
             if(!$this->IsNullOrEmptyString($ProductCriteriaViewModel->getAttribute('ProductID'))){
@@ -124,7 +130,7 @@ class ProductModel extends Model
 
             }
             $tbl_GridListing->List_tbl_Pager_To_Client = $List_tbl_Pager_To_Client;
-            Log::info('tbl_GridListing List_tbl_Pager_To_Client ... = '.print_r($tbl_GridListing->List_tbl_Pager_To_Client, true));
+            //Log::info('tbl_GridListing List_tbl_Pager_To_Client ... = '.print_r($tbl_GridListing->List_tbl_Pager_To_Client, true));
 
 
             // Bind tbl_GridListing
@@ -136,8 +142,8 @@ class ProductModel extends Model
                             ->get();
             
             $tbl_GridListing->List_Data = $results;
-            Log::info('tbl_GridListing List_Data ... = '.print_r($tbl_GridListing->List_Data, true));
-            Log::info('tbl_GridListing ... = '.print_r($tbl_GridListing, true));
+            //Log::info('tbl_GridListing List_Data ... = '.print_r($tbl_GridListing->List_Data, true));
+            //Log::info('tbl_GridListing ... = '.print_r($tbl_GridListing, true));
 
             return json_encode((array)$tbl_GridListing);
         }
