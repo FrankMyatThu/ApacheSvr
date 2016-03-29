@@ -9,8 +9,7 @@ use Log;
 class ProductBindingViewModel extends Model
 {
 	protected $fillable = array(		
-						 	'SrNo', 
-						 	'TotalRecordCount', 
+						 	'SrNo', 						 	
 						 	'ProductID',
 						 	'ProductName',
 						 	'Description',
@@ -21,8 +20,7 @@ class ProductBindingViewModel extends Model
 	protected function validate($data){	
 		$validator = "";	
 		$rules = array(
-					'SrNo'     				=> ['sometimes', 'regex:/^[0-9.]*$/'],
-					'TotalRecordCount'     	=> ['sometimes', 'regex:/^[0-9.]*$/'],
+					'SrNo'     				=> ['sometimes', 'regex:/^[0-9.]*$/'],					
 					'ProductID' 			=> ['sometimes', 'regex:/^[0-9.]*$/'],
 					'ProductName'  			=> ['required', 'regex:/^[A-Za-z0-9 ,.\'\"\-\(\)\/]+$/', 'min:1', 'max:250'],					
 					'Description'  			=> ['required', 'regex:/^[A-Za-z0-9 ,.\'\"\-\(\)\/]+$/', 'min:1', 'max:250'],
@@ -30,8 +28,7 @@ class ProductBindingViewModel extends Model
 					//'ProductImage'			=> ['sometimes', 'regex:/^$/']
 				);	
 		$messages = array(
-					'SrNo.regex' 				=> 'Invalid SrNo.',
-					'TotalRecordCount.regex'	=> 'Invalid TotalRecordCount.',
+					'SrNo.regex' 				=> 'Invalid SrNo.',					
 					'ProductID.regex' 			=> 'Invalid ProductID.',
 					'ProductName.required' 		=> 'Product Name is required.',
 					'ProductName.regex'			=> 'Invalid Product Name.',

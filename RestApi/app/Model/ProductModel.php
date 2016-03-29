@@ -74,8 +74,7 @@ class ProductModel extends Model
             $tbl_GridListing = new CommonViewModel_tbl_GridListing();                        
             $query = \DB::table(\DB::raw('Products, (SELECT @row := 0) RowCounter'));
             $query = $query->select(
-                                \DB::raw('@row := @row + 1 AS SrNo'),
-                                \DB::raw('1 AS TotalRecordCount'),                                
+                                \DB::raw('@row := @row + 1 AS SrNo'),                                                              
                                 'ProductID', 
                                 'ProductName', 
                                 'Description',
@@ -106,6 +105,7 @@ class ProductModel extends Model
             // count clause
             $TotalRecordCount = $query->count();
             Log::info("TotalRecordCount... = ".$TotalRecordCount);
+            $tbl_GridListing->TotalRecordCount = $TotalRecordCount;
 
             // Bind tbl_GridListing
             // ----Bind data to tbl_Pager_To_Client

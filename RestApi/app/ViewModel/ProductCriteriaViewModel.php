@@ -9,8 +9,7 @@ use Log;
 class ProductCriteriaViewModel extends Model
 {
     protected $fillable = array(
-							 	'SrNo', 
-							 	'TotalRecordCount', 
+							 	'SrNo', 							 	
 							 	'ProductID',
 							 	'ProductName',
 							 	'Description',
@@ -27,8 +26,7 @@ class ProductCriteriaViewModel extends Model
 	protected function validate($data){	
 		$validator = "";	
 		$rules = array(
-					'SrNo'     				=> ['sometimes', 'regex:/^[0-9.]*$/'],
-					'TotalRecordCount'     	=> ['sometimes', 'regex:/^[0-9.]*$/'],
+					'SrNo'     				=> ['sometimes', 'regex:/^[0-9.]*$/'],					
 					'ProductID' 			=> ['sometimes', 'regex:/^[0-9.]*$/'],
 					'ProductName'  			=> ['sometimes', 'regex:/^[A-Za-z0-9 ,.\'\"\-\(\)\/]+$/', 'min:0', 'max:250'],
 					'Description'  			=> ['sometimes', 'regex:/^[A-Za-z0-9 ,.\'\"\-\(\)\/]+$/', 'min:0', 'max:250'],
@@ -36,8 +34,7 @@ class ProductCriteriaViewModel extends Model
 					'OrderByClause'         => ['sometimes', 'regex:/^([A-Za-z0-9_]+\s(ASC|DESC),?\s?){1,}$/']
 				);	
 		$messages = array(
-					'SrNo.regex' 				=> 'Invalid SrNo.',
-					'TotalRecordCount.regex'	=> 'Invalid TotalRecordCount.',
+					'SrNo.regex' 				=> 'Invalid SrNo.',					
 					'ProductID.regex' 			=> 'Invalid ProductID.',					
 					'ProductName.regex'			=> 'Invalid Product Name.',
 					'ProductName.min'			=> 'Product Name\'s length should be between 1 and 250.',
