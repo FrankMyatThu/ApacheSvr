@@ -8,7 +8,7 @@ use Log;
 // To bind data
 class ProductBindingViewModel extends Model
 {
-	protected $fillable = array(
+	protected $fillable = array(		
 						 	'SrNo', 
 						 	'TotalRecordCount', 
 						 	'ProductID',
@@ -46,15 +46,10 @@ class ProductBindingViewModel extends Model
 					//'ProductImage.regex'		=> 'Invalid ProductImage',
 				);
 				
-		Log::info('[ProductViewModel/validate] validate function start');				
-		Log::info('[ProductViewModel/validate] $data'.PHP_EOL. print_r($data, true));
+		Log::info('[ProductBindingViewModel/validate] validate function start');				
+		//Log::info('[ProductBindingViewModel/validate] $data'.PHP_EOL. print_r($data, true));
 
-		foreach ($data as $row) {			
-			$validator = \Validator::make($row, $rules, $messages);
-			if($validator->fails()){				
-				return $validator;				
-			}
-		}			
+		$validator = \Validator::make($data, $rules, $messages);				
 		return $validator;
 	}
 }

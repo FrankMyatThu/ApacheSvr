@@ -74,7 +74,8 @@ class ProductModel extends Model
             $tbl_GridListing = new CommonViewModel_tbl_GridListing();                        
             $query = \DB::table(\DB::raw('Products, (SELECT @row := 0) RowCounter'));
             $query = $query->select(
-                                \DB::raw('@row := @row + 1 AS SrNo'),                                
+                                \DB::raw('@row := @row + 1 AS SrNo'),
+                                \DB::raw('1 AS TotalRecordCount'),                                
                                 'ProductID', 
                                 'ProductName', 
                                 'Description',
@@ -112,7 +113,7 @@ class ProductModel extends Model
             $TotalPage = ceil($TotalRecordCount / $ProductCriteriaViewModel->getAttribute('RecordPerPage'));
             $Pager_BatchIndex = 1;
             $Pager_BehindTheScenseIndex = 1;
-            $List_tbl_Pager_To_Client = array();
+            $List_tbl_Pager_To_Client = [];
             for ($i = 1; $i <= $TotalPage; $i++) {
 
                 if($Pager_BehindTheScenseIndex > $ProductCriteriaViewModel->getAttribute('PagerShowIndexOneUpToX')){
@@ -134,8 +135,6 @@ class ProductModel extends Model
 
             }
             $tbl_GridListing->List_tbl_Pager_To_Client = $List_tbl_Pager_To_Client;
-            //Log::info('tbl_GridListing List_tbl_Pager_To_Client ... = '.print_r($tbl_GridListing->List_tbl_Pager_To_Client, true));
-
 
             // Bind tbl_GridListing
             // ----Bind data to List_Data
@@ -144,19 +143,27 @@ class ProductModel extends Model
                             ->take($ProductCriteriaViewModel->getAttribute('RecordPerBatch'))                
                             ->skip(($ProductCriteriaViewModel->getAttribute('BatchIndex') - 1) * $ProductCriteriaViewModel->getAttribute('RecordPerBatch'))
                             ->toSql();
-            Log::info("sqlLog = ".$sqlLog);
+            //Log::info("sqlLog = ".$sqlLog);
 
             $results =  $query
                             ->take($ProductCriteriaViewModel->getAttribute('RecordPerBatch'))                
                             ->skip(($ProductCriteriaViewModel->getAttribute('BatchIndex') - 1) * $ProductCriteriaViewModel->getAttribute('RecordPerBatch'))
                             ->get();
 
-            $tbl_GridListing->List_Data = $results;            
+            $List_ProductBindingViewModel = [];
+            foreach ($results as $result) {
+                $ProductBindingViewModel = new ProductBindingViewModel();
+                $validator = ProductBindingViewModel::validate((array)$result);
+                if($validator->fails()){            
+                    Log::info("validator fails message = ".$validator->messages()) ;
+                    return $validator->messages();
+                }else{
+                    $ProductBindingViewModel->fill((array)$result); 
+                    $List_ProductBindingViewModel[] = $ProductBindingViewModel;
+                }
+            }
 
-            $ProductBindingViewModel = new ProductBindingViewModel();
-            //$ProductBindingViewModel->fill($tbl_GridListing[0]);
-            Log::info("ProductBindingViewModel = ".$ProductBindingViewModel->toJson());
-
+            $tbl_GridListing->List_Data = $List_ProductBindingViewModel;
             return json_encode((array)$tbl_GridListing);
         }
         catch(Exception $e) {

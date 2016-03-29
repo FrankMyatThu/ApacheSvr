@@ -49,15 +49,10 @@ class ProductCriteriaViewModel extends Model
 					'OrderByClause.regex'		=> 'Invalid OrderByClause.'
 				);
 				
-		Log::info('[ProductViewModel/validate] validate function start');				
-		Log::info('[ProductViewModel/validate] $data'.PHP_EOL. print_r($data, true));
+		Log::info('[ProductCriteriaViewModel/validate] validate function start');				
+		//Log::info('[ProductCriteriaViewModel/validate] $data'.PHP_EOL. print_r($data, true));
 
-		foreach ($data as $row) {			
-			$validator = \Validator::make($row, $rules, $messages);
-			if($validator->fails()){				
-				return $validator;				
-			}
-		}			
+		$validator = \Validator::make($data, $rules, $messages);
 		return $validator;
 	}
 }

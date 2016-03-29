@@ -17,7 +17,7 @@ class ProductController extends Controller
 	{
 		Log::info('[ProductController/CreateProduct]');
 		$requestContent = json_decode($request->getContent(), true);
-		$validator = ProductBindingViewModel::validate($requestContent);	
+		$validator = ProductBindingViewModel::validate($requestContent[0]);	
 		
 		if($validator->fails()){			
 			Log::info("validator fails message = ".$validator->messages()) ;
@@ -34,7 +34,7 @@ class ProductController extends Controller
 	{
 		Log::info('[ProductController/SelectProductWithoutPager]');
 		$requestContent = json_decode($request->getContent(), true);
-		$validator = ProductCriteriaViewModel::validate($requestContent);	
+		$validator = ProductCriteriaViewModel::validate($requestContent[0]);	
 
 		if($validator->fails()){			
 			Log::info("validator fails message = ".$validator->messages()) ;
@@ -51,13 +51,13 @@ class ProductController extends Controller
 	{
 		Log::info('[ProductController/SelectProductWithPager]');		
 		$requestContent = json_decode($request->getContent(), true);		
-		$validator = ProductCriteriaViewModel::validate($requestContent);	
+		$validator = ProductCriteriaViewModel::validate($requestContent[0]);	
 
 		if($validator->fails()){			
 			Log::info("validator fails message = ".$validator->messages()) ;
 			return $validator->messages();
 		}else{
-			$ProductCriteriaViewModel = new ProductCriteriaViewModel();
+			$ProductCriteriaViewModel = new ProductCriteriaViewModel();			
 			$ProductCriteriaViewModel->fill($requestContent[0]);
 			return (new ProductModel())->SelectProductWithPager($ProductCriteriaViewModel);			
 		}
