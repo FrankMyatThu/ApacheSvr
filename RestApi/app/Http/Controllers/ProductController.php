@@ -37,7 +37,7 @@ class ProductController extends Controller
 		$validator = ProductCriteriaViewModel::validate($requestContent[0]);	
 
 		if($validator->fails()){			
-			Log::info("validator fails message = ".$validator->messages()) ;
+			Log::info("[ProductController/SelectProductWithoutPager] validator fails message = ".$validator->messages()) ;
 			return $validator->messages();
 		}else{
 			$ProductCriteriaViewModel = new ProductCriteriaViewModel();
@@ -54,24 +54,14 @@ class ProductController extends Controller
 		$validator = ProductCriteriaViewModel::validate($requestContent[0]);	
 
 		if($validator->fails()){			
-			Log::info("validator fails message = ".$validator->messages()) ;
+			Log::info("[ProductController/SelectProductWithPager] validator fails message = ".$validator->messages()) ;
 			return $validator->messages();
 		}else{
 			$ProductCriteriaViewModel = new ProductCriteriaViewModel();			
 			$ProductCriteriaViewModel->fill($requestContent[0]);
 			return (new ProductModel())->SelectProductWithPager($ProductCriteriaViewModel);			
 		}
-		
-		//return (new ProductModel())->SelectProductByProductName($ProductName);
 	}
-	
-	/*
-	public function SelectProductWithPager()
-	{
-		Log::info('[ProductController][SelectProductAll()]');
-		return (new ProductModel())->SelectProductAll();
-	}
-	*/
 	
 	// Update
 	// Delete
