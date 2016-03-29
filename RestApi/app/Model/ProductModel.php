@@ -2,28 +2,37 @@
 
 namespace App\Model;
 
-use Illuminate\Database\Eloquent\Model;
+//use Illuminate\Database\Eloquent\Model;
 use App\ViewModel\ProductBindingViewModel;
 use App\ViewModel\ProductCriteriaViewModel;
 use App\ViewModel\CommonViewModel_tbl_GridListing;
 use App\ViewModel\CommonViewModel_tbl_Pager_To_Client;
 use Log;
 
-class ProductModel extends Model
-{
-    public $table = 'Products';
-    public $timestamps = false;
-    
+//class ProductModel extends Model
+class ProductModel
+{    
     // Create
     public function CreateProduct(ProductBindingViewModel $ProductBindingViewModel)
     {
-        Log::info("[ProductModel/CreateProduct] Start");
+        Log::info("[ProductModel/CreateProduct] Start ........");
         try {
+            
+            \DB::table('Products')->insert(
+                 array(
+                        'ProductName'     =>   trim($ProductBindingViewModel->getAttribute('ProductName')), 
+                        'Description'     =>   trim($ProductBindingViewModel->getAttribute('Description')),
+                        'Price'           =>   trim($ProductBindingViewModel->getAttribute('Price'))
+                 )
+            );
+
+            /*
             $ProductModel = new ProductModel;
             $ProductModel->ProductName = $ProductBindingViewModel->getAttribute('ProductName');
             $ProductModel->Description = $ProductBindingViewModel->getAttribute('Description');
             $ProductModel->Price = $ProductBindingViewModel->getAttribute('Price');
             $ProductModel->save();
+            */
             return "Success";
         }
         catch(Exception $e) {
