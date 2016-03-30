@@ -1,9 +1,27 @@
-[2016-03-30 02:33:25] local.INFO: [ProductController/SelectProductWithPager]  
-[2016-03-30 02:33:25] local.INFO: [ProductCriteriaViewModel/validate] validate function start  
-[2016-03-30 02:33:25] local.INFO: [ProductModel/SelectProductWithPager] Start  
-[2016-03-30 02:33:25] local.INFO: [ProductBindingViewModel/validate] validate function start  
-[2016-03-30 02:33:25] local.INFO: [ProductBindingViewModel/validate] validate function start  
-[2016-03-30 02:33:25] local.INFO: [ProductBindingViewModel/validate] validate function start  
-[2016-03-30 02:33:25] local.INFO: [ProductBindingViewModel/validate] validate function start  
-[2016-03-30 02:33:25] local.INFO: [ProductBindingViewModel/validate] validate function start  
-[2016-03-30 02:33:25] local.INFO: [ProductBindingViewModel/validate] validate function start  
+[2016-03-30 09:44:08] local.INFO: [ProductController/SelectProductWithPager]  
+[2016-03-30 09:44:08] local.INFO: [ProductViewModel_Criteria/validate] validate function start  
+[2016-03-30 09:44:08] local.INFO: [Product_BL/SelectProductWithPager] Start  
+[2016-03-30 09:44:08] local.INFO: [ProductViewModel_Binding/validate] validate function start  
+[2016-03-30 09:44:21] local.INFO: [ProductController/SelectProductWithPager]  
+[2016-03-30 09:44:21] local.INFO: [ProductViewModel_Criteria/validate] validate function start  
+[2016-03-30 09:44:21] local.INFO: [Product_BL/SelectProductWithPager] Start  
+[2016-03-30 09:44:21] local.INFO: [ProductViewModel_Binding/validate] validate function start  
+[2016-03-30 09:44:21] local.INFO: [ProductViewModel_Binding/validate] validate function start  
+[2016-03-30 09:44:21] local.INFO: [ProductViewModel_Binding/validate] validate function start  
+[2016-03-30 09:44:21] local.INFO: [ProductViewModel_Binding/validate] validate function start  
+[2016-03-30 09:44:21] local.INFO: [ProductViewModel_Binding/validate] validate function start  
+[2016-03-30 09:44:21] local.INFO: [ProductViewModel_Binding/validate] validate function start  
+[2016-03-30 09:44:21] local.INFO: [ProductViewModel_Binding/validate] validate function start  
+[2016-03-30 09:44:31] local.INFO: [ProductController/SelectProductWithoutPager]  
+[2016-03-30 09:44:31] local.INFO: [ProductViewModel_Criteria/validate] validate function start  
+[2016-03-30 09:44:31] local.INFO: [Product_BL/SelectProductWithoutPager] Start  
+[2016-03-30 09:44:31] local.INFO: [ProductViewModel_Binding/validate] validate function start  
+[2016-03-30 09:44:31] local.INFO: [ProductViewModel_Binding/validate] validate function start  
+[2016-03-30 09:44:31] local.INFO: [ProductViewModel_Binding/validate] validate function start  
+[2016-03-30 09:44:31] local.INFO: [ProductViewModel_Binding/validate] validate function start  
+[2016-03-30 09:44:31] local.INFO: [ProductViewModel_Binding/validate] validate function start  
+[2016-03-30 09:44:31] local.INFO: [ProductViewModel_Binding/validate] validate function start  
+[2016-03-30 09:44:31] local.INFO: [ProductViewModel_Binding/validate] validate function start  
+[2016-03-30 09:45:14] local.INFO: [ProductController/CreateProduct]  
+[2016-03-30 09:45:14] local.INFO: [ProductViewModel_Binding/validate] validate function start  
+[2016-03-30 09:45:14] local.INFO: [Product_BL/CreateProduct] Start ........  

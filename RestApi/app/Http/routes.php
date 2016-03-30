@@ -19,6 +19,8 @@ Route::get('/', function () {
 Route::post('/product/CreateProduct', array('as' => 'CreateProduct', 'uses' => 'ProductController@CreateProduct'));
 Route::post('/product/SelectProductWithoutPager', array('as' => 'SelectProductWithoutPager', 'uses' => 'ProductController@SelectProductWithoutPager'));
 Route::post('/product/SelectProductWithPager', array('as' => 'SelectProductWithPager', 'uses' => 'ProductController@SelectProductWithPager'));
+Route::post('/product/UpdateProduct', array('as' => 'UpdateProduct', 'uses' => 'ProductController@UpdateProduct'));
+Route::post('/product/DeleteProduct', array('as' => 'DeleteProduct', 'uses' => 'ProductController@DeleteProduct'));
 
 
 Route::get('/order', array('as' => 'order', 'uses' => 'OrderController@SelectOrderAll'));

@@ -14,7 +14,7 @@ class Product_BL
     // Create
     public function CreateProduct(ProductViewModel_Binding $ProductViewModel_Binding)
     {
-        Log::info("[ProductModel/CreateProduct] Start ........");
+        Log::info("[Product_BL/CreateProduct] Start ........");
         try {
             
             DB::table('Products')->insert(
@@ -28,14 +28,14 @@ class Product_BL
             return "Success";
         }
         catch(Exception $e) {
-            Log::error('[ProductModel/CreateProduct] Error = '.$e);
+            Log::error('[Product_BL/CreateProduct] Error = '.$e);
         }
     }
 
     // Retrieve
     public function SelectProductWithoutPager(ProductViewModel_Criteria $ProductViewModel_Criteria)
     {
-        Log::info("[ProductModel/SelectProductWithoutPager] Start");
+        Log::info("[Product_BL/SelectProductWithoutPager] Start");
         try {
             $tbl_GridListing = new CommonViewModel_tbl_GridListing();                        
             $query = DB::table(DB::raw('Products, (SELECT @row := 0) RowCounter'));
@@ -91,7 +91,7 @@ class Product_BL
                 $ProductViewModel_Binding = new ProductViewModel_Binding();
                 $validator = ProductViewModel_Binding::validate((array)$result);
                 if($validator->fails()){            
-                    Log::info("[ProductModel/SelectProductWithoutPager] validator fails message = ".$validator->messages()) ;
+                    Log::info("[Product_BL/SelectProductWithoutPager] validator fails message = ".$validator->messages()) ;
                     return $validator->messages();
                 }else{
                     $ProductViewModel_Binding->fill((array)$result); 
@@ -103,12 +103,12 @@ class Product_BL
             return json_encode((array)$tbl_GridListing);
         }
         catch(Exception $e) {
-            Log::error('[ProductModel/SelectProductWithoutPager] Error = '.$e);
+            Log::error('[Product_BL/SelectProductWithoutPager] Error = '.$e);
         }
     }
     public function SelectProductWithPager(ProductViewModel_Criteria $ProductViewModel_Criteria)
     {
-        Log::info("[ProductModel/SelectProductWithPager] Start");
+        Log::info("[Product_BL/SelectProductWithPager] Start");
         try {
             $tbl_GridListing = new CommonViewModel_tbl_GridListing();                        
             $query = DB::table(DB::raw('Products, (SELECT @row := 0) RowCounter'));
@@ -193,7 +193,7 @@ class Product_BL
                 $ProductViewModel_Binding = new ProductViewModel_Binding();
                 $validator = ProductViewModel_Binding::validate((array)$result);
                 if($validator->fails()){            
-                    Log::info("[ProductModel/SelectProductWithPager] validator fails message = ".$validator->messages()) ;
+                    Log::info("[Product_BL/SelectProductWithPager] validator fails message = ".$validator->messages()) ;
                     return $validator->messages();
                 }else{
                     $ProductViewModel_Binding->fill((array)$result); 
@@ -205,12 +205,49 @@ class Product_BL
             return json_encode((array)$tbl_GridListing);
         }
         catch(Exception $e) {
-            Log::error('[ProductModel/SelectProductWithPager] Error = '.$e);
+            Log::error('[Product_BL/SelectProductWithPager] Error = '.$e);
         }
     }   
     
     // Update
+    public function UpdateProduct(ProductViewModel_Binding $ProductViewModel_Binding)
+    {
+        Log::info("[Product_BL/UpdateProduct] Start ........");
+        try {
+            
+            DB::table('Products')
+                ->where( array('ProductID' => trim($ProductViewModel_Binding->getAttribute('ProductID'))) )
+                ->update(
+                        array(
+                            'ProductName'     =>   trim($ProductViewModel_Binding->getAttribute('ProductName')), 
+                            'Description'     =>   trim($ProductViewModel_Binding->getAttribute('Description')),
+                            'Price'           =>   trim($ProductViewModel_Binding->getAttribute('Price'))
+                        )
+                    );
+
+            return "Success";
+        }
+        catch(Exception $e) {
+            Log::error('[Product_BL/UpdateProduct] Error = '.$e);
+        }
+    }
+
     // Delete
+    public function DeleteProduct(ProductViewModel_Binding $ProductViewModel_Binding)
+    {
+        Log::info("[Product_BL/DeleteProduct] Start ........");
+        try {
+            
+            DB::table('Products')->where(
+                    array('ProductID' => trim($ProductViewModel_Binding->getAttribute('ProductID')) )
+                )->delete();
+        
+            return "Success";
+        }
+        catch(Exception $e) {
+            Log::error('[Product_BL/DeleteProduct] Error = '.$e);
+        }
+    }
 
     // Helpers    
     function IsNullOrEmptyString($value){

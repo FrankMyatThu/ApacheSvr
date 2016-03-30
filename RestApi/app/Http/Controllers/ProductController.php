@@ -15,12 +15,12 @@ class ProductController extends Controller
 	// Create	
     public function CreateProduct(Request $request)
 	{
-		Log::info('[ProductController/CreateProduct]');
+		Log::info("[ProductController/CreateProduct]");
 		$requestContent = json_decode($request->getContent(), true);
 		$validator = ProductViewModel_Binding::validate($requestContent[0]);	
 		
 		if($validator->fails()){			
-			Log::info("validator fails message = ".$validator->messages()) ;
+			Log::info("[ProductController/CreateProduct] validator fails message = ".$validator->messages()) ;
 			return $validator->messages();
 		}else{
 			$ProductViewModel_Binding = new ProductViewModel_Binding();
@@ -32,7 +32,7 @@ class ProductController extends Controller
 	// Retrieve
 	public function SelectProductWithoutPager(Request $request)
 	{
-		Log::info('[ProductController/SelectProductWithoutPager]');
+		Log::info("[ProductController/SelectProductWithoutPager]");
 		$requestContent = json_decode($request->getContent(), true);
 		$validator = ProductViewModel_Criteria::validate($requestContent[0]);	
 
@@ -47,7 +47,7 @@ class ProductController extends Controller
 	}
 	public function SelectProductWithPager(Request $request)
 	{
-		Log::info('[ProductController/SelectProductWithPager]');		
+		Log::info("[ProductController/SelectProductWithPager]");		
 		$requestContent = json_decode($request->getContent(), true);		
 		$validator = ProductViewModel_Criteria::validate($requestContent[0]);	
 
@@ -62,5 +62,36 @@ class ProductController extends Controller
 	}
 	
 	// Update
+	public function UpdateProduct(Request $request)
+	{
+		Log::info("[ProductController/UpdateProduct]");
+		$requestContent = json_decode($request->getContent(), true);
+		$validator = ProductViewModel_Binding::validate($requestContent[0]);	
+		
+		if($validator->fails()){			
+			Log::info("[ProductController/UpdateProduct] validator fails message = ".$validator->messages()) ;
+			return $validator->messages();
+		}else{
+			$ProductViewModel_Binding = new ProductViewModel_Binding();
+			$ProductViewModel_Binding->fill($requestContent[0]);
+			return (new Product_BL())->UpdateProduct($ProductViewModel_Binding);			
+		}
+	}
+
 	// Delete
+	public function DeleteProduct(Request $request)
+	{
+		Log::info("[ProductController/DeleteProduct]");
+		$requestContent = json_decode($request->getContent(), true);
+		$validator = ProductViewModel_Binding::validate($requestContent[0]);	
+		
+		if($validator->fails()){			
+			Log::info("[ProductController/DeleteProduct] validator fails message = ".$validator->messages()) ;
+			return $validator->messages();
+		}else{
+			$ProductViewModel_Binding = new ProductViewModel_Binding();
+			$ProductViewModel_Binding->fill($requestContent[0]);
+			return (new Product_BL())->DeleteProduct($ProductViewModel_Binding);			
+		}
+	}
 }
