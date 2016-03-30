@@ -1,39 +1,39 @@
 <?php
 
-namespace App\Model;
+namespace App\Model\BusinessLogic;
 
-use App\ViewModel\ProductBindingViewModel;
-use App\ViewModel\ProductCriteriaViewModel;
-use App\ViewModel\CommonViewModel_tbl_GridListing;
-use App\ViewModel\CommonViewModel_tbl_Pager_To_Client;
+use App\Model\ViewModel\ProductViewModel_Binding;
+use App\Model\ViewModel\ProductViewModel_Criteria;
+use App\Model\ViewModel\CommonViewModel_tbl_GridListing;
+use App\Model\ViewModel\CommonViewModel_tbl_Pager_To_Client;
 use Log;
 use DB;
 
-class ProductModel
+class Product_BL
 {    
     // Create
-    public function CreateProduct(ProductBindingViewModel $ProductBindingViewModel)
+    public function CreateProduct(ProductViewModel_Binding $ProductViewModel_Binding)
     {
         Log::info("[ProductModel/CreateProduct] Start ........");
         try {
             
             DB::table('Products')->insert(
                  array(
-                        'ProductName'     =>   trim($ProductBindingViewModel->getAttribute('ProductName')), 
-                        'Description'     =>   trim($ProductBindingViewModel->getAttribute('Description')),
-                        'Price'           =>   trim($ProductBindingViewModel->getAttribute('Price'))
+                        'ProductName'     =>   trim($ProductViewModel_Binding->getAttribute('ProductName')), 
+                        'Description'     =>   trim($ProductViewModel_Binding->getAttribute('Description')),
+                        'Price'           =>   trim($ProductViewModel_Binding->getAttribute('Price'))
                  )
             );
 
             return "Success";
         }
         catch(Exception $e) {
-            Log::error('[ProductModel/Create] Error = '.$e);
+            Log::error('[ProductModel/CreateProduct] Error = '.$e);
         }
     }
 
     // Retrieve
-    public function SelectProductWithoutPager(ProductCriteriaViewModel $ProductCriteriaViewModel)
+    public function SelectProductWithoutPager(ProductViewModel_Criteria $ProductViewModel_Criteria)
     {
         Log::info("[ProductModel/SelectProductWithoutPager] Start");
         try {
@@ -49,21 +49,21 @@ class ProductModel
                             );
             
             // where clauses
-            if(!$this->IsNullOrEmptyString($ProductCriteriaViewModel->getAttribute('ProductID'))){
-                $query = $query->where('ProductID', trim($ProductCriteriaViewModel->getAttribute('ProductID')));
+            if(!$this->IsNullOrEmptyString($ProductViewModel_Criteria->getAttribute('ProductID'))){
+                $query = $query->where('ProductID', trim($ProductViewModel_Criteria->getAttribute('ProductID')));
             }
 
-            if(!$this->IsNullOrEmptyString($ProductCriteriaViewModel->getAttribute('ProductName'))){
-                $query = $query->where('ProductName', trim($ProductCriteriaViewModel->getAttribute('ProductName')));
+            if(!$this->IsNullOrEmptyString($ProductViewModel_Criteria->getAttribute('ProductName'))){
+                $query = $query->where('ProductName', trim($ProductViewModel_Criteria->getAttribute('ProductName')));
             }
             
-            if(!$this->IsNullOrEmptyString($ProductCriteriaViewModel->getAttribute('Description'))){
-                $query = $query->where('Description', trim($ProductCriteriaViewModel->getAttribute('Description')));
+            if(!$this->IsNullOrEmptyString($ProductViewModel_Criteria->getAttribute('Description'))){
+                $query = $query->where('Description', trim($ProductViewModel_Criteria->getAttribute('Description')));
             }
 
             // orderby clauses
             // ...            
-            $OrderByArray = $this->GetOrderByArray(trim($ProductCriteriaViewModel->getAttribute('OrderByClause')));            
+            $OrderByArray = $this->GetOrderByArray(trim($ProductViewModel_Criteria->getAttribute('OrderByClause')));            
             foreach($OrderByArray as $rowArray) {
                 $query = $query->orderBy($rowArray[0], $rowArray[1]);    
             }
@@ -76,26 +76,26 @@ class ProductModel
             // ----Bind data to List_Data
             //$tbl_GridListing->List_Data = "";
             $sqlLog =   $query
-                            ->take($ProductCriteriaViewModel->getAttribute('RecordPerBatch'))                
-                            ->skip(($ProductCriteriaViewModel->getAttribute('BatchIndex') - 1) * $ProductCriteriaViewModel->getAttribute('RecordPerBatch'))
+                            ->take($ProductViewModel_Criteria->getAttribute('RecordPerBatch'))                
+                            ->skip(($ProductViewModel_Criteria->getAttribute('BatchIndex') - 1) * $ProductViewModel_Criteria->getAttribute('RecordPerBatch'))
                             ->toSql();
             //Log::info("sqlLog = ".$sqlLog);
 
             $results =  $query
-                            ->take($ProductCriteriaViewModel->getAttribute('RecordPerBatch'))                
-                            ->skip(($ProductCriteriaViewModel->getAttribute('BatchIndex') - 1) * $ProductCriteriaViewModel->getAttribute('RecordPerBatch'))
+                            ->take($ProductViewModel_Criteria->getAttribute('RecordPerBatch'))                
+                            ->skip(($ProductViewModel_Criteria->getAttribute('BatchIndex') - 1) * $ProductViewModel_Criteria->getAttribute('RecordPerBatch'))
                             ->get();
 
             $List_ProductBindingViewModel = [];
             foreach ($results as $result) {
-                $ProductBindingViewModel = new ProductBindingViewModel();
-                $validator = ProductBindingViewModel::validate((array)$result);
+                $ProductViewModel_Binding = new ProductViewModel_Binding();
+                $validator = ProductViewModel_Binding::validate((array)$result);
                 if($validator->fails()){            
                     Log::info("[ProductModel/SelectProductWithoutPager] validator fails message = ".$validator->messages()) ;
                     return $validator->messages();
                 }else{
-                    $ProductBindingViewModel->fill((array)$result); 
-                    $List_ProductBindingViewModel[] = $ProductBindingViewModel;
+                    $ProductViewModel_Binding->fill((array)$result); 
+                    $List_ProductBindingViewModel[] = $ProductViewModel_Binding;
                 }
             }
 
@@ -106,7 +106,7 @@ class ProductModel
             Log::error('[ProductModel/SelectProductWithoutPager] Error = '.$e);
         }
     }
-    public function SelectProductWithPager(ProductCriteriaViewModel $ProductCriteriaViewModel)
+    public function SelectProductWithPager(ProductViewModel_Criteria $ProductViewModel_Criteria)
     {
         Log::info("[ProductModel/SelectProductWithPager] Start");
         try {
@@ -122,21 +122,21 @@ class ProductModel
                             );
             
             // where clauses
-            if(!$this->IsNullOrEmptyString($ProductCriteriaViewModel->getAttribute('ProductID'))){
-                $query = $query->where('ProductID', trim($ProductCriteriaViewModel->getAttribute('ProductID')));
+            if(!$this->IsNullOrEmptyString($ProductViewModel_Criteria->getAttribute('ProductID'))){
+                $query = $query->where('ProductID', trim($ProductViewModel_Criteria->getAttribute('ProductID')));
             }
 
-            if(!$this->IsNullOrEmptyString($ProductCriteriaViewModel->getAttribute('ProductName'))){
-                $query = $query->where('ProductName', trim($ProductCriteriaViewModel->getAttribute('ProductName')));
+            if(!$this->IsNullOrEmptyString($ProductViewModel_Criteria->getAttribute('ProductName'))){
+                $query = $query->where('ProductName', trim($ProductViewModel_Criteria->getAttribute('ProductName')));
             }
             
-            if(!$this->IsNullOrEmptyString($ProductCriteriaViewModel->getAttribute('Description'))){
-                $query = $query->where('Description', trim($ProductCriteriaViewModel->getAttribute('Description')));
+            if(!$this->IsNullOrEmptyString($ProductViewModel_Criteria->getAttribute('Description'))){
+                $query = $query->where('Description', trim($ProductViewModel_Criteria->getAttribute('Description')));
             }
 
             // orderby clauses
             // ...            
-            $OrderByArray = $this->GetOrderByArray(trim($ProductCriteriaViewModel->getAttribute('OrderByClause')));            
+            $OrderByArray = $this->GetOrderByArray(trim($ProductViewModel_Criteria->getAttribute('OrderByClause')));            
             foreach($OrderByArray as $rowArray) {
                 $query = $query->orderBy($rowArray[0], $rowArray[1]);    
             }
@@ -148,13 +148,13 @@ class ProductModel
             // Bind tbl_GridListing
             // ----Bind data to tbl_Pager_To_Client
             //$tbl_GridListing->List_tbl_Pager_To_Client = "";            
-            $TotalPage = ceil($TotalRecordCount / $ProductCriteriaViewModel->getAttribute('RecordPerPage'));
+            $TotalPage = ceil($TotalRecordCount / $ProductViewModel_Criteria->getAttribute('RecordPerPage'));
             $Pager_BatchIndex = 1;
             $Pager_BehindTheScenseIndex = 1;
             $List_tbl_Pager_To_Client = [];
             for ($i = 1; $i <= $TotalPage; $i++) {
 
-                if($Pager_BehindTheScenseIndex > $ProductCriteriaViewModel->getAttribute('PagerShowIndexOneUpToX')){
+                if($Pager_BehindTheScenseIndex > $ProductViewModel_Criteria->getAttribute('PagerShowIndexOneUpToX')){
                     $Pager_BehindTheScenseIndex = 1;
                 }
 
@@ -166,7 +166,7 @@ class ProductModel
 
                 $Pager_BehindTheScenseIndex++;
 
-                if (($i % $ProductCriteriaViewModel->getAttribute('PagerShowIndexOneUpToX')) == 0)
+                if (($i % $ProductViewModel_Criteria->getAttribute('PagerShowIndexOneUpToX')) == 0)
                 {
                     $Pager_BatchIndex++;
                 }
@@ -178,26 +178,26 @@ class ProductModel
             // ----Bind data to List_Data
             //$tbl_GridListing->List_Data = "";
             $sqlLog =   $query
-                            ->take($ProductCriteriaViewModel->getAttribute('RecordPerBatch'))                
-                            ->skip(($ProductCriteriaViewModel->getAttribute('BatchIndex') - 1) * $ProductCriteriaViewModel->getAttribute('RecordPerBatch'))
+                            ->take($ProductViewModel_Criteria->getAttribute('RecordPerBatch'))                
+                            ->skip(($ProductViewModel_Criteria->getAttribute('BatchIndex') - 1) * $ProductViewModel_Criteria->getAttribute('RecordPerBatch'))
                             ->toSql();
             //Log::info("sqlLog = ".$sqlLog);
 
             $results =  $query
-                            ->take($ProductCriteriaViewModel->getAttribute('RecordPerBatch'))                
-                            ->skip(($ProductCriteriaViewModel->getAttribute('BatchIndex') - 1) * $ProductCriteriaViewModel->getAttribute('RecordPerBatch'))
+                            ->take($ProductViewModel_Criteria->getAttribute('RecordPerBatch'))                
+                            ->skip(($ProductViewModel_Criteria->getAttribute('BatchIndex') - 1) * $ProductViewModel_Criteria->getAttribute('RecordPerBatch'))
                             ->get();
 
             $List_ProductBindingViewModel = [];
             foreach ($results as $result) {
-                $ProductBindingViewModel = new ProductBindingViewModel();
-                $validator = ProductBindingViewModel::validate((array)$result);
+                $ProductViewModel_Binding = new ProductViewModel_Binding();
+                $validator = ProductViewModel_Binding::validate((array)$result);
                 if($validator->fails()){            
                     Log::info("[ProductModel/SelectProductWithPager] validator fails message = ".$validator->messages()) ;
                     return $validator->messages();
                 }else{
-                    $ProductBindingViewModel->fill((array)$result); 
-                    $List_ProductBindingViewModel[] = $ProductBindingViewModel;
+                    $ProductViewModel_Binding->fill((array)$result); 
+                    $List_ProductBindingViewModel[] = $ProductViewModel_Binding;
                 }
             }
 

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\ViewModel;
+namespace App\Model\ViewModel;
 
 use Illuminate\Database\Eloquent\Model;
 use Log;
 
 // To search data
-class ProductCriteriaViewModel extends Model
+class ProductViewModel_Criteria extends Model
 {
     protected $fillable = array(
 							 	'SrNo', 							 	
@@ -46,8 +46,8 @@ class ProductCriteriaViewModel extends Model
 					'OrderByClause.regex'		=> 'Invalid OrderByClause.'
 				);
 				
-		Log::info('[ProductCriteriaViewModel/validate] validate function start');				
-		//Log::info('[ProductCriteriaViewModel/validate] $data'.PHP_EOL. print_r($data, true));
+		Log::info('[ProductViewModel_Criteria/validate] validate function start');				
+		//Log::info('[ProductViewModel_Criteria/validate] $data'.PHP_EOL. print_r($data, true));
 
 		$validator = \Validator::make($data, $rules, $messages);
 		return $validator;

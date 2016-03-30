@@ -1,6 +1,6 @@
 <?php
 
-namespace App\ViewModel;
+namespace App\Model\ViewModel;
 
 use Log;
 

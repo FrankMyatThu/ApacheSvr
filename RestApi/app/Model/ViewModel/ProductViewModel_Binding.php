@@ -1,12 +1,12 @@
 <?php
 
-namespace App\ViewModel;
+namespace App\Model\ViewModel;
 
 use Illuminate\Database\Eloquent\Model;
 use Log;
 
 // To bind data
-class ProductBindingViewModel extends Model
+class ProductViewModel_Binding extends Model
 {
 	protected $fillable = array(		
 						 	'SrNo', 						 	
@@ -43,8 +43,8 @@ class ProductBindingViewModel extends Model
 					//'ProductImage.regex'		=> 'Invalid ProductImage',
 				);
 				
-		Log::info('[ProductBindingViewModel/validate] validate function start');				
-		//Log::info('[ProductBindingViewModel/validate] $data'.PHP_EOL. print_r($data, true));
+		Log::info('[ProductViewModel_Binding/validate] validate function start');				
+		//Log::info('[ProductViewModel_Binding/validate] $data'.PHP_EOL. print_r($data, true));
 
 		$validator = \Validator::make($data, $rules, $messages);				
 		return $validator;

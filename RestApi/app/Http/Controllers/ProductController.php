@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\Model\ProductModel;
-use App\ViewModel\ProductBindingViewModel;
-use App\ViewModel\ProductCriteriaViewModel;
+use App\Model\BusinessLogic\Product_BL;
+use App\Model\ViewModel\ProductViewModel_Binding;
+use App\Model\ViewModel\ProductViewModel_Criteria;
 use Log;
 
 class ProductController extends Controller
@@ -17,15 +17,15 @@ class ProductController extends Controller
 	{
 		Log::info('[ProductController/CreateProduct]');
 		$requestContent = json_decode($request->getContent(), true);
-		$validator = ProductBindingViewModel::validate($requestContent[0]);	
+		$validator = ProductViewModel_Binding::validate($requestContent[0]);	
 		
 		if($validator->fails()){			
 			Log::info("validator fails message = ".$validator->messages()) ;
 			return $validator->messages();
 		}else{
-			$ProductBindingViewModel = new ProductBindingViewModel();
-			$ProductBindingViewModel->fill($requestContent[0]);
-			return (new ProductModel())->CreateProduct($ProductBindingViewModel);			
+			$ProductViewModel_Binding = new ProductViewModel_Binding();
+			$ProductViewModel_Binding->fill($requestContent[0]);
+			return (new Product_BL())->CreateProduct($ProductViewModel_Binding);			
 		}
 	}
 
@@ -34,32 +34,30 @@ class ProductController extends Controller
 	{
 		Log::info('[ProductController/SelectProductWithoutPager]');
 		$requestContent = json_decode($request->getContent(), true);
-		$validator = ProductCriteriaViewModel::validate($requestContent[0]);	
+		$validator = ProductViewModel_Criteria::validate($requestContent[0]);	
 
 		if($validator->fails()){			
 			Log::info("[ProductController/SelectProductWithoutPager] validator fails message = ".$validator->messages()) ;
 			return $validator->messages();
 		}else{
-			$ProductCriteriaViewModel = new ProductCriteriaViewModel();
-			$ProductCriteriaViewModel->fill($requestContent[0]);
-			return (new ProductModel())->SelectProductWithoutPager($ProductCriteriaViewModel);			
+			$ProductViewModel_Criteria = new ProductViewModel_Criteria();
+			$ProductViewModel_Criteria->fill($requestContent[0]);
+			return (new Product_BL())->SelectProductWithoutPager($ProductViewModel_Criteria);			
 		}
-		
-		//return (new ProductModel())->SelectProductByProductName($ProductName);
 	}
 	public function SelectProductWithPager(Request $request)
 	{
 		Log::info('[ProductController/SelectProductWithPager]');		
 		$requestContent = json_decode($request->getContent(), true);		
-		$validator = ProductCriteriaViewModel::validate($requestContent[0]);	
+		$validator = ProductViewModel_Criteria::validate($requestContent[0]);	
 
 		if($validator->fails()){			
 			Log::info("[ProductController/SelectProductWithPager] validator fails message = ".$validator->messages()) ;
 			return $validator->messages();
 		}else{
-			$ProductCriteriaViewModel = new ProductCriteriaViewModel();			
-			$ProductCriteriaViewModel->fill($requestContent[0]);
-			return (new ProductModel())->SelectProductWithPager($ProductCriteriaViewModel);			
+			$ProductViewModel_Criteria = new ProductViewModel_Criteria();			
+			$ProductViewModel_Criteria->fill($requestContent[0]);
+			return (new Product_BL())->SelectProductWithPager($ProductViewModel_Criteria);			
 		}
 	}
 	
