@@ -2,12 +2,12 @@
 
 namespace App\Model;
 
-//use Illuminate\Database\Eloquent\Model;
 use App\ViewModel\ProductBindingViewModel;
 use App\ViewModel\ProductCriteriaViewModel;
 use App\ViewModel\CommonViewModel_tbl_GridListing;
 use App\ViewModel\CommonViewModel_tbl_Pager_To_Client;
 use Log;
+use DB;
 
 //class ProductModel extends Model
 class ProductModel
@@ -18,7 +18,7 @@ class ProductModel
         Log::info("[ProductModel/CreateProduct] Start ........");
         try {
             
-            \DB::table('Products')->insert(
+            DB::table('Products')->insert(
                  array(
                         'ProductName'     =>   trim($ProductBindingViewModel->getAttribute('ProductName')), 
                         'Description'     =>   trim($ProductBindingViewModel->getAttribute('Description')),
@@ -26,13 +26,6 @@ class ProductModel
                  )
             );
 
-            /*
-            $ProductModel = new ProductModel;
-            $ProductModel->ProductName = $ProductBindingViewModel->getAttribute('ProductName');
-            $ProductModel->Description = $ProductBindingViewModel->getAttribute('Description');
-            $ProductModel->Price = $ProductBindingViewModel->getAttribute('Price');
-            $ProductModel->save();
-            */
             return "Success";
         }
         catch(Exception $e) {
@@ -46,14 +39,14 @@ class ProductModel
         Log::info("[ProductModel/SelectProductWithoutPager] Start");
         try {
             $tbl_GridListing = new CommonViewModel_tbl_GridListing();                        
-            $query = \DB::table(\DB::raw('Products, (SELECT @row := 0) RowCounter'));
+            $query = DB::table(DB::raw('Products, (SELECT @row := 0) RowCounter'));
             $query = $query->select(
-                                \DB::raw('@row := @row + 1 AS SrNo'),                                                              
+                                DB::raw('@row := @row + 1 AS SrNo'),                                                              
                                 'ProductID', 
                                 'ProductName', 
                                 'Description',
                                 'Price',                 
-                                 \DB::raw('IFNULL(ProductImage,"") AS ProductImage')
+                                 DB::raw('IFNULL(ProductImage,"") AS ProductImage')
                             );
             
             // where clauses
@@ -119,14 +112,14 @@ class ProductModel
         Log::info("[ProductModel/SelectProductWithPager] Start");
         try {
             $tbl_GridListing = new CommonViewModel_tbl_GridListing();                        
-            $query = \DB::table(\DB::raw('Products, (SELECT @row := 0) RowCounter'));
+            $query = DB::table(DB::raw('Products, (SELECT @row := 0) RowCounter'));
             $query = $query->select(
-                                \DB::raw('@row := @row + 1 AS SrNo'),                                                              
+                                DB::raw('@row := @row + 1 AS SrNo'),                                                              
                                 'ProductID', 
                                 'ProductName', 
                                 'Description',
                                 'Price',                 
-                                 \DB::raw('IFNULL(ProductImage,"") AS ProductImage')
+                                 DB::raw('IFNULL(ProductImage,"") AS ProductImage')
                             );
             
             // where clauses
