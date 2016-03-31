@@ -2,8 +2,10 @@
 
 namespace App\Model\ViewModel;
 
+use Illuminate\Support\Facades\Config;
 use Illuminate\Database\Eloquent\Model;
 use Log;
+
 
 // To search data
 class ProductViewModel_Criteria extends Model
@@ -24,14 +26,14 @@ class ProductViewModel_Criteria extends Model
 						   	);
 	
 	protected function validate($data){	
-		$validator = "";	
+		$validator = "";
 		$rules = array(
-					'SrNo'     				=> ['sometimes', 'regex:/^[0-9.]*$/'],					
-					'ProductID' 			=> ['sometimes', 'regex:/^[0-9.]*$/'],
-					'ProductName'  			=> ['sometimes', 'regex:/^[A-Za-z0-9 ,.\'\"\-\(\)\/]+$/', 'min:0', 'max:250'],
-					'Description'  			=> ['sometimes', 'regex:/^[A-Za-z0-9 ,.\'\"\-\(\)\/]+$/', 'min:0', 'max:250'],
-					'Price'  				=> ['sometimes', 'regex:/^[0-9.]*$/'],
-					'OrderByClause'         => ['sometimes', 'regex:/^([A-Za-z0-9_]+\s(ASC|DESC),?\s?){1,}$/']
+					'SrNo'     				=> ['sometimes', Config::get('FormatStandardizer.SrNo') ],					
+					'ProductID' 			=> ['sometimes', Config::get('FormatStandardizer.ProductID') ],
+					'ProductName'  			=> ['sometimes', Config::get('FormatStandardizer.ProductName') , 'min:0', 'max:250'],
+					'Description'  			=> ['sometimes', Config::get('FormatStandardizer.ProductDescription') , 'min:0', 'max:250'],
+					'Price'  				=> ['sometimes', Config::get('FormatStandardizer.Price') ],
+					'OrderByClause'         => ['sometimes', Config::get('FormatStandardizer.OrderByClause') ]
 				);	
 		$messages = array(
 					'SrNo.regex' 				=> 'Invalid SrNo.',					

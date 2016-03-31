@@ -2,6 +2,7 @@
 
 namespace App\Model\ViewModel;
 
+use Illuminate\Support\Facades\Config;
 use Illuminate\Database\Eloquent\Model;
 use Log;
 
@@ -20,12 +21,12 @@ class ProductViewModel_Binding extends Model
 	protected function validate($data){	
 		$validator = "";	
 		$rules = array(
-					'SrNo'     				=> ['sometimes', 'regex:/^[0-9.]*$/'],					
-					'ProductID' 			=> ['sometimes', 'regex:/^[0-9.]*$/'],
-					'ProductName'  			=> ['required', 'regex:/^[A-Za-z0-9 ,.\'\"\-\(\)\/]+$/', 'min:1', 'max:250'],					
-					'Description'  			=> ['required', 'regex:/^[A-Za-z0-9 ,.\'\"\-\(\)\/]+$/', 'min:1', 'max:250'],
-					'Price'  				=> ['required', 'regex:/^[0-9.]*$/'],
-					//'ProductImage'			=> ['sometimes', 'regex:/^$/']
+					'SrNo'     				=> ['sometimes', Config::get('FormatStandardizer.SrNo') ],					
+					'ProductID' 			=> ['sometimes', Config::get('FormatStandardizer.ProductID') ],
+					'ProductName'  			=> ['required', Config::get('FormatStandardizer.ProductName') , 'min:1', 'max:250'],					
+					'Description'  			=> ['required', Config::get('FormatStandardizer.ProductDescription') , 'min:1', 'max:250'],
+					'Price'  				=> ['required', Config::get('FormatStandardizer.Price') ],
+					//'ProductImage'			=> ['sometimes', Config::get('FormatStandardizer.ImagePath') ]
 				);	
 		$messages = array(
 					'SrNo.regex' 				=> 'Invalid SrNo.',					
