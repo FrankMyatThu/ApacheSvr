@@ -16,7 +16,8 @@ class Product_BL
     {
         Log::info("[Product_BL/CreateProduct] Start ........");
         try {
-            
+
+            //DB::enableQueryLog();
             DB::table('Products')->insert(
                  array(
                         'ProductName'     =>   trim($ProductViewModel_Binding->getAttribute('ProductName')), 
@@ -24,6 +25,7 @@ class Product_BL
                         'Price'           =>   trim($ProductViewModel_Binding->getAttribute('Price'))
                  )
             );
+            //Log::info("Query Log = ". print_r(DB::getQueryLog(), true));
 
             return "Success";
         }
@@ -79,7 +81,7 @@ class Product_BL
                             ->take($ProductViewModel_Criteria->getAttribute('RecordPerBatch'))                
                             ->skip(($ProductViewModel_Criteria->getAttribute('BatchIndex') - 1) * $ProductViewModel_Criteria->getAttribute('RecordPerBatch'))
                             ->toSql();
-            //Log::info("sqlLog = ".$sqlLog);
+            //Log::info("Query Log = ".$sqlLog);
 
             $results =  $query
                             ->take($ProductViewModel_Criteria->getAttribute('RecordPerBatch'))                
@@ -181,7 +183,7 @@ class Product_BL
                             ->take($ProductViewModel_Criteria->getAttribute('RecordPerBatch'))                
                             ->skip(($ProductViewModel_Criteria->getAttribute('BatchIndex') - 1) * $ProductViewModel_Criteria->getAttribute('RecordPerBatch'))
                             ->toSql();
-            //Log::info("sqlLog = ".$sqlLog);
+            Log::info("Query Log = ".$sqlLog);
 
             $results =  $query
                             ->take($ProductViewModel_Criteria->getAttribute('RecordPerBatch'))                
@@ -215,6 +217,7 @@ class Product_BL
         Log::info("[Product_BL/UpdateProduct] Start ........");
         try {
             
+            //DB::enableQueryLog();
             DB::table('Products')
                 ->where( array('ProductID' => trim($ProductViewModel_Binding->getAttribute('ProductID'))) )
                 ->update(
@@ -224,6 +227,7 @@ class Product_BL
                             'Price'           =>   trim($ProductViewModel_Binding->getAttribute('Price'))
                         )
                     );
+            //Log::info("Query Log = ". print_r(DB::getQueryLog(), true));
 
             return "Success";
         }
@@ -238,9 +242,11 @@ class Product_BL
         Log::info("[Product_BL/DeleteProduct] Start ........");
         try {
             
+            //DB::enableQueryLog();
             DB::table('Products')->where(
                     array('ProductID' => trim($ProductViewModel_Binding->getAttribute('ProductID')) )
                 )->delete();
+            //Log::info("Query Log = ". print_r(DB::getQueryLog(), true));
         
             return "Success";
         }
