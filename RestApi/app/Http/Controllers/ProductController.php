@@ -30,21 +30,6 @@ class ProductController extends Controller
 	}
 
 	// Retrieve
-	public function SelectProductWithoutPager(Request $request)
-	{
-		Log::info("[ProductController/SelectProductWithoutPager]");
-		$requestContent = json_decode($request->getContent(), true);
-		$validator = ProductViewModel_Criteria::validate($requestContent[0]);	
-
-		if($validator->fails()){			
-			Log::info("[ProductController/SelectProductWithoutPager] validator fails message = ".$validator->messages()) ;
-			return $validator->messages();
-		}else{
-			$ProductViewModel_Criteria = new ProductViewModel_Criteria();
-			$ProductViewModel_Criteria->fill($requestContent[0]);
-			return (new Product_BL())->SelectProductWithoutPager($ProductViewModel_Criteria);			
-		}
-	}
 	public function SelectProductWithPager(Request $request)
 	{
 		Log::info("[ProductController/SelectProductWithPager]");		
@@ -60,6 +45,21 @@ class ProductController extends Controller
 			return (new Product_BL())->SelectProductWithPager($ProductViewModel_Criteria);			
 		}
 	}
+	public function SelectProductWithoutPager(Request $request)
+	{
+		Log::info("[ProductController/SelectProductWithoutPager]");
+		$requestContent = json_decode($request->getContent(), true);
+		$validator = ProductViewModel_Criteria::validate($requestContent[0]);	
+
+		if($validator->fails()){			
+			Log::info("[ProductController/SelectProductWithoutPager] validator fails message = ".$validator->messages()) ;
+			return $validator->messages();
+		}else{
+			$ProductViewModel_Criteria = new ProductViewModel_Criteria();
+			$ProductViewModel_Criteria->fill($requestContent[0]);
+			return (new Product_BL())->SelectProductWithoutPager($ProductViewModel_Criteria);			
+		}
+	}	
 	
 	// Update
 	public function UpdateProduct(Request $request)

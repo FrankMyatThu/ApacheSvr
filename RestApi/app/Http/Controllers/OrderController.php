@@ -28,21 +28,6 @@ class OrderController extends Controller
 	}
 
 	// Retrieve
-	public function SelectOrderWithoutPager(Request $request)
-	{
-		Log::info("[OrderController/SelectOrderWithoutPager]");
-		$requestContent = json_decode($request->getContent(), true);
-		$validator = OrderViewModel_Criteria::validate($requestContent[0]);	
-
-		if($validator->fails()){			
-			Log::info("[OrderController/SelectOrderWithoutPager] validator fails message = ".$validator->messages()) ;
-			return $validator->messages();
-		}else{
-			$OrderViewModel_Criteria = new OrderViewModel_Criteria();
-			$OrderViewModel_Criteria->fill($requestContent[0]);
-			return (new Order_BL())->SelectOrderWithoutPager($OrderViewModel_Criteria);			
-		}
-	}
 	public function SelectOrderWithPager(Request $request)
 	{
 		Log::info("[OrderController/SelectOrderWithPager]");		
@@ -58,6 +43,22 @@ class OrderController extends Controller
 			return (new Order_BL())->SelectOrderWithPager($OrderViewModel_Criteria);			
 		}
 	}
+	public function SelectOrderDetail(Request $request)
+	{
+		Log::info("[OrderController/SelectOrderDetail]");
+		$requestContent = json_decode($request->getContent(), true);
+		$validator = OrderViewModel_Criteria::validate($requestContent[0]);	
+
+		if($validator->fails()){			
+			Log::info("[OrderController/SelectOrderDetail] validator fails message = ".$validator->messages()) ;
+			return $validator->messages();
+		}else{
+			$OrderViewModel_Criteria = new OrderViewModel_Criteria();
+			$OrderViewModel_Criteria->fill($requestContent[0]);
+			return (new Order_BL())->SelectOrderWithoutPager($OrderViewModel_Criteria);			
+		}
+	}
+	
 	
 	// Update
 	public function UpdateOrder(Request $request)
