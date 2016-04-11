@@ -6,6 +6,12 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+
+use App\Model\BusinessLogic\Order_BL;
+use App\Model\ViewModel\OrderViewModel_Binding;
+use App\Model\ViewModel\OrderViewModel_Criteria;
+
+
 use Log;
 
 class OrderController extends Controller

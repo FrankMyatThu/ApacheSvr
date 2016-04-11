@@ -23,7 +23,7 @@ Route::post('/product/UpdateProduct', array('as' => 'UpdateProduct', 'uses' => '
 Route::post('/product/DeleteProduct', array('as' => 'DeleteProduct', 'uses' => 'ProductController@DeleteProduct'));
 
 
-Route::get('/order', array('as' => 'order', 'uses' => 'OrderController@SelectOrderAll'));
+Route::post('/order/SelectOrderDetail', array('as' => 'SelectOrderDetail', 'uses' => 'OrderController@SelectOrderDetail'));
 /*
 |--------------------------------------------------------------------------
 | Application Routes
