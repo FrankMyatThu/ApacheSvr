@@ -28,8 +28,8 @@ class OrderViewModel_Criteria extends Model
 		$rules = array(
 					'SrNo'     						=> ['sometimes', Config::get('FormatStandardizer.SrNo') ],					
 					'OrderId' 						=> ['sometimes', Config::get('FormatStandardizer.ID') ],					
-					'Description'  					=> ['required', Config::get('FormatStandardizer.Description') , 'min:1', 'max:250'],
-					'OrderDate'						=> ['required', 'date_format:"d/m/Y"' ],
+					'Description'  					=> ['sometimes', Config::get('FormatStandardizer.Description') , 'min:1', 'max:250'],
+					'OrderDate'						=> ['sometimes', 'date_format:"d/m/Y"' ],
 					'OrderByClause'         		=> ['sometimes', Config::get('FormatStandardizer.OrderByClause') ],
 					'OrderDetails.*.OrderDetailId'	=> ['sometimes', Config::get('FormatStandardizer.ID') ],
 					/*'OrderDetails.*.OrderId'		=> ['sometimes', Config::get('FormatStandardizer.ID') ],

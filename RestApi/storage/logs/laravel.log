@@ -1,86 +1,13 @@
-[2016-04-11 09:58:47] local.INFO: [OrderController/SelectOrderDetail]  
-[2016-04-11 09:58:47] local.INFO: [OrderViewModel_Criteria/validate] validate function start  
-[2016-04-11 09:58:47] local.ERROR: Symfony\Component\Debug\Exception\FatalThrowableError: Type error: Argument 1 passed to Illuminate\Validation\Factory::make() must be of the type array, null given, called in C:\xampp\htdocs\RestApi\vendor\laravel\framework\src\Illuminate\Support\Facades\Facade.php on line 224 in C:\xampp\htdocs\RestApi\vendor\laravel\framework\src\Illuminate\Validation\Factory.php:91
-Stack trace:
-#0 C:\xampp\htdocs\RestApi\vendor\laravel\framework\src\Illuminate\Support\Facades\Facade.php(224): Illuminate\Validation\Factory->make(NULL, Array, Array)
-#1 C:\xampp\htdocs\RestApi\app\Model\ViewModel\OrderViewModel_Criteria.php(64): Illuminate\Support\Facades\Facade::__callStatic('make', Array)
-#2 [internal function]: App\Model\ViewModel\OrderViewModel_Criteria->validate(NULL)
-#3 C:\xampp\htdocs\RestApi\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php(3507): call_user_func_array(Array, Array)
-#4 C:\xampp\htdocs\RestApi\app\Http\Controllers\OrderController.php(56): Illuminate\Database\Eloquent\Model::__callStatic('validate', Array)
-#5 [internal function]: App\Http\Controllers\OrderController->SelectOrderDetail(Object(Illuminate\Http\Request))
-#6 C:\xampp\htdocs\RestApi\vendor\laravel\framework\src\Illuminate\Routing\Controller.php(80): call_user_func_array(Array, Array)
-#7 C:\xampp\htdocs\RestApi\vendor\laravel\framework\src\Illuminate\Routing\ControllerDispatcher.php(146): Illuminate\Routing\Controller->callAction('SelectOrderDeta...', Array)
-#8 C:\xampp\htdocs\RestApi\vendor\laravel\framework\src\Illuminate\Routing\ControllerDispatcher.php(94): Illuminate\Routing\ControllerDispatcher->call(Object(App\Http\Controllers\OrderController), Object(Illuminate\Routing\Route), 'SelectOrderDeta...')
-#9 [internal function]: Illuminate\Routing\ControllerDispatcher->Illuminate\Routing\{closure}(Object(Illuminate\Http\Request))
-#10 C:\xampp\htdocs\RestApi\vendor\laravel\framework\src\Illuminate\Routing\Pipeline.php(52): call_user_func(Object(Closure), Object(Illuminate\Http\Request))
-#11 [internal function]: Illuminate\Routing\Pipeline->Illuminate\Routing\{closure}(Object(Illuminate\Http\Request))
-#12 C:\xampp\htdocs\RestApi\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php(102): call_user_func(Object(Closure), Object(Illuminate\Http\Request))
-#13 C:\xampp\htdocs\RestApi\vendor\laravel\framework\src\Illuminate\Routing\ControllerDispatcher.php(96): Illuminate\Pipeline\Pipeline->then(Object(Closure))
-#14 C:\xampp\htdocs\RestApi\vendor\laravel\framework\src\Illuminate\Routing\ControllerDispatcher.php(54): Illuminate\Routing\ControllerDispatcher->callWithinStack(Object(App\Http\Controllers\OrderController), Object(Illuminate\Routing\Route), Object(Illuminate\Http\Request), 'SelectOrderDeta...')
-#15 C:\xampp\htdocs\RestApi\vendor\laravel\framework\src\Illuminate\Routing\Route.php(174): Illuminate\Routing\ControllerDispatcher->dispatch(Object(Illuminate\Routing\Route), Object(Illuminate\Http\Request), 'App\\Http\\Contro...', 'SelectOrderDeta...')
-#16 C:\xampp\htdocs\RestApi\vendor\laravel\framework\src\Illuminate\Routing\Route.php(140): Illuminate\Routing\Route->runController(Object(Illuminate\Http\Request))
-#17 C:\xampp\htdocs\RestApi\vendor\laravel\framework\src\Illuminate\Routing\Router.php(724): Illuminate\Routing\Route->run(Object(Illuminate\Http\Request))
-#18 [internal function]: Illuminate\Routing\Router->Illuminate\Routing\{closure}(Object(Illuminate\Http\Request))
-#19 C:\xampp\htdocs\RestApi\vendor\laravel\framework\src\Illuminate\Routing\Pipeline.php(52): call_user_func(Object(Closure), Object(Illuminate\Http\Request))
-#20 [internal function]: Illuminate\Routing\Pipeline->Illuminate\Routing\{closure}(Object(Illuminate\Http\Request))
-#21 C:\xampp\htdocs\RestApi\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php(102): call_user_func(Object(Closure), Object(Illuminate\Http\Request))
-#22 C:\xampp\htdocs\RestApi\vendor\laravel\framework\src\Illuminate\Routing\Router.php(726): Illuminate\Pipeline\Pipeline->then(Object(Closure))
-#23 C:\xampp\htdocs\RestApi\vendor\laravel\framework\src\Illuminate\Routing\Router.php(699): Illuminate\Routing\Router->runRouteWithinStack(Object(Illuminate\Routing\Route), Object(Illuminate\Http\Request))
-#24 C:\xampp\htdocs\RestApi\vendor\laravel\framework\src\Illuminate\Routing\Router.php(675): Illuminate\Routing\Router->dispatchToRoute(Object(Illuminate\Http\Request))
-#25 C:\xampp\htdocs\RestApi\vendor\laravel\framework\src\Illuminate\Foundation\Http\Kernel.php(246): Illuminate\Routing\Router->dispatch(Object(Illuminate\Http\Request))
-#26 [internal function]: Illuminate\Foundation\Http\Kernel->Illuminate\Foundation\Http\{closure}(Object(Illuminate\Http\Request))
-#27 C:\xampp\htdocs\RestApi\vendor\laravel\framework\src\Illuminate\Routing\Pipeline.php(52): call_user_func(Object(Closure), Object(Illuminate\Http\Request))
-#28 C:\xampp\htdocs\RestApi\vendor\laravel\framework\src\Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode.php(44): Illuminate\Routing\Pipeline->Illuminate\Routing\{closure}(Object(Illuminate\Http\Request))
-#29 [internal function]: Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode->handle(Object(Illuminate\Http\Request), Object(Closure))
-#30 C:\xampp\htdocs\RestApi\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php(124): call_user_func_array(Array, Array)
-#31 [internal function]: Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}(Object(Illuminate\Http\Request))
-#32 C:\xampp\htdocs\RestApi\vendor\laravel\framework\src\Illuminate\Routing\Pipeline.php(32): call_user_func(Object(Closure), Object(Illuminate\Http\Request))
-#33 [internal function]: Illuminate\Routing\Pipeline->Illuminate\Routing\{closure}(Object(Illuminate\Http\Request))
-#34 C:\xampp\htdocs\RestApi\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php(102): call_user_func(Object(Closure), Object(Illuminate\Http\Request))
-#35 C:\xampp\htdocs\RestApi\vendor\laravel\framework\src\Illuminate\Foundation\Http\Kernel.php(132): Illuminate\Pipeline\Pipeline->then(Object(Closure))
-#36 C:\xampp\htdocs\RestApi\vendor\laravel\framework\src\Illuminate\Foundation\Http\Kernel.php(99): Illuminate\Foundation\Http\Kernel->sendRequestThroughRouter(Object(Illuminate\Http\Request))
-#37 C:\xampp\htdocs\RestApi\index.php(53): Illuminate\Foundation\Http\Kernel->handle(Object(Illuminate\Http\Request))
-#38 {main}  
-[2016-04-11 09:58:57] local.INFO: [OrderController/SelectOrderDetail]  
-[2016-04-11 09:58:57] local.INFO: [OrderViewModel_Criteria/validate] validate function start  
-[2016-04-11 09:58:57] local.ERROR: Symfony\Component\Debug\Exception\FatalThrowableError: Type error: Argument 1 passed to Illuminate\Validation\Factory::make() must be of the type array, null given, called in C:\xampp\htdocs\RestApi\vendor\laravel\framework\src\Illuminate\Support\Facades\Facade.php on line 224 in C:\xampp\htdocs\RestApi\vendor\laravel\framework\src\Illuminate\Validation\Factory.php:91
-Stack trace:
-#0 C:\xampp\htdocs\RestApi\vendor\laravel\framework\src\Illuminate\Support\Facades\Facade.php(224): Illuminate\Validation\Factory->make(NULL, Array, Array)
-#1 C:\xampp\htdocs\RestApi\app\Model\ViewModel\OrderViewModel_Criteria.php(64): Illuminate\Support\Facades\Facade::__callStatic('make', Array)
-#2 [internal function]: App\Model\ViewModel\OrderViewModel_Criteria->validate(NULL)
-#3 C:\xampp\htdocs\RestApi\vendor\laravel\framework\src\Illuminate\Database\Eloquent\Model.php(3507): call_user_func_array(Array, Array)
-#4 C:\xampp\htdocs\RestApi\app\Http\Controllers\OrderController.php(56): Illuminate\Database\Eloquent\Model::__callStatic('validate', Array)
-#5 [internal function]: App\Http\Controllers\OrderController->SelectOrderDetail(Object(Illuminate\Http\Request))
-#6 C:\xampp\htdocs\RestApi\vendor\laravel\framework\src\Illuminate\Routing\Controller.php(80): call_user_func_array(Array, Array)
-#7 C:\xampp\htdocs\RestApi\vendor\laravel\framework\src\Illuminate\Routing\ControllerDispatcher.php(146): Illuminate\Routing\Controller->callAction('SelectOrderDeta...', Array)
-#8 C:\xampp\htdocs\RestApi\vendor\laravel\framework\src\Illuminate\Routing\ControllerDispatcher.php(94): Illuminate\Routing\ControllerDispatcher->call(Object(App\Http\Controllers\OrderController), Object(Illuminate\Routing\Route), 'SelectOrderDeta...')
-#9 [internal function]: Illuminate\Routing\ControllerDispatcher->Illuminate\Routing\{closure}(Object(Illuminate\Http\Request))
-#10 C:\xampp\htdocs\RestApi\vendor\laravel\framework\src\Illuminate\Routing\Pipeline.php(52): call_user_func(Object(Closure), Object(Illuminate\Http\Request))
-#11 [internal function]: Illuminate\Routing\Pipeline->Illuminate\Routing\{closure}(Object(Illuminate\Http\Request))
-#12 C:\xampp\htdocs\RestApi\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php(102): call_user_func(Object(Closure), Object(Illuminate\Http\Request))
-#13 C:\xampp\htdocs\RestApi\vendor\laravel\framework\src\Illuminate\Routing\ControllerDispatcher.php(96): Illuminate\Pipeline\Pipeline->then(Object(Closure))
-#14 C:\xampp\htdocs\RestApi\vendor\laravel\framework\src\Illuminate\Routing\ControllerDispatcher.php(54): Illuminate\Routing\ControllerDispatcher->callWithinStack(Object(App\Http\Controllers\OrderController), Object(Illuminate\Routing\Route), Object(Illuminate\Http\Request), 'SelectOrderDeta...')
-#15 C:\xampp\htdocs\RestApi\vendor\laravel\framework\src\Illuminate\Routing\Route.php(174): Illuminate\Routing\ControllerDispatcher->dispatch(Object(Illuminate\Routing\Route), Object(Illuminate\Http\Request), 'App\\Http\\Contro...', 'SelectOrderDeta...')
-#16 C:\xampp\htdocs\RestApi\vendor\laravel\framework\src\Illuminate\Routing\Route.php(140): Illuminate\Routing\Route->runController(Object(Illuminate\Http\Request))
-#17 C:\xampp\htdocs\RestApi\vendor\laravel\framework\src\Illuminate\Routing\Router.php(724): Illuminate\Routing\Route->run(Object(Illuminate\Http\Request))
-#18 [internal function]: Illuminate\Routing\Router->Illuminate\Routing\{closure}(Object(Illuminate\Http\Request))
-#19 C:\xampp\htdocs\RestApi\vendor\laravel\framework\src\Illuminate\Routing\Pipeline.php(52): call_user_func(Object(Closure), Object(Illuminate\Http\Request))
-#20 [internal function]: Illuminate\Routing\Pipeline->Illuminate\Routing\{closure}(Object(Illuminate\Http\Request))
-#21 C:\xampp\htdocs\RestApi\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php(102): call_user_func(Object(Closure), Object(Illuminate\Http\Request))
-#22 C:\xampp\htdocs\RestApi\vendor\laravel\framework\src\Illuminate\Routing\Router.php(726): Illuminate\Pipeline\Pipeline->then(Object(Closure))
-#23 C:\xampp\htdocs\RestApi\vendor\laravel\framework\src\Illuminate\Routing\Router.php(699): Illuminate\Routing\Router->runRouteWithinStack(Object(Illuminate\Routing\Route), Object(Illuminate\Http\Request))
-#24 C:\xampp\htdocs\RestApi\vendor\laravel\framework\src\Illuminate\Routing\Router.php(675): Illuminate\Routing\Router->dispatchToRoute(Object(Illuminate\Http\Request))
-#25 C:\xampp\htdocs\RestApi\vendor\laravel\framework\src\Illuminate\Foundation\Http\Kernel.php(246): Illuminate\Routing\Router->dispatch(Object(Illuminate\Http\Request))
-#26 [internal function]: Illuminate\Foundation\Http\Kernel->Illuminate\Foundation\Http\{closure}(Object(Illuminate\Http\Request))
-#27 C:\xampp\htdocs\RestApi\vendor\laravel\framework\src\Illuminate\Routing\Pipeline.php(52): call_user_func(Object(Closure), Object(Illuminate\Http\Request))
-#28 C:\xampp\htdocs\RestApi\vendor\laravel\framework\src\Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode.php(44): Illuminate\Routing\Pipeline->Illuminate\Routing\{closure}(Object(Illuminate\Http\Request))
-#29 [internal function]: Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode->handle(Object(Illuminate\Http\Request), Object(Closure))
-#30 C:\xampp\htdocs\RestApi\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php(124): call_user_func_array(Array, Array)
-#31 [internal function]: Illuminate\Pipeline\Pipeline->Illuminate\Pipeline\{closure}(Object(Illuminate\Http\Request))
-#32 C:\xampp\htdocs\RestApi\vendor\laravel\framework\src\Illuminate\Routing\Pipeline.php(32): call_user_func(Object(Closure), Object(Illuminate\Http\Request))
-#33 [internal function]: Illuminate\Routing\Pipeline->Illuminate\Routing\{closure}(Object(Illuminate\Http\Request))
-#34 C:\xampp\htdocs\RestApi\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php(102): call_user_func(Object(Closure), Object(Illuminate\Http\Request))
-#35 C:\xampp\htdocs\RestApi\vendor\laravel\framework\src\Illuminate\Foundation\Http\Kernel.php(132): Illuminate\Pipeline\Pipeline->then(Object(Closure))
-#36 C:\xampp\htdocs\RestApi\vendor\laravel\framework\src\Illuminate\Foundation\Http\Kernel.php(99): Illuminate\Foundation\Http\Kernel->sendRequestThroughRouter(Object(Illuminate\Http\Request))
-#37 C:\xampp\htdocs\RestApi\index.php(53): Illuminate\Foundation\Http\Kernel->handle(Object(Illuminate\Http\Request))
-#38 {main}  
+[2016-04-11 10:22:21] local.INFO: [OrderController/SelectOrderDetail]  
+[2016-04-11 10:22:21] local.INFO: [OrderViewModel_Criteria/validate] validate function start  
+[2016-04-11 10:22:21] local.INFO: [Order_BL/SelectOrderWithoutPager] Start  
+[2016-04-11 10:22:21] local.INFO: [OrderViewModel_Binding/validate] validate function start  
+[2016-04-11 10:22:21] local.INFO: [Order_BL/SelectOrderWithoutPager] validator fails message = {"OrderDate":["Invalid OrderDate"]}  
+[2016-04-11 10:23:34] local.INFO: [OrderController/SelectOrderDetail]  
+[2016-04-11 10:23:34] local.INFO: [OrderViewModel_Criteria/validate] validate function start  
+[2016-04-11 10:23:34] local.INFO: [Order_BL/SelectOrderWithoutPager] Start  
+[2016-04-11 10:23:34] local.INFO: [OrderViewModel_Binding/validate] validate function start  
+[2016-04-11 10:23:34] local.INFO: [Order_BL/SelectOrderWithoutPager] validator fails message = {"OrderDate":["Invalid OrderDate"]}  
+[2016-04-11 10:30:15] local.INFO: [OrderController/SelectOrderDetail]  
+[2016-04-11 10:30:15] local.INFO: [OrderViewModel_Criteria/validate] validate function start  
+[2016-04-11 10:30:15] local.INFO: [OrderController/SelectOrderDetail] validator fails message = {"OrderDetails.0.OrderDetailId":["Invalid OrderDetailId."]}  
