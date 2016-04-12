@@ -40,7 +40,8 @@ class ProductController extends Controller
 			Log::info("[ProductController/SelectProductWithPager] validator fails message = ".$validator->messages()) ;
 			return $validator->messages();
 		}else{
-			$ProductViewModel_Criteria = new ProductViewModel_Criteria();			
+			$ProductViewModel_Criteria = new ProductViewModel_Criteria();	
+			Log::info("requestContent = ".print_r($requestContent[0], true));		
 			$ProductViewModel_Criteria->fill($requestContent[0]);
 			return (new Product_BL())->SelectProductWithPager($ProductViewModel_Criteria);			
 		}

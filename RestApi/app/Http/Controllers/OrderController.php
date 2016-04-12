@@ -60,12 +60,12 @@ class OrderController extends Controller
 			return $validator->messages();
 		}else{
 			$OrderViewModel_Criteria = new OrderViewModel_Criteria();
+			Log::info("requestContent = ".print_r($requestContent[0], true));
 			$OrderViewModel_Criteria->fill($requestContent[0]);
-			return (new Order_BL())->SelectOrderWithoutPager($OrderViewModel_Criteria);			
+			return (new Order_BL())->SelectOrderDetail($OrderViewModel_Criteria);			
 		}
 	}
-	
-	
+
 	// Update
 	public function UpdateOrder(Request $request)
 	{

@@ -4,6 +4,7 @@ namespace App\Model\BusinessLogic;
 
 use App\Model\ViewModel\OrderViewModel_Binding;
 use App\Model\ViewModel\OrderViewModel_Criteria;
+use App\Model\ViewModel\OrderDetailViewModel_Binding;
 use App\Model\ViewModel\CommonViewModel_tbl_GridListing;
 use App\Model\ViewModel\CommonViewModel_tbl_Pager_To_Client;
 use Log;
@@ -43,14 +44,14 @@ class Order_BL
             $query = DB::table(DB::raw('Orders, (SELECT @row := 0) RowCounter'));
             $query = $query->select(
                                 DB::raw('@row := @row + 1 AS SrNo'),                                                              
-                                'OrderID',                                 
+                                'OrderId',                                 
                                 'Description',
                                 'OrderDate'                                
                             );
             
             // where clauses
-            if(!$this->IsNullOrEmptyString($OrderViewModel_Criteria->getAttribute('OrderID'))){
-                $query = $query->where('OrderID', trim($OrderViewModel_Criteria->getAttribute('OrderID')));
+            if(!$this->IsNullOrEmptyString($OrderViewModel_Criteria->getAttribute('OrderId'))){
+                $query = $query->where('OrderId', trim($OrderViewModel_Criteria->getAttribute('OrderId')));
             }
 
             if(!$this->IsNullOrEmptyString($OrderViewModel_Criteria->getAttribute('Description'))){
@@ -112,18 +113,20 @@ class Order_BL
         try {
             $tbl_GridListing = new CommonViewModel_tbl_GridListing();    
 
-            /* Get master  query */ {       
+            /* Get master  query */ {                     
                 $queryMaster = DB::table(DB::raw('Orders, (SELECT @row := 0) RowCounter'));
                 $queryMaster = $queryMaster->select(
                                     DB::raw('@row := @row + 1 AS SrNo'),                                                              
-                                    'OrderID',                                 
+                                    'OrderId',                                 
                                     'Description',
-                                    'OrderDate'                                
+                                    'OrderDate'                                                                
                                 );
                 
+                Log::info("OrderId = ".$OrderViewModel_Criteria->getAttribute('OrderId'));
+
                 // where clauses
-                if(!$this->IsNullOrEmptyString($OrderViewModel_Criteria->getAttribute('OrderID'))){
-                    $queryMaster = $queryMaster->where('OrderID', trim($OrderViewModel_Criteria->getAttribute('OrderID')));
+                if(!$this->IsNullOrEmptyString($OrderViewModel_Criteria->getAttribute('OrderId'))){
+                    $queryMaster = $queryMaster->where('OrderId', trim($OrderViewModel_Criteria->getAttribute('OrderId')));
                 }
 
                 if(!$this->IsNullOrEmptyString($OrderViewModel_Criteria->getAttribute('Description'))){
@@ -149,7 +152,7 @@ class Order_BL
                                 ->take($OrderViewModel_Criteria->getAttribute('RecordPerBatch'))                
                                 ->skip(($OrderViewModel_Criteria->getAttribute('BatchIndex') - 1) * $OrderViewModel_Criteria->getAttribute('RecordPerBatch'))
                                 ->toSql();
-                //Log::info("queryMaster Log = ".$sqlLogMaster);
+                Log::info("queryMaster Log = ".$sqlLogMaster);
 
                 $resultsMaster =  $queryMaster
                                 ->take($OrderViewModel_Criteria->getAttribute('RecordPerBatch'))                
@@ -171,12 +174,12 @@ class Order_BL
                                 );
                 
                 // where clauses
-                if(!$this->IsNullOrEmptyString($OrderViewModel_Criteria->getAttribute('OrderID'))){
-                    $queryDetail = $queryDetail->where('OrderDetails.OrderID', trim($OrderViewModel_Criteria->getAttribute('OrderID')));
+                if(!$this->IsNullOrEmptyString($OrderViewModel_Criteria->getAttribute('OrderId'))){
+                    $queryDetail = $queryDetail->where('OrderDetails.OrderId', trim($OrderViewModel_Criteria->getAttribute('OrderId')));
                 }
                 
                 $sqlLogDetail =  $queryDetail->toSql();
-                //Log::info("queryDetail Log = ".$sqlLogDetail);
+                Log::info("queryDetail Log = ".$sqlLogDetail);
 
                 $resultsDetail =  $queryDetail->get();
             }
@@ -188,15 +191,16 @@ class Order_BL
                 
                 $List_OrderMasterDetailBindingViewModel = [ "Master" => "", "Detail" => "" ];
                 $OrderViewModel_Binding = new OrderViewModel_Binding();
-                $OrderViewModel_Binding->fill((array)$resultsMaster);
+                $OrderViewModel_Binding->fill((array)$resultsMaster[0]);
                 $List_OrderMasterDetailBindingViewModel["Master"] = $OrderViewModel_Binding;
                 
+                $List_OrderDetailViewModel_Binding = [];
                 foreach ($resultsDetail as $resultDetail) {
                     $OrderDetailViewModel_Binding = new OrderDetailViewModel_Binding();
                     $OrderDetailViewModel_Binding->fill((array)$resultDetail);
-                    $List_OrderMasterDetailBindingViewModel["Detail"] = $OrderDetailViewModel_Binding;
+                    $List_OrderDetailViewModel_Binding[] = $OrderDetailViewModel_Binding;
                 }
-
+                $List_OrderMasterDetailBindingViewModel["Detail"] = $List_OrderDetailViewModel_Binding;
                 $tbl_GridListing->List_Data = $List_OrderMasterDetailBindingViewModel;
             }
             
@@ -215,7 +219,7 @@ class Order_BL
             
             //DB::enableQueryLog();
             DB::table('Orders')
-                ->where( array('OrderID' => trim($OrderViewModel_Binding->getAttribute('OrderID'))) )
+                ->where( array('OrderId' => trim($OrderViewModel_Binding->getAttribute('OrderId'))) )
                 ->update(
                         array(
                             'OrderName'     =>   trim($OrderViewModel_Binding->getAttribute('OrderName')), 
@@ -240,7 +244,7 @@ class Order_BL
             
             //DB::enableQueryLog();
             DB::table('Orders')->where(
-                    array('OrderID' => trim($OrderViewModel_Binding->getAttribute('OrderID')) )
+                    array('OrderId' => trim($OrderViewModel_Binding->getAttribute('OrderId')) )
                 )->delete();
             //Log::info("Query Log = ". print_r(DB::getQueryLog(), true));
         
