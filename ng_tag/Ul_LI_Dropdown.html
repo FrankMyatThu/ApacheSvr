@@ -11,7 +11,24 @@
 			angular.module('myApp', [])
 			.controller('MyCtrl', function($scope, $http) {
 				$scope.SelectedKey = "";
-				$scope.SelectedValue = "";
+				$scope.SelectedValue = "";				
+
+				$scope.ProjectCategoryList = [{
+					Key: 'A001',
+					Value: 'Project A',
+				}, {
+					Key: 'B001',
+					Value: 'Project B'
+				}, {
+					Key: 'C001',
+					Value: 'Project C'
+				}];
+				
+				
+				$scope.ddlProjectCategory_SelectedChange = function(Key, Value){
+					$scope.SelectedKey = Key;
+					$scope.SelectedValue = Value;
+				}
 								
 			});
 	</script>
@@ -20,7 +37,7 @@
 	<div class="container">
 		<div class="panel-group">
 			<div class="panel panel-primary">
-				<div class="panel-heading">Download Testing</div>
+				<div class="panel-heading">Dropdown Testing</div>
 				<div class="panel-body">
 					<div class="row">
 						<div class="col-md-2"><span class="text-muted">Control</span></div>
@@ -30,7 +47,14 @@
 					<div class="row">
 						<div class="col-md-2">
 							<!-- Dropdown Control Start -->
-							
+							<div class="dropdown">
+									<button class="btn btn-default dropdown-toggle" id="ddlProjectCategory" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">            
+										Subject <span class="caret"></span>
+									</button>
+									<ul class="dropdown-menu" aria-labelledby="ddlProjectCategory">
+										<li ng-repeat="ProjectCategory in ProjectCategoryList" ><a href="#" ng-click="ddlProjectCategory_SelectedChange(ProjectCategory.Key, ProjectCategory.Value);">{{ ProjectCategory.Value }}</a></li>										
+									</ul>
+							</div>
 							<!-- Dropdown Control End   -->
 						</div>
 						<div class="col-md-2"><span class="text-muted">{{ SelectedKey }}</span></div>
