@@ -50,11 +50,11 @@
 						<div class="col-md-3">
 							<!-- Dropdown Control Start -->
 							<div class="dropdown">									
-									<button class="btn btn-default dropdown-toggle" id="ddlProjectCategory" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="width:230px;">            
-										{{ ddlProjectCategoryDefaultMessage }} <span class="caret"></span>
+									<button class="btn btn-default dropdown-toggle" id="ddlProjectCategory" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="width:230px;text-align:left;">            
+										{{ ddlProjectCategoryDefaultMessage }} <span class="caret" style="position:absolute;left:80%;top:45%;"></span>
 									</button>
 									<ul class="dropdown-menu" aria-labelledby="ddlProjectCategory">
-										<li ng-repeat="ProjectCategory in ProjectCategoryList" style="width:230px;" ><a href="#" ng-click="ddlProjectCategory_SelectedChange(ProjectCategory.Key, ProjectCategory.Value);">{{ ProjectCategory.Value }}</a></li>										
+										<li ng-repeat="ProjectCategory in ProjectCategoryList" style="width:230px;text-align:left;" ><a href="#" ng-click="ddlProjectCategory_SelectedChange(ProjectCategory.Key, ProjectCategory.Value);">{{ ProjectCategory.Value }}</a></li>										
 									</ul>
 							</div>
 							<!-- Dropdown Control End   -->
