@@ -4,25 +4,34 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.min.css">
+	<style type="text/css">
+		.dropdown-menu {
+			width: 230px;
+		}
+		.dropdown-menu li a {
+			word-wrap: break-word;
+			white-space: normal;
+		}
+	</style>
 	<script src="./bower_components/jquery/dist/jquery.min.js"></script>	
 	<script src="./bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 	<script src="./bower_components/angular/angular.min.js"></script>	
 	<script>
 			angular.module('myApp', [])
 			.controller('MyCtrl', function($scope, $http) {
-				$scope.ddlProjectCategoryDefaultMessage = "-- Select Project Category --";
+				$scope.ddlProjectCategoryDefaultMessage = "";
 				$scope.SelectedKey = "";
 				$scope.SelectedValue = "";				
 
 				$scope.ProjectCategoryList = [{
 					Key: 'A001',
-					Value: 'Project A',
+					Value: 'Myanmar EITI Implementation Project',
 				}, {
 					Key: 'B001',
-					Value: 'Project B'
+					Value: 'National Electrification Project'
 				}, {
 					Key: 'C001',
-					Value: 'Project C'
+					Value: 'Agricultural Development Support Project'
 				}];
 				
 				
@@ -33,7 +42,7 @@
 				}
 								
 			});
-	</script>
+	</script>	
 </head>
 <body ng-app="myApp" ng-controller="MyCtrl">
 	<div class="container">
@@ -49,12 +58,29 @@
 					<div class="row">
 						<div class="col-md-3">
 							<!-- Dropdown Control Start -->
-							<div class="dropdown">									
-									<button class="btn btn-default dropdown-toggle" id="ddlProjectCategory" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="width:230px;text-align:left;">            
-										{{ ddlProjectCategoryDefaultMessage }} <span class="caret" style="position:absolute;left:80%;top:45%;"></span>
-									</button>
+							<div class="input-append btn-group">									
+									<input 
+										type="text"
+										id="ddlProjectCategory" 
+										placeholder="-- Select Project --" 
+										ng-model="ddlProjectCategoryDefaultMessage"
+										data-toggle="dropdown" 
+										aria-haspopup="true" 
+										aria-expanded="true" 
+										style="text-align:left;width:230px;" />
+									<span 
+										class="caret" 
+										data-toggle="dropdown" 
+										aria-haspopup="true" 
+										aria-expanded="true" 
+										style="position:absolute;left:90%;top:45%;"></span>
+										
 									<ul class="dropdown-menu" aria-labelledby="ddlProjectCategory">
-										<li ng-repeat="ProjectCategory in ProjectCategoryList" style="width:230px;text-align:left;" ><a href="#" ng-click="ddlProjectCategory_SelectedChange(ProjectCategory.Key, ProjectCategory.Value);">{{ ProjectCategory.Value }}</a></li>										
+										<li ng-repeat="ProjectCategory in ProjectCategoryList">
+											<a href="#" ng-click="ddlProjectCategory_SelectedChange(ProjectCategory.Key, ProjectCategory.Value);">
+												{{ ProjectCategory.Value }}
+											</a>
+										</li>										
 									</ul>
 							</div>
 							<!-- Dropdown Control End   -->
