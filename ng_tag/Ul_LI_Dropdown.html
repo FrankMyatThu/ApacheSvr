@@ -23,16 +23,20 @@
 				$scope.SelectedKey = "";
 				$scope.SelectedValue = "";				
 
-				$scope.ProjectCategoryList = [{
-					Key: 'A001',
-					Value: 'Myanmar EITI Implementation Project',
-				}, {
-					Key: 'B001',
-					Value: 'National Electrification Project'
-				}, {
-					Key: 'C001',
-					Value: 'Agricultural Development Support Project'
-				}];
+				$scope.ProjectCategoryList = [
+					{
+						Key: 'A001',
+						Value: 'Myanmar EITI Implementation Project',
+					}, 
+					{
+						Key: 'B001',
+						Value: 'National Electrification Project'
+					}, 
+					{
+						Key: 'C001',
+						Value: 'Agricultural Development Support Project'
+					}
+				];
 				
 				
 				$scope.ddlProjectCategory_SelectedChange = function(Key, Value){
@@ -40,7 +44,20 @@
 					$scope.SelectedValue = Value;
 					$scope.ddlProjectCategoryDefaultMessage = Value;
 				}
-								
+				
+				$scope.ddlProjectCategory_keyChange = function(){
+					console.log("Change Value = ", $scope.ddlProjectCategoryDefaultMessage);
+					//$scope.ProjectCategoryList
+					// data[0].List_tbl_Pager_To_Client.filter(function (item) { return item.BatchIndex === $scope.Order_Criteria_Model.BatchIndex; })
+					/*
+					$scope.ProjectCategoryList = $scope.ProjectCategoryList.filter(
+						function(item){
+							return item.Value ==
+						}
+					);
+					http://stackoverflow.com/questions/19405346/how-can-i-write-an-angularjs-filter-to-search-for-string-fragments-sequences-of
+					*/
+				}				
 			});
 	</script>	
 </head>
@@ -68,7 +85,8 @@
 										aria-haspopup="true" 
 										aria-expanded="true" 
 										class="form-control"
-										style="text-align:left;width:230px;" />
+										style="text-align:left;width:230px;"										
+										ng-change="ddlProjectCategory_keyChange();" />
 									<span 
 										class="caret" 
 										data-toggle="dropdown" 
