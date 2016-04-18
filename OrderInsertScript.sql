@@ -35,6 +35,8 @@ SELECT OrderId, Description, OrderDate FROM Orders WHERE 1=1
 SELECT OrderId, Description, OrderDate FROM Orders WHERE 1=1;
 -- Get Detail
 SELECT OrderDetailID, OrderId, OrderDetails.ProductID, ProductName, Quantity, Total, TotalGST FROM OrderDetails
-INNER JOIN Products ON OrderDetails.ProductID = Products.ProductID WHERE 1=1;
+INNER JOIN Products ON OrderDetails.ProductID = Products.ProductID 
+WHERE OrderDetails.OrderId = 2;
 
 
+SELECT @row := @row + 1 AS SrNo, `OrderID`, `Description`, `OrderDate` FROM Orders, (SELECT @row := 0) RowCounter WHERE `OrderID` = 2 ORDER BY `OrderID` DESC, `Description` DESC LIMIT 100 OFFSET 0  

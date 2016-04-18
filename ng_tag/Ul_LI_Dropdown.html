@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.min.css">
+	<script src="./bower_components/jquery/dist/jquery.min.js"></script>	
+	<script src="./bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="./bower_components/angular/angular.min.js"></script>	
+	<script>
+			angular.module('myApp', [])
+			.controller('MyCtrl', function($scope, $http) {
+				$scope.SelectedKey = "";
+				$scope.SelectedValue = "";
+								
+			});
+	</script>
+</head>
+<body ng-app="myApp" ng-controller="MyCtrl">
+	<div class="container">
+		<div class="panel-group">
+			<div class="panel panel-primary">
+				<div class="panel-heading">Download Testing</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-md-2"><span class="text-muted">Control</span></div>
+						<div class="col-md-2"><span class="text-muted">Key</span></div>
+						<div class="col-md-2"><span class="text-muted">Value</span></div>
+					</div>
+					<div class="row">
+						<div class="col-md-2">
+							<!-- Dropdown Control Start -->
+							
+							<!-- Dropdown Control End   -->
+						</div>
+						<div class="col-md-2"><span class="text-muted">{{ SelectedKey }}</span></div>
+						<div class="col-md-2"><span class="text-muted">{{ SelectedValue }}</span></div>
+					</div>					
+				</div>
+			</div>
+		</div>
+	</div>	
+</body>
+</html>
