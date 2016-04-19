@@ -12,32 +12,75 @@
 			word-wrap: break-word;
 			white-space: normal;
 		}
+		.scrollable-menu {
+			height: auto;
+			max-height: 200px;
+			overflow-x: hidden;
+		}
 	</style>
 	<script src="./bower_components/jquery/dist/jquery.min.js"></script>	
 	<script src="./bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-	<script src="./bower_components/angular/angular.min.js"></script>	
+	<script src="./bower_components/angular/angular.min.js"></script>		
 	<script>
 			angular.module('myApp', [])
 			.controller('MyCtrl', function($scope, $http) {
 				$scope.ddlProjectCategoryDefaultMessage = "";
 				$scope.SelectedKey = "";
 				$scope.SelectedValue = "";				
-
-				$scope.ProjectCategoryList = [
-					{
-						Key: 'A001',
-						Value: 'Myanmar EITI Implementation Project',
-					}, 
-					{
-						Key: 'B001',
-						Value: 'National Electrification Project'
-					}, 
-					{
-						Key: 'C001',
-						Value: 'Agricultural Development Support Project'
-					}
-				];
 				
+				$scope.ProjectCategoryList_DataBinder = [
+					{ Key : 'A001', Value : 'Alabama Fist most Project'},
+					{ Key : 'A002', Value : 'Alaska'}, 
+					{ Key : 'A003', Value : 'Arizona'},
+					{ Key : 'A004', Value : 'Arkansas'},
+					{ Key : 'A005', Value : 'California'},
+					{ Key : 'A006', Value : 'Colorado'},
+					{ Key : 'A007', Value : 'Connecticut'},
+					{ Key : 'A008', Value : 'Delaware'},
+					{ Key : 'A009', Value : 'Florida'},
+					{ Key : 'A010', Value : 'Georgia'},
+					{ Key : 'A011', Value : 'Hawaii'},
+					{ Key : 'A012', Value : 'Idaho'},
+					{ Key : 'A013', Value : 'Illinois'},
+					{ Key : 'A014', Value : 'Indiana'},
+					{ Key : 'A015', Value : 'Iowa'},
+					{ Key : 'A016', Value : 'Kansas'},
+					{ Key : 'A017', Value : 'Kentucky'},
+					{ Key : 'A018', Value : 'Louisiana Test Project testing'},
+					{ Key : 'A019', Value : 'Maine'},
+					{ Key : 'A020', Value : 'Maryland'},
+					{ Key : 'A021', Value : 'Massachusetts'},
+					{ Key : 'A022', Value : 'Michigan'},
+					{ Key : 'A023', Value : 'Minnesota'},
+					{ Key : 'A024', Value : 'Mississippi'},
+					{ Key : 'A025', Value : 'Missouri'},
+					{ Key : 'A026', Value : 'Montana'},
+					{ Key : 'A027', Value : 'Nebraska'},
+					{ Key : 'A028', Value : 'Nevada'},
+					{ Key : 'A029', Value : 'New Hampshire bla bla Test Project'},
+					{ Key : 'A030', Value : 'New Jersey'},
+					{ Key : 'A031', Value : 'New Mexico'},
+					{ Key : 'A032', Value : 'New York'},
+					{ Key : 'A033', Value : 'North Dakota'},
+					{ Key : 'A034', Value : 'North Carolina'},
+					{ Key : 'A035', Value : 'Ohio'},
+					{ Key : 'A036', Value : 'Oklahoma'},
+					{ Key : 'A037', Value : 'Oregon'},
+					{ Key : 'A038', Value : 'Pennsylvania'},
+					{ Key : 'A039', Value : 'Rhode Island'},
+					{ Key : 'A040', Value : 'South Carolina'},
+					{ Key : 'A041', Value : 'South Dakota'},
+					{ Key : 'A042', Value : 'Tennessee'},
+					{ Key : 'A043', Value : 'Texas'},
+					{ Key : 'A044', Value : 'Utah'},
+					{ Key : 'A045', Value : 'Vermont'},
+					{ Key : 'A046', Value : 'Virginia'},
+					{ Key : 'A047', Value : 'Washington'},
+					{ Key : 'A048', Value : 'West Virginia bla bla bla Project bla test'},
+					{ Key : 'A049', Value : 'Wisconsin'},
+					{ Key : 'A050', Value : 'Wyoming'}
+				];			
+				$scope.ProjectCategoryList_Searchable = $scope.ProjectCategoryList_DataBinder;				
 				
 				$scope.ddlProjectCategory_SelectedChange = function(Key, Value){
 					$scope.SelectedKey = Key;
@@ -47,16 +90,11 @@
 				
 				$scope.ddlProjectCategory_keyChange = function(){
 					console.log("Change Value = ", $scope.ddlProjectCategoryDefaultMessage);
-					//$scope.ProjectCategoryList
-					// data[0].List_tbl_Pager_To_Client.filter(function (item) { return item.BatchIndex === $scope.Order_Criteria_Model.BatchIndex; })
-					/*
-					$scope.ProjectCategoryList = $scope.ProjectCategoryList.filter(
+					$scope.ProjectCategoryList_Searchable = $scope.ProjectCategoryList_DataBinder.filter(
 						function(item){
-							return item.Value ==
+							return item.Value.toLowerCase().indexOf($scope.ddlProjectCategoryDefaultMessage) > -1;
 						}
 					);
-					http://stackoverflow.com/questions/19405346/how-can-i-write-an-angularjs-filter-to-search-for-string-fragments-sequences-of
-					*/
 				}				
 			});
 	</script>	
@@ -75,7 +113,8 @@
 					<div class="row">
 						<div class="col-md-3">
 							<!-- Dropdown Control Start -->
-							<div class="input-append btn-group">									
+							<div class="input-append btn-group">
+									
 									<input 
 										type="text"
 										id="ddlProjectCategory" 
@@ -92,10 +131,9 @@
 										data-toggle="dropdown" 
 										aria-haspopup="true" 
 										aria-expanded="true" 
-										style="position:absolute;left:90%;top:45%;"></span>
-										
-									<ul class="dropdown-menu" aria-labelledby="ddlProjectCategory">
-										<li ng-repeat="ProjectCategory in ProjectCategoryList">
+										style="position:absolute;left:90%;top:45%;"></span>										
+									<ul class="dropdown-menu scrollable-menu" aria-labelledby="ddlProjectCategory">
+										<li ng-repeat="ProjectCategory in ProjectCategoryList_Searchable">
 											<a href="#" ng-click="ddlProjectCategory_SelectedChange(ProjectCategory.Key, ProjectCategory.Value);">
 												{{ ProjectCategory.Value }}
 											</a>
