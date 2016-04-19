@@ -74,7 +74,7 @@
 					{ Key : 'A043', Value : 'Texas'},
 					{ Key : 'A044', Value : 'Utah'},
 					{ Key : 'A045', Value : 'Vermont'},
-					{ Key : 'A046', Value : 'Virginia'},
+					{ Key : 'A046', Value : 'Virginia special character\'s includ3 !'},
 					{ Key : 'A047', Value : 'Washington'},
 					{ Key : 'A048', Value : 'West Virginia bla bla bla Project bla test'},
 					{ Key : 'A049', Value : 'Wisconsin'},
@@ -89,12 +89,13 @@
 				}
 				
 				$scope.ddlProjectCategory_keyChange = function(){
-					console.log("Change Value = ", $scope.ddlProjectCategoryDefaultMessage);
+					//console.log("Change Value = ", $scope.ddlProjectCategoryDefaultMessage, " $scope.ProjectCategoryList_DataBinder.length = ", $scope.ProjectCategoryList_DataBinder.length);
 					$scope.ProjectCategoryList_Searchable = $scope.ProjectCategoryList_DataBinder.filter(
 						function(item){
-							return item.Value.toLowerCase().indexOf($scope.ddlProjectCategoryDefaultMessage) > -1;
+							return item.Value.toLowerCase().indexOf($scope.ddlProjectCategoryDefaultMessage.toLowerCase()) > -1;
 						}
 					);
+					//console.log("$scope.ProjectCategoryList_Searchable.length = ", $scope.ProjectCategoryList_Searchable.length);
 				}				
 			});
 	</script>	
