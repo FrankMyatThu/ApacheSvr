@@ -91,14 +91,8 @@ class Product_BL
             $List_ProductBindingViewModel = [];
             foreach ($results as $result) {
                 $ProductViewModel_Binding = new ProductViewModel_Binding();
-                $validator = ProductViewModel_Binding::validate((array)$result);
-                if($validator->fails()){            
-                    Log::info("[Product_BL/SelectProductWithoutPager] validator fails message = ".$validator->messages()) ;
-                    return $validator->messages();
-                }else{
-                    $ProductViewModel_Binding->fill((array)$result); 
-                    $List_ProductBindingViewModel[] = $ProductViewModel_Binding;
-                }
+                $ProductViewModel_Binding->fill((array)$result); 
+                $List_ProductBindingViewModel[] = $ProductViewModel_Binding;
             }
 
             $tbl_GridListing->List_Data = $List_ProductBindingViewModel;
@@ -193,14 +187,8 @@ class Product_BL
             $List_ProductBindingViewModel = [];
             foreach ($results as $result) {
                 $ProductViewModel_Binding = new ProductViewModel_Binding();
-                $validator = ProductViewModel_Binding::validate((array)$result);
-                if($validator->fails()){            
-                    Log::info("[Product_BL/SelectProductWithPager] validator fails message = ".$validator->messages()) ;
-                    return $validator->messages();
-                }else{
-                    $ProductViewModel_Binding->fill((array)$result); 
-                    $List_ProductBindingViewModel[] = $ProductViewModel_Binding;
-                }
+                $ProductViewModel_Binding->fill((array)$result); 
+                $List_ProductBindingViewModel[] = $ProductViewModel_Binding;
             }
 
             $tbl_GridListing->List_Data = $List_ProductBindingViewModel;

@@ -119,14 +119,8 @@ class Order_BL
             $List_OrderBindingViewModel = [];
             foreach ($results as $result) {
                 $OrderViewModel_Binding = new OrderViewModel_Binding();
-                $validator = OrderViewModel_Binding::validate((array)$result);
-                if($validator->fails()){            
-                    Log::info("[Order_BL/SelectOrderWithPager] validator fails message = ".$validator->messages()) ;
-                    return $validator->messages();
-                }else{
-                    $OrderViewModel_Binding->fill((array)$result); 
-                    $List_OrderBindingViewModel[] = $OrderViewModel_Binding;
-                }
+                $OrderViewModel_Binding->fill((array)$result); 
+                $List_OrderBindingViewModel[] = $OrderViewModel_Binding;
             }
 
             $tbl_GridListing->List_Data = $List_OrderBindingViewModel;

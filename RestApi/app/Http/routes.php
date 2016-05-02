@@ -22,7 +22,6 @@ Route::post('/product/SelectProductWithPager', array('as' => 'SelectProductWithP
 Route::post('/product/UpdateProduct', array('as' => 'UpdateProduct', 'uses' => 'ProductController@UpdateProduct'));
 Route::post('/product/DeleteProduct', array('as' => 'DeleteProduct', 'uses' => 'ProductController@DeleteProduct'));
 
-
 Route::post('/order/SelectOrderDetail', array('as' => 'SelectOrderDetail', 'uses' => 'OrderController@SelectOrderDetail'));
 Route::post('/order/SelectOrderWithPager', array('as' => 'SelectOrderWithPager', 'uses' => 'OrderController@SelectOrderWithPager'));
 /*

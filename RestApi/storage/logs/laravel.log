@@ -1,5 +1,130 @@
-[2016-05-02 10:12:16] local.INFO: [OrderController/SelectOrderWithPager]  
-[2016-05-02 10:12:16] local.INFO: [OrderViewModel_Criteria/validate] validate function start  
-[2016-05-02 10:12:16] local.INFO: [Order_BL/SelectOrderWithPager] Start  
-[2016-05-02 10:12:16] local.INFO: [OrderViewModel_Binding/validate] validate function start  
-[2016-05-02 10:12:16] local.INFO: [Order_BL/SelectOrderWithPager] validator fails message = {"OrderDate":["Invalid OrderDate"]}  
+[2016-05-02 14:38:18] local.INFO: [OrderController/SelectOrderWithPager]  
+[2016-05-02 14:38:18] local.INFO: [OrderViewModel_Criteria/validate] validate function start  
+[2016-05-02 14:38:18] local.INFO: [Order_BL/SelectOrderWithPager] Start  
+[2016-05-02 14:39:02] local.INFO: [OrderController/SelectOrderWithPager]  
+[2016-05-02 14:39:02] local.INFO: [OrderViewModel_Criteria/validate] validate function start  
+[2016-05-02 14:39:02] local.INFO: [Order_BL/SelectOrderWithPager] Start  
+[2016-05-02 14:39:11] local.INFO: [ProductController/SelectProductWithPager]  
+[2016-05-02 14:39:11] local.INFO: [ProductViewModel_Criteria/validate] validate function start  
+[2016-05-02 14:39:11] local.INFO: requestContent = Array
+(
+    [Srno] => 
+    [TotalRecordCount] => 
+    [ProductID] => 20
+    [ProductName] => 
+    [Description] => 
+    [Price] => 
+    [BatchIndex] => 1
+    [PagerShowIndexOneUpToX] => 10
+    [RecordPerPage] => 10
+    [RecordPerBatch] => 100
+    [OrderByClause] => ProductID DESC, ProductName ASC, Description DESC
+)
+  
+[2016-05-02 14:39:11] local.INFO: [Product_BL/SelectProductWithPager] Start  
+[2016-05-02 14:39:11] local.INFO: Query Log = select @row := @row + 1 AS SrNo, `ProductID`, `ProductName`, `Description`, `Price`, IFNULL(ProductImage,"") AS ProductImage from Products, (SELECT @row := 0) RowCounter where `ProductID` = ? order by `ProductID` desc, `ProductName` asc, `Description` desc limit 100 offset 0  
+[2016-05-02 14:39:31] local.INFO: [ProductController/SelectProductWithoutPager]  
+[2016-05-02 14:39:31] local.INFO: [ProductViewModel_Criteria/validate] validate function start  
+[2016-05-02 14:39:31] local.INFO: [Product_BL/SelectProductWithoutPager] Start  
+[2016-05-02 14:39:50] local.INFO: [ProductController/SelectProductWithPager]  
+[2016-05-02 14:39:50] local.INFO: [ProductViewModel_Criteria/validate] validate function start  
+[2016-05-02 14:39:50] local.INFO: requestContent = Array
+(
+    [Srno] => 
+    [TotalRecordCount] => 
+    [ProductID] => 20
+    [ProductName] => 
+    [Description] => 
+    [Price] => 
+    [BatchIndex] => 1
+    [PagerShowIndexOneUpToX] => 10
+    [RecordPerPage] => 10
+    [RecordPerBatch] => 100
+    [OrderByClause] => ProductID DESC, ProductName ASC, Description DESC
+)
+  
+[2016-05-02 14:39:50] local.INFO: [Product_BL/SelectProductWithPager] Start  
+[2016-05-02 14:39:50] local.INFO: Query Log = select @row := @row + 1 AS SrNo, `ProductID`, `ProductName`, `Description`, `Price`, IFNULL(ProductImage,"") AS ProductImage from Products, (SELECT @row := 0) RowCounter where `ProductID` = ? order by `ProductID` desc, `ProductName` asc, `Description` desc limit 100 offset 0  
+[2016-05-02 14:40:03] local.INFO: [ProductController/SelectProductWithPager]  
+[2016-05-02 14:40:03] local.INFO: [ProductViewModel_Criteria/validate] validate function start  
+[2016-05-02 14:40:03] local.INFO: requestContent = Array
+(
+    [Srno] => 
+    [TotalRecordCount] => 
+    [ProductID] => 20
+    [ProductName] => 
+    [Description] => 
+    [Price] => 
+    [BatchIndex] => 1
+    [PagerShowIndexOneUpToX] => 10
+    [RecordPerPage] => 10
+    [RecordPerBatch] => 100
+    [OrderByClause] => ProductID DESC, ProductName ASC, Description DESC
+)
+  
+[2016-05-02 14:40:03] local.INFO: [Product_BL/SelectProductWithPager] Start  
+[2016-05-02 14:40:03] local.INFO: Query Log = select @row := @row + 1 AS SrNo, `ProductID`, `ProductName`, `Description`, `Price`, IFNULL(ProductImage,"") AS ProductImage from Products, (SELECT @row := 0) RowCounter where `ProductID` = ? order by `ProductID` desc, `ProductName` asc, `Description` desc limit 100 offset 0  
+[2016-05-02 14:40:10] local.INFO: [OrderController/SelectOrderDetail]  
+[2016-05-02 14:40:10] local.INFO: [OrderViewModel_Criteria/validate] validate function start  
+[2016-05-02 14:40:10] local.INFO: requestContent = Array
+(
+    [SrNo] => 
+    [TotalRecordCount] => 
+    [OrderId] => 2
+    [Description] => 
+    [OrderDate] => 
+    [BatchIndex] => 1
+    [PagerShowIndexOneUpToX] => 10
+    [RecordPerPage] => 10
+    [RecordPerBatch] => 100
+    [OrderByClause] => OrderID DESC, Description DESC
+)
+  
+[2016-05-02 14:40:10] local.INFO: [Order_BL/SelectOrderDetail] Start  
+[2016-05-02 14:40:10] local.INFO: OrderId = 2  
+[2016-05-02 14:40:10] local.INFO: queryMaster Log = select @row := @row + 1 AS SrNo, `OrderId`, `Description`, `OrderDate` from Orders, (SELECT @row := 0) RowCounter where `OrderId` = ? order by `OrderID` desc, `Description` desc limit 100 offset 0  
+[2016-05-02 14:40:10] local.INFO: queryDetail Log = select `OrderDetails`.`OrderDetailID`, `OrderDetails`.`OrderId`, `OrderDetails`.`ProductID`, `Products`.`ProductName`, `OrderDetails`.`Quantity`, `OrderDetails`.`Total`, `OrderDetails`.`TotalGST` from `OrderDetails` inner join `Products` on `OrderDetails`.`ProductID` = `Products`.`ProductID` where `OrderDetails`.`OrderId` = ?  
+[2016-05-02 14:40:10] local.INFO: resultsMaster = stdClass Object
+(
+    [SrNo] => 1
+    [OrderId] => 2
+    [Description] => Order Two
+    [OrderDate] => 2016-04-07 00:00:00
+)
+  
+[2016-05-02 14:40:10] local.INFO: resultDetail = stdClass Object
+(
+    [OrderDetailID] => 14
+    [OrderId] => 2
+    [ProductID] => 4
+    [ProductName] => Etiam bibendum fermentum metus. Aenean sed pede nec ante blandit
+    [Quantity] => 5
+    [Total] => 34745.00
+    [TotalGST] => 2432.15
+)
+  
+[2016-05-02 14:40:10] local.INFO: resultDetail = stdClass Object
+(
+    [OrderDetailID] => 15
+    [OrderId] => 2
+    [ProductID] => 2
+    [ProductName] => auctor ullamcorper, nisl arcu iaculis enim, sit amet ornare lectus
+    [Quantity] => 10
+    [Total] => 35600.00
+    [TotalGST] => 2492.00
+)
+  
+[2016-05-02 14:40:10] local.INFO: resultDetail = stdClass Object
+(
+    [OrderDetailID] => 16
+    [OrderId] => 2
+    [ProductID] => 3
+    [ProductName] => vitae dolor. Donec fringilla. Donec feugiat metus sit amet ante.
+    [Quantity] => 15
+    [Total] => 106500.00
+    [TotalGST] => 7455.00
+)
+  
+[2016-05-02 14:40:22] local.INFO: [OrderController/SelectOrderWithPager]  
+[2016-05-02 14:40:22] local.INFO: [OrderViewModel_Criteria/validate] validate function start  
+[2016-05-02 14:40:22] local.INFO: [Order_BL/SelectOrderWithPager] Start  
