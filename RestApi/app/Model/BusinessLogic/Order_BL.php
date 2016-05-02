@@ -36,9 +36,9 @@ class Order_BL
     }
 
     // Retrieve
-    public function SelectOrderWithoutPager(OrderViewModel_Criteria $OrderViewModel_Criteria)
+    public function SelectOrderWithPager(OrderViewModel_Criteria $OrderViewModel_Criteria)
     {
-        Log::info("[Order_BL/SelectOrderWithoutPager] Start");
+        Log::info("[Order_BL/SelectOrderWithPager] Start");
         try {
             $tbl_GridListing = new CommonViewModel_tbl_GridListing();                        
             $query = DB::table(DB::raw('Orders, (SELECT @row := 0) RowCounter'));
@@ -74,6 +74,35 @@ class Order_BL
             $tbl_GridListing->TotalRecordCount = $TotalRecordCount;
             
             // Bind tbl_GridListing
+            // ----Bind data to tbl_Pager_To_Client
+            //$tbl_GridListing->List_tbl_Pager_To_Client = "";            
+            $TotalPage = ceil($TotalRecordCount / $OrderViewModel_Criteria->getAttribute('RecordPerPage'));
+            $Pager_BatchIndex = 1;
+            $Pager_BehindTheScenseIndex = 1;
+            $List_tbl_Pager_To_Client = [];
+            for ($i = 1; $i <= $TotalPage; $i++) {
+
+                if($Pager_BehindTheScenseIndex > $OrderViewModel_Criteria->getAttribute('PagerShowIndexOneUpToX')){
+                    $Pager_BehindTheScenseIndex = 1;
+                }
+
+                $tbl_Pager_To_Client = new CommonViewModel_tbl_Pager_To_Client();
+                $tbl_Pager_To_Client->BatchIndex = $Pager_BatchIndex;
+                $tbl_Pager_To_Client->DisplayPageIndex = $i;
+                $tbl_Pager_To_Client->BehindTheScenesIndex = $Pager_BehindTheScenseIndex;
+                $List_tbl_Pager_To_Client[] = $tbl_Pager_To_Client;
+
+                $Pager_BehindTheScenseIndex++;
+
+                if (($i % $OrderViewModel_Criteria->getAttribute('PagerShowIndexOneUpToX')) == 0)
+                {
+                    $Pager_BatchIndex++;
+                }
+
+            }
+            $tbl_GridListing->List_tbl_Pager_To_Client = $List_tbl_Pager_To_Client;
+
+            // Bind tbl_GridListing
             // ----Bind data to List_Data
             //$tbl_GridListing->List_Data = "";
             $sqlLog =   $query
@@ -92,7 +121,7 @@ class Order_BL
                 $OrderViewModel_Binding = new OrderViewModel_Binding();
                 $validator = OrderViewModel_Binding::validate((array)$result);
                 if($validator->fails()){            
-                    Log::info("[Order_BL/SelectOrderWithoutPager] validator fails message = ".$validator->messages()) ;
+                    Log::info("[Order_BL/SelectOrderWithPager] validator fails message = ".$validator->messages()) ;
                     return $validator->messages();
                 }else{
                     $OrderViewModel_Binding->fill((array)$result); 
@@ -104,7 +133,7 @@ class Order_BL
             return json_encode((array)$tbl_GridListing);
         }
         catch(Exception $e) {
-            Log::error('[Order_BL/SelectOrderWithoutPager] Error = '.$e);
+            Log::error('[Order_BL/SelectOrderWithPager] Error = '.$e);
         }
     }       
     public function SelectOrderDetail(OrderViewModel_Criteria $OrderViewModel_Criteria)
@@ -191,12 +220,14 @@ class Order_BL
                 
                 $List_OrderMasterDetailBindingViewModel = [ "Master" => "", "Detail" => "" ];
                 $OrderViewModel_Binding = new OrderViewModel_Binding();
+                log::info("resultsMaster = ".print_r($resultsMaster[0], true));
                 $OrderViewModel_Binding->fill((array)$resultsMaster[0]);
                 $List_OrderMasterDetailBindingViewModel["Master"] = $OrderViewModel_Binding;
                 
                 $List_OrderDetailViewModel_Binding = [];
                 foreach ($resultsDetail as $resultDetail) {
                     $OrderDetailViewModel_Binding = new OrderDetailViewModel_Binding();
+                    log::info("resultDetail = ".print_r($resultDetail, true));
                     $OrderDetailViewModel_Binding->fill((array)$resultDetail);
                     $List_OrderDetailViewModel_Binding[] = $OrderDetailViewModel_Binding;
                 }

@@ -24,6 +24,7 @@ Route::post('/product/DeleteProduct', array('as' => 'DeleteProduct', 'uses' => '
 
 
 Route::post('/order/SelectOrderDetail', array('as' => 'SelectOrderDetail', 'uses' => 'OrderController@SelectOrderDetail'));
+Route::post('/order/SelectOrderWithPager', array('as' => 'SelectOrderWithPager', 'uses' => 'OrderController@SelectOrderWithPager'));
 /*
 |--------------------------------------------------------------------------
 | Application Routes
