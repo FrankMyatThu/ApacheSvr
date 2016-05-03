@@ -13,20 +13,45 @@ use DB;
 class Order_BL
 {    
     // Create
-    public function CreateOrder(OrderViewModel_Binding $OrderViewModel_Binding)
+    public function CreateOrder(OrderViewModel_Binding $OrderViewModel_Binding, Array $List_OrderDetailViewModel_Binding)
     {
         Log::info("[Order_BL/CreateOrder] Start ........");
         try {
+            
+            Log::info("..Before transaction OrderViewModel_Binding = ".print_r($OrderViewModel_Binding->toArray(), true));
+            
+            DB::transaction(function() use ($OrderViewModel_Binding, $List_OrderDetailViewModel_Binding)
+            {
+                Log::info("After transaction OrderViewModel_Binding = ".print_r($OrderViewModel_Binding->toArray(), true));
+                DB::enableQueryLog();
+                /*Insert master and detail table(s)*/{
+                    // Insert master                
+                    $OrderId = DB::table('Orders')->insertGetId(
+                         array(
+                                'Description'     =>   trim($OrderViewModel_Binding->getAttribute('Description')),
+                                'OrderDate'       =>   date("Y-m-d", strtotime(trim($OrderViewModel_Binding->getAttribute('OrderDate'))))
+                         )
+                    );
 
-            //DB::enableQueryLog();
-            DB::table('Orders')->insert(
-                 array(
-                        'OrderName'       =>   trim($OrderViewModel_Binding->getAttribute('OrderName')), 
-                        'Description'     =>   trim($OrderViewModel_Binding->getAttribute('Description')),
-                        'Price'           =>   trim($OrderViewModel_Binding->getAttribute('Price'))
-                 )
-            );
-            //Log::info("Query Log = ". print_r(DB::getQueryLog(), true));
+                    /*Insert detail table(s)*/{
+                        //Insert detail
+                        foreach ($List_OrderDetailViewModel_Binding as $ItemRow) {
+                            DB::table('OrderDetails')->insert(
+                                 array(
+                                        'OrderId'       =>   $OrderId,                                        
+                                        'ProductID'     =>   trim($ItemRow->getAttribute('ProductID')),
+                                        'Quantity'      =>   trim($ItemRow->getAttribute('Quantity')),
+                                        'Total'         =>   trim($ItemRow->getAttribute('Total')),
+                                        'TotalGST'      =>   trim($ItemRow->getAttribute('TotalGST'))
+                                 )
+                            );
+                        }
+
+                    }
+                }    
+                Log::info("Query Log = ". print_r(DB::getQueryLog(), true));
+            });
+            
 
             return "Success";
         }
