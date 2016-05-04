@@ -9,6 +9,7 @@ use App\Model\ViewModel\CommonViewModel_tbl_GridListing;
 use App\Model\ViewModel\CommonViewModel_tbl_Pager_To_Client;
 use Log;
 use DB;
+use DateTime;
 
 class Order_BL
 {    
@@ -17,19 +18,17 @@ class Order_BL
     {
         Log::info("[Order_BL/CreateOrder] Start ........");
         try {
-            
-            Log::info("..Before transaction OrderViewModel_Binding = ".print_r($OrderViewModel_Binding->toArray(), true));
-            
+
             DB::transaction(function() use ($OrderViewModel_Binding, $List_OrderDetailViewModel_Binding)
             {
-                Log::info("After transaction OrderViewModel_Binding = ".print_r($OrderViewModel_Binding->toArray(), true));
                 DB::enableQueryLog();
                 /*Insert master and detail table(s)*/{
-                    // Insert master                
+                    // Insert master  
+
                     $OrderId = DB::table('Orders')->insertGetId(
                          array(
                                 'Description'     =>   trim($OrderViewModel_Binding->getAttribute('Description')),
-                                'OrderDate'       =>   date("Y-m-d", strtotime(trim($OrderViewModel_Binding->getAttribute('OrderDate'))))
+                                'OrderDate'       =>   DateTime::createFromFormat('d/m/Y', trim($OrderViewModel_Binding->getAttribute('OrderDate')))->format('Y/m/d')
                          )
                     );
 
@@ -262,22 +261,47 @@ class Order_BL
     }
     
     // Update
-    public function UpdateOrder(OrderViewModel_Binding $OrderViewModel_Binding)
+    public function UpdateOrder(OrderViewModel_Binding $OrderViewModel_Binding, Array $List_OrderDetailViewModel_Binding)
     {
         Log::info("[Order_BL/UpdateOrder] Start ........");
         try {
-            
-            //DB::enableQueryLog();
-            DB::table('Orders')
-                ->where( array('OrderId' => trim($OrderViewModel_Binding->getAttribute('OrderId'))) )
-                ->update(
-                        array(
-                            'OrderName'     =>   trim($OrderViewModel_Binding->getAttribute('OrderName')), 
-                            'Description'     =>   trim($OrderViewModel_Binding->getAttribute('Description')),
-                            'Price'           =>   trim($OrderViewModel_Binding->getAttribute('Price'))
-                        )
-                    );
-            //Log::info("Query Log = ". print_r(DB::getQueryLog(), true));
+            DB::transaction(function() use ($OrderViewModel_Binding, $List_OrderDetailViewModel_Binding)
+            {
+                DB::enableQueryLog();
+                /*Update master and detail table(s)*/{
+                    // Update master
+                    DB::table('Orders')
+                        ->where( array('OrderId' => trim($OrderViewModel_Binding->getAttribute('OrderId'))) )
+                        ->update(
+                                array(                                    
+                                    'Description'     =>   trim($OrderViewModel_Binding->getAttribute('Description')),
+                                    'OrderDate'       =>   DateTime::createFromFormat('d/m/Y', trim($OrderViewModel_Binding->getAttribute('OrderDate')))->format('Y/m/d')
+                                )
+                            );
+
+                    /*Delete detail row(s) and re-Insert after that.*/{
+                        //Delete detail row(s)
+                        DB::table('OrderDetails')->where(
+                            array('OrderId' => trim($OrderViewModel_Binding->getAttribute('OrderId')) )
+                        )->delete();
+
+                        //re-Insert detail row(s)
+                        foreach ($List_OrderDetailViewModel_Binding as $ItemRow) {
+                            DB::table('OrderDetails')->insert(
+                                 array(
+                                        'OrderId'       =>   trim($OrderViewModel_Binding->getAttribute('OrderId')),                                        
+                                        'ProductID'     =>   trim($ItemRow->getAttribute('ProductID')),
+                                        'Quantity'      =>   trim($ItemRow->getAttribute('Quantity')),
+                                        'Total'         =>   trim($ItemRow->getAttribute('Total')),
+                                        'TotalGST'      =>   trim($ItemRow->getAttribute('TotalGST'))
+                                 )
+                            );
+                        }
+
+                    }
+                }    
+                Log::info("Query Log = ". print_r(DB::getQueryLog(), true));
+            });
 
             return "Success";
         }
