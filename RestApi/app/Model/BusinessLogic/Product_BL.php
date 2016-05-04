@@ -225,14 +225,14 @@ class Product_BL
     }
 
     // Delete
-    public function DeleteProduct(ProductViewModel_Binding $ProductViewModel_Binding)
+    public function DeleteProduct(ProductViewModel_Criteria $ProductViewModel_Criteria)
     {
         Log::info("[Product_BL/DeleteProduct] Start ........");
         try {
             
             //DB::enableQueryLog();
             DB::table('Products')->where(
-                    array('ProductID' => trim($ProductViewModel_Binding->getAttribute('ProductID')) )
+                    array('ProductID' => trim($ProductViewModel_Criteria->getAttribute('ProductID')) )
                 )->delete();
             //Log::info("Query Log = ". print_r(DB::getQueryLog(), true));
         

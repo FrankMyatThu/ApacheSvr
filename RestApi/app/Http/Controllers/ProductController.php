@@ -84,15 +84,15 @@ class ProductController extends Controller
 	{
 		Log::info("[ProductController/DeleteProduct]");
 		$requestContent = json_decode($request->getContent(), true);
-		$validator = ProductViewModel_Binding::validate($requestContent[0]);	
+		$validator = ProductViewModel_Criteria::validate($requestContent[0]);	
 		
 		if($validator->fails()){			
 			Log::info("[ProductController/DeleteProduct] validator fails message = ".$validator->messages()) ;
 			return $validator->messages();
 		}else{
-			$ProductViewModel_Binding = new ProductViewModel_Binding();
-			$ProductViewModel_Binding->fill($requestContent[0]);
-			return (new Product_BL())->DeleteProduct($ProductViewModel_Binding);			
+			$ProductViewModel_Criteria = new ProductViewModel_Criteria();
+			$ProductViewModel_Criteria->fill($requestContent[0]);
+			return (new Product_BL())->DeleteProduct($ProductViewModel_Criteria);			
 		}
 	}
 }

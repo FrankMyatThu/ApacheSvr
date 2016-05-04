@@ -287,17 +287,30 @@ class Order_BL
     }
 
     // Delete
-    public function DeleteOrder(OrderViewModel_Binding $OrderViewModel_Binding)
+    public function DeleteOrder(OrderViewModel_Criteria $OrderViewModel_Criteria)
     {
         Log::info("[Order_BL/DeleteOrder] Start ........");
         try {
             
-            //DB::enableQueryLog();
-            DB::table('Orders')->where(
-                    array('OrderId' => trim($OrderViewModel_Binding->getAttribute('OrderId')) )
-                )->delete();
-            //Log::info("Query Log = ". print_r(DB::getQueryLog(), true));
-        
+            DB::transaction(function() use ($OrderViewModel_Criteria)
+            {
+                DB::enableQueryLog();
+                /*Delete detail and master table(s)*/{
+                    /*Delete detail table(s)*/{
+                        //Delete detail
+                        DB::table('OrderDetails')->where(
+                            array('OrderId' => trim($OrderViewModel_Criteria->getAttribute('OrderId')) )
+                        )->delete();
+                    }
+
+                    // Delete master                
+                    DB::table('Orders')->where(
+                        array('OrderId' => trim($OrderViewModel_Criteria->getAttribute('OrderId')) )
+                    )->delete();
+                }    
+                Log::info("Query Log = ". print_r(DB::getQueryLog(), true));
+            });
+
             return "Success";
         }
         catch(Exception $e) {

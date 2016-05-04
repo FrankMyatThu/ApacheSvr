@@ -106,15 +106,15 @@ class OrderController extends Controller
 	{
 		Log::info("[OrderController/DeleteOrder]");
 		$requestContent = json_decode($request->getContent(), true);
-		$validator = OrderViewModel_Binding::validate($requestContent[0]);	
+		$validator = OrderViewModel_Criteria::validate($requestContent[0]);	
 		
 		if($validator->fails()){			
 			Log::info("[OrderController/DeleteOrder] validator fails message = ".$validator->messages()) ;
 			return $validator->messages();
 		}else{
-			$OrderViewModel_Binding = new OrderViewModel_Binding();
-			$OrderViewModel_Binding->fill($requestContent[0]);
-			return (new Order_BL())->DeleteOrder($OrderViewModel_Binding);			
+			$OrderViewModel_Criteria = new OrderViewModel_Criteria();
+			$OrderViewModel_Criteria->fill($requestContent[0]);
+			return (new Order_BL())->DeleteOrder($OrderViewModel_Criteria);			
 		}
 	}
 }
