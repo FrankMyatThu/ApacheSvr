@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.min.css">
+	<style type="text/css">
+		.dropdown-menu {
+			width: 230px;
+		}
+		.dropdown-menu li a {
+			word-wrap: break-word;
+			white-space: normal;
+		}
+		/*
+		.scrollable-menu {
+			height: auto;
+			max-height: 200px;
+			overflow-x: hidden;
+		}
+		*/
+	</style>
+	<script src="./bower_components/jquery/dist/jquery.min.js"></script>	
+	<script src="./bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="./bower_components/angular/angular.min.js"></script>		
+	<script>
+			angular.module('myApp', [])
+			.controller('MyCtrl', function($scope, $http) {
+			
+				$scope.ProjectCategoryList_FlatStyle = [{
+					"ID": "71A6821F-8D90-42CD-AF12-77BB77B75BA4",
+					"Name": "One Account",
+					"Description": "One Account",
+					"ParentID": "",
+					"Sequent": 1
+				},
+				{
+					"ID": "B91CB192-3959-4F4E-B881-8C6E37004FF9",
+					"Name": "Savings/Uniplus Account",
+					"Description": "Savings/Uniplus Account",
+					"ParentID": "",
+					"Sequent": 2
+				},
+				{
+					"ID": "3FA5048C-671A-450E-B1AB-884FE0DFAD0D",
+					"Name": "Branding Campaign",
+					"Description": "Branding Campaign",
+					"ParentID": "",
+					"Sequent": 3
+				},
+				{
+					"ID": "1A9CB604-0AE3-4C5C-A16F-3DBD2447FAA8",
+					"Name": "Press Ad",
+					"Description": "Press Ad",
+					"ParentID": "B41D0651-066E-46DF-832C-37D63096A47F",
+					"Sequent": 2
+				},
+				{
+					"ID": "3FECA7D2-C5B5-4F59-8119-D6C2E60437DA",
+					"Name": "TVC",
+					"Description": "TVC",
+					"ParentID": "B41D0651-066E-46DF-832C-37D63096A47F",
+					"Sequent": 2
+				},
+				{
+					"ID": "B41D0651-066E-46DF-832C-37D63096A47F",
+					"Name": "ATL Campaigns",
+					"Description": "ATL Campaigns",
+					"ParentID": "71A6821F-8D90-42CD-AF12-77BB77B75BA4",
+					"Sequent": 1
+				},
+				{
+					"ID": "79B74587-D435-4F38-9DCE-9A5F46CCB511",
+					"Name": "BTL Campaigns",
+					"Description": "BTL Campaigns",
+					"ParentID": "71A6821F-8D90-42CD-AF12-77BB77B75BA4",
+					"Sequent": 2
+				},
+				{
+					"ID": "B3805919-469A-418A-8525-43418D9D1FB2",
+					"Name": "ATL Campaigns",
+					"Description": "ATL Campaigns",
+					"ParentID": "3FA5048C-671A-450E-B1AB-884FE0DFAD0D",
+					"Sequent": 1
+				},
+				{
+					"ID": "2DFCC4DE-EF7A-4713-8BFA-1CE306B55BD5",
+					"Name": "ATL Campaigns",
+					"Description": "ATL Campaigns",
+					"ParentID": "B91CB192-3959-4F4E-B881-8C6E37004FF9",
+					"Sequent": 1
+				},
+				{
+					"ID": "5E67EC6F-DEDD-4C30-BCEF-F0D43404FA48",
+					"Name": "BTL Campaigns",
+					"Description": "BTL Campaigns",
+					"ParentID": "B91CB192-3959-4F4E-B881-8C6E37004FF9",
+					"Sequent": 2
+				}];
+				
+				
+				$scope.ProjectCategoryList_TreeStyle = [];
+				$scope.ConvertFlatToTree = function(Value){
+					console.log("Value = ", Value);					
+					angular.forEach(Value, function(item){						
+						//if(!item.ParentID){
+							console.log(item.Name); 						
+							var  _Object = new Object();
+							_Object.ID = item.ID;
+							_Object.Name = item.Name;
+							_Object.Description = item.Description;
+							_Object.ParentID = item.ParentID;
+							_Object.Sequent = item.Sequent;
+							var SubArray = Value.filter(function (x) { return x.ParentID === item.ID; });
+							console.log("SubArray", SubArray);
+							$scope.ProjectCategoryList_TreeStyle.push(_Object);	
+							$scope.ConvertFlatToTree(SubArray);
+						//}										   
+				   })
+				   console.log("ProjectCategoryList_TreeStyle = ",$scope.ProjectCategoryList_TreeStyle);
+				}
+				$scope.ConvertFlatToTree($scope.ProjectCategoryList_FlatStyle);
+				
+				
+			});
+	</script>	
+</head>
+<body ng-app="myApp" ng-controller="MyCtrl">
+	
+</body>
+</html>
