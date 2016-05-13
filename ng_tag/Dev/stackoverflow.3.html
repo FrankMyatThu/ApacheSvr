@@ -1,0 +1,80 @@
+<html>
+	<script>
+		var Flat_JSON = [{
+			"ID": "Root_1",
+			"Name": "Root_1",                   
+			"ParentID": "",
+			"Sequent": 1
+		},
+		{
+			"ID": "Root_2",
+			"Name": "Root_2",                   
+			"ParentID": "",
+			"Sequent": 2
+		},              
+		{
+			"ID": "Root_1_Sub_1_Child_1",
+			"Name": "Root_1_Sub_1_Child_1",                 
+			"ParentID": "Root_1_Sub_1",
+			"Sequent": 1
+		},
+		{
+			"ID": "Root_1_Sub_1_Child_2",
+			"Name": "Root_1_Sub_1_Child_2",                 
+			"ParentID": "Root_1_Sub_1",
+			"Sequent": 2
+		},
+		{
+			"ID": "Root_1_Sub_1",
+			"Name": "Root_1_Sub_1",                 
+			"ParentID": "Root_1",
+			"Sequent": 1
+		}];
+
+		function FlatToTreeConverter(Flat){
+			/// This function is come from http://stackoverflow.com/a/21343255/900284
+			/// Thank to http://stackoverflow.com/users/489307/treye
+			var Nodes = [];
+			var TopLevelNodes = [];
+			var LookupList = [];
+
+			console.log("Flat.length = ", Flat.length);
+			for (var i = 0; i < Flat.length; i++) {
+				var Row = {
+						ID: Flat[i].ID,
+						Name: Flat[i].Name,
+						ParentID: ((Flat[i].ParentID == 0) ? null : Flat[i].ParentID),
+						children: []
+					};
+				LookupList.push(Row); 
+				Nodes.push(Row);
+				if (Row.ParentID == null) {
+					TopLevelNodes.push(Row);
+				}
+				console.log("Fist TopLevelNodes = ", JSON.stringify(TopLevelNodes));
+			}
+
+			for (var i = 0; i < Nodes.length; i++) {
+			  var Row = Nodes[i];
+			  if (!(Row.ParentID == null)) {			  			  
+				  var LookupList_Row = LookupList.filter(function (x) { return x.ID === Row.ParentID; });
+				  LookupList_Row[0].children.push(Row); 
+			  }
+			}
+			
+			console.log("LookupList = ", JSON.stringify(LookupList));
+			
+			/// Below is my assumption.
+			/// Here, very very important concept is "var X" is reference type, 
+			/// so TopLevelNodes is automatically updated once after Row's Value was changed.
+			/// For more detail, see at http://stackoverflow.com/a/32793507/900284
+			return TopLevelNodes;
+		}
+		
+		console.log("Final TopLevelNodes = ", JSON.stringify(FlatToTreeConverter(Flat_JSON)));
+		
+		
+	</script>
+	<body></body>
+</html>
+
