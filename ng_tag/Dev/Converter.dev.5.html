@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>		
+	<script>
+			angular.module('myApp', [])
+			.controller('MyCtrl', function($scope, $http) {
+				
+				$scope.ProjectCategoryList_FlatStyle = [{
+					"ID": "Parent_1",									
+					"ParentID": ""					
+				},																
+				{
+					"ID": "Child_1",					
+					"ParentID": "Parent_1"
+				}];	
+				
+				$scope.ConvertFlatToTree = function(Value){						
+					angular.forEach(Value, function(item){						
+						
+                            // Create row.													
+							var  _Object = new Object();
+							_Object.ID = item.ID;													
+							_Object.ParentID = item.ParentID;							
+												
+							console.log("_Object = ", JSON.stringify(_Object));
+												
+							// Checking if it is root element.
+							if(item.ParentID){									
+								console.log("It is child node.");
+							}else{
+								// It is for parent node.
+								// Get child elements.
+								console.log("It is parent node.");
+								var ChildElementArray = $scope.ProjectCategoryList_FlatStyle.filter(function (x) { return x.ParentID === item.ID; });
+								$scope.ConvertFlatToTree(ChildElementArray);
+							}
+				   })
+				}
+				//$scope.ConvertFlatToTree($scope.ProjectCategoryList_FlatStyle);
+				
+				
+				var ConvertFlatToTree = function(JsonList) {					
+					for (var count = 0; count < JsonList.length; count++) {
+						
+						// Create row.													
+						var  _Object = new Object();
+						_Object.ID = JsonList[count].ID;
+						_Object.ParentID = JsonList[count].ParentID;
+						console.log("_Object = ", JSON.stringify(_Object));
+						
+						// Checking if it is root element.
+						if(JsonList[count].ParentID){									
+							console.log("It is child node.");
+						}else{
+							console.log("It is parent node.");
+							var ChildElementArray = $scope.ProjectCategoryList_FlatStyle.filter(function (x) { return x.ParentID === JsonList[count].ID; });
+							ConvertFlatToTree(ChildElementArray);
+						}
+					}					
+				};
+				ConvertFlatToTree($scope.ProjectCategoryList_FlatStyle);
+				
+				
+			});
+	</script>	
+</head>
+<body ng-app="myApp" ng-controller="MyCtrl">	
+</body>
+</html>

@@ -7,34 +7,20 @@
 			.controller('MyCtrl', function($scope, $http) {
 			
 				$scope.ProjectCategoryList_FlatStyle = [{
-					"ID": "Root_1",
-					"Name": "Root_1",					
-					"ParentID": "",
-					"Sequent": 1
+					"ID": "Parent_1",									
+					"ParentID": ""					
 				},
 				{
-					"ID": "Root_2",
-					"Name": "Root_2",					
-					"ParentID": "",
-					"Sequent": 2
+					"ID": "Parent_2",								
+					"ParentID": ""
 				},				
 				{
-					"ID": "Root_1_Sub_1_Child_1",
-					"Name": "Root_1_Sub_1_Child_1",					
-					"ParentID": "Root_1_Sub_1",
-					"Sequent": 1
-				},
+					"ID": "SubChild_1",									
+					"ParentID": "Child_1"					
+				},				
 				{
-					"ID": "Root_1_Sub_1_Child_2",
-					"Name": "Root_1_Sub_1_Child_2",					
-					"ParentID": "Root_1_Sub_1",
-					"Sequent": 2
-				},
-				{
-					"ID": "Root_1_Sub_1",
-					"Name": "Root_1_Sub_1",					
-					"ParentID": "Root_1",
-					"Sequent": 1
+					"ID": "Child_1",					
+					"ParentID": "Parent_1"
 				}];
 				
 				
@@ -45,10 +31,8 @@
 						
                             // Create row.													
 							var  _Object = new Object();
-							_Object.ID = item.ID;
-							_Object.Name = item.Name;							
-							_Object.ParentID = item.ParentID;
-							_Object.Sequent = item.Sequent;
+							_Object.ID = item.ID;													
+							_Object.ParentID = item.ParentID;							
 							_Object.Sub = [];
 														
 							// Checking if it is root element.

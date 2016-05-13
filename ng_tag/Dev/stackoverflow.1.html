@@ -1,0 +1,53 @@
+<html>
+	<script>
+		var flat = [
+			/*			
+			{ id: 1, name: "Business", parent: 0 },
+			{ id: 2, name: "Management", parent: 1 },
+			{ id: 3, name: "Leadership", parent: 2 },
+			{ id: 4, name: "Finance", parent: 1 },
+			{ id: 5, name: "Fiction", parent: 0 },
+			{ id: 6, name: "Accounting", parent: 1 },
+			{ id: 7, name: "Project Management", parent: 2  }
+			*/
+			
+			
+			{ id: "A001", name: "Root_1", parent: "0" },
+			{ id: "A002", name: "Root_2", parent: "0" },
+			{ id: "B001", name: "Root_1_Sub_1", parent: "A001" },
+			{ id: "C001", name: "Root_1_Sub_1_Child_1", parent: "B001" },
+			{ id: "C002", name: "Root_1_Sub_1_Child_2", parent: "B001" }
+			
+		];
+
+		var nodes = [];
+		var toplevelNodes = [];
+		var lookupList = [];
+
+		for (var i = 0; i < flat.length; i++) {
+			var n = {
+				id: flat[i].id,
+				name: flat[i].name,
+				parent_id: ((flat[i].parent == 0) ? null : flat[i].parent),
+				children: []
+				};
+			lookupList.push(n); 
+			nodes.push(n);
+			if (n.parent_id == null) {
+				toplevelNodes.push(n);
+			}
+		}
+
+		for (var i = 0; i < nodes.length; i++) {
+		  var n = nodes[i];
+		  if (!(n.parent_id == null)) {			  			  
+			  var lookupList_row = lookupList.filter(function (x) { return x.id === n.parent_id; });
+			  lookupList_row[0].children.push(n); 
+		  }
+		}
+		
+		console.log( JSON.stringify(toplevelNodes) );
+	</script>
+	<body></body>
+</html>
+

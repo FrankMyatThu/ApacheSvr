@@ -6,61 +6,43 @@
 			angular.module('myApp', [])
 			.controller('MyCtrl', function($scope, $http) {
 			
+				
 				$scope.ProjectCategoryList_FlatStyle = [{
-					"ID": "Root_1",
-					"Name": "Root_1",					
-					"ParentID": "",
-					"Sequent": 1
-				},
+					"ID": "Parent_1",									
+					"ParentID": ""					
+				},																
 				{
-					"ID": "Root_2",
-					"Name": "Root_2",					
-					"ParentID": "",
-					"Sequent": 2
-				},				
-				{
-					"ID": "Root_1_Sub_1_Child_1",
-					"Name": "Root_1_Sub_1_Child_1",					
-					"ParentID": "Root_1_Sub_1",
-					"Sequent": 1
-				},
-				{
-					"ID": "Root_1_Sub_1_Child_2",
-					"Name": "Root_1_Sub_1_Child_2",					
-					"ParentID": "Root_1_Sub_1",
-					"Sequent": 2
-				},
-				{
-					"ID": "Root_1_Sub_1",
-					"Name": "Root_1_Sub_1",					
-					"ParentID": "Root_1",
-					"Sequent": 1
+					"ID": "Child_1",					
+					"ParentID": "Parent_1"
 				}];
 				
 				
 				$scope.ProjectCategoryList_TreeStyle = [];
 				$scope.ParentArray = [];
 				$scope.ConvertFlatToTree = function(Value){	
+					console.log("Before foreach = Value = ", JSON.stringify(Value));
 					angular.forEach(Value, function(item){						
 						
                             // Create row.													
 							var  _Object = new Object();
-							_Object.ID = item.ID;
-							_Object.Name = item.Name;							
-							_Object.ParentID = item.ParentID;
-							_Object.Sequent = item.Sequent;
+							_Object.ID = item.ID;													
+							_Object.ParentID = item.ParentID;							
 							_Object.Sub = [];
-														
+												
+							console.log("_Object = ", JSON.stringify(_Object));
+												
 							// Checking if it is root element.
 							if(item.ParentID){
 								// It is for child node.
 								// Get Parent Element.
 								var ParentElement = $scope.ParentArray.filter(function (x) { return x.ID === item.ParentID; });
 								ParentElement[0].Sub.push(_Object);
-								$scope.ParentArray.push(_Object);								
+								$scope.ParentArray.push(_Object);	
+								console.log("It is child node.");
 							}else{
 								// It is for parent node.
 								// Get child elements.
+								console.log("It is parent node.");
 								var ChildElementArray = $scope.ProjectCategoryList_FlatStyle.filter(function (x) { return x.ParentID === item.ID; });
 								if(ChildElementArray.length != 0){	
 									// For element which has child nodes.
