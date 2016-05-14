@@ -1,0 +1,29 @@
+<div class="input-append btn-group">				
+	<!-- project category start -->
+	<div id="model" class="dropdown dropdown-select" style="background-color: white;height:35px;">
+		<a data-toggle="dropdown" class="dropdown-toggle ng-binding" href="#">-- Select Category --<b class="caret"></b></a>										
+		<ul class="dropdown-menu">
+			<!-- ngRepeat: ProjectCategory in ProjectCategoryList_DataBinder -->
+			<li ng-repeat="ProjectCategory in ProjectCategoryList_DataBinder" class="ng-scope">
+				<a href="#" ng-click="ddlProjectCategory_SelectedChange(ProjectCategory.ID, ProjectCategory.Name);" class="ng-binding">
+					One Account &nbsp; 0 
+				</a>
+				<div ng-switch="" on="ProjectCategory.Sub.length > 0">
+				<!-- ngSwitchWhen: true -->
+				</div>
+			</li>
+			<!-- end ngRepeat: ProjectCategory in ProjectCategoryList_DataBinder -->
+		
+			<li ng-repeat="ProjectCategory in ProjectCategoryList_DataBinder" class="ng-scope">
+				<a href="#" ng-click="ddlProjectCategory_SelectedChange(ProjectCategory.ID, ProjectCategory.Name);" class="ng-binding">
+					Savings/Uniplus Account &nbsp; 0 
+				</a>
+				<div ng-switch="" on="ProjectCategory.Sub.length > 0">
+				<!-- ngSwitchWhen: true -->
+				</div>
+			</li>
+			<!-- end ngRepeat: ProjectCategory in ProjectCategoryList_DataBinder -->
+		</ul>										
+	</div>									
+	<!-- project category end -->				
+</div>

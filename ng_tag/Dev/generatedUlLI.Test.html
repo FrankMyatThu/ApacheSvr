@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.min.css">	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+<body>	
+	<div class="container">
+		ProjectCategoryList_DataBinder Length : {{ ProjectCategoryList_DataBinder.length }}
+		<br>
+		<!-- Dropdown Control Start -->
+		<div class="input-append btn-group">				
+			<!-- project category start -->
+			<div id="model" class="dropdown dropdown-select" style="background-color: white;height:35px;">
+				<a data-toggle="dropdown" class="dropdown-toggle" href="#">-- Select Category --<b class="caret"></b></a>										
+				<ul class="dropdown-menu">
+					<li ng-repeat="ProjectCategory in ProjectCategoryList_DataBinder">
+						<a href="#" ng-click="ddlProjectCategory_SelectedChange(ProjectCategory.ID, ProjectCategory.Name);">
+							One Account &nbsp; 0 
+						</a>
+					</li>
+				</ul>
+			</div>									
+			<!-- project category end -->				
+		</div>
+		<!-- Dropdown Control End   -->
+	</div>
+</body>
+</html>
