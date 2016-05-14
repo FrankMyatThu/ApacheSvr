@@ -25,12 +25,19 @@
 	<script src="./bower_components/angular/angular.min.js"></script>		
 	<script>
 			angular.module('myApp', [])
-			.directive('includeReplace', function () {
+			.directive("include", function ($http, $templateCache, $compile) {
 				return {
-					require: 'ngInclude',
-					restrict: 'A', /* optional */
-					link: function (scope, el, attrs) {
-						el.replaceWith(el.children());
+					restrict: 'A',
+					link: function (scope, element, attributes) {
+						var templateUrl = scope.$eval(attributes.include);
+						console.log("templateUrl = ",templateUrl);
+						$http.get(templateUrl, {cache: $templateCache}).success(							
+							function (tplContent) {
+								console.log("tplContent = ",tplContent);
+								console.log("compile(tplContent.data)(scope) = ", $compile(tplContent.data));
+								element.replaceWith($compile(tplContent.data)(scope));
+							}
+						);
 					}
 				};
 			})
@@ -202,7 +209,7 @@
 									<!-- project category start -->
 									<div id="model" class="dropdown dropdown-select" style="background-color: white;height:35px;">
 										<a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ ddlProjectCategoryDefaultMessage }}<b class="caret"></b></a>										
-										<div ng-include="'PartialMenu_ProjectCategory'" include-replace></div>
+										<div include="'PartialMenu_ProjectCategory'"></div>
 										<script type="text/ng-template" id="PartialMenu_ProjectCategory">	
 											<ul class="dropdown-menu" >
 												<li ng-repeat="ProjectCategory in ProjectCategoryList_DataBinder">

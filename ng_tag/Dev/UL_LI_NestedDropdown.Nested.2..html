@@ -195,16 +195,19 @@
 												</li>
 											</ul>
 										</div>
+										data-toggle="dropdown" class="dropdown-toggle"
+										include-replace
+										class="dropdown-menu"
 									</script>
 									-->
 									<!-- project category end -->
 									
 									<!-- project category start -->
 									<div id="model" class="dropdown dropdown-select" style="background-color: white;height:35px;">
-										<a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ ddlProjectCategoryDefaultMessage }}<b class="caret"></b></a>										
-										<div ng-include="'PartialMenu_ProjectCategory'" include-replace></div>
+										<a  href="#">{{ ddlProjectCategoryDefaultMessage }}<b class="caret"></b></a>										
+										<div ng-include="'PartialMenu_ProjectCategory'" ></div>
 										<script type="text/ng-template" id="PartialMenu_ProjectCategory">	
-											<ul class="dropdown-menu" >
+											<ul>
 												<li ng-repeat="ProjectCategory in ProjectCategoryList_DataBinder">
 													<a href="#" ng-click="ddlProjectCategory_SelectedChange(ProjectCategory.ID, ProjectCategory.Name);">
 														{{ ProjectCategory.Name }} &nbsp; {{ProjectCategory.Sub.length}} 

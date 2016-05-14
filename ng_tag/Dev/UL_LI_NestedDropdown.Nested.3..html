@@ -22,16 +22,14 @@
 	</style>
 	<script src="./bower_components/jquery/dist/jquery.min.js"></script>	
 	<script src="./bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-	<script src="./bower_components/angular/angular.min.js"></script>		
+	<script src="./bower_components/angular/angular.min.js"></script>			
 	<script>
-			angular.module('myApp', [])
-			.directive('includeReplace', function () {
+			angular.module('myApp', [])			
+			.directive('renderTemplate', function() {
 				return {
-					require: 'ngInclude',
-					restrict: 'A', /* optional */
-					link: function (scope, el, attrs) {
-						el.replaceWith(el.children());
-					}
+					replace: true,
+					restrict: 'E',  
+					templateUrl: "PartialMenu_ProjectCategory.html"
 				};
 			})
 			.controller('MyCtrl', function($scope, $http) {
@@ -182,41 +180,9 @@
 							<div class="input-append btn-group">
 									
 									<!-- project category start -->
-									<!--
-									<div ng-include="'PartialMenu_ProjectCategory'"></div>
-									<script type="text/ng-template" id="PartialMenu_ProjectCategory">
-										<div id="model" class="dropdown dropdown-select" style="background-color: white;height:35px;">
-											<a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ ddlProjectCategoryDefaultMessage }}<b class="caret"></b></a>
-											<ul class="dropdown-menu">
-												<li ng-repeat="ProjectCategory in ProjectCategoryList_DataBinder">
-													<a href="#" ng-click="ddlProjectCategory_SelectedChange(ProjectCategory.ID, ProjectCategory.Name);">
-														{{ ProjectCategory.Name }} &nbsp; {{ProjectCategory.Sub.length}} 
-													</a>													
-												</li>
-											</ul>
-										</div>
-									</script>
-									-->
-									<!-- project category end -->
-									
-									<!-- project category start -->
 									<div id="model" class="dropdown dropdown-select" style="background-color: white;height:35px;">
 										<a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ ddlProjectCategoryDefaultMessage }}<b class="caret"></b></a>										
-										<div ng-include="'PartialMenu_ProjectCategory'" include-replace></div>
-										<script type="text/ng-template" id="PartialMenu_ProjectCategory">	
-											<ul class="dropdown-menu" >
-												<li ng-repeat="ProjectCategory in ProjectCategoryList_DataBinder">
-													<a href="#" ng-click="ddlProjectCategory_SelectedChange(ProjectCategory.ID, ProjectCategory.Name);">
-														{{ ProjectCategory.Name }} &nbsp; {{ProjectCategory.Sub.length}} 
-													</a>
-													<div ng-switch on="ProjectCategory.Sub.length > 0">
-														<div ng-switch-when="true">
-															<div ng-init="ProjectCategoryList_DataBinder = ProjectCategory.Sub" ng-include="'PartialMenu_ProjectCategory'"></div>
-														</div>
-													</div>
-												</li>
-											</ul>	
-										</script>
+										<render-Template></render-Template>										
 									</div>									
 									<!-- project category end -->
 									

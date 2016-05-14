@@ -1,0 +1,23 @@
+<div ng-include="'PartialMenu_ProjectCategory'"></div>
+<script type="text/ng-template" id="PartialMenu_ProjectCategory">
+  
+  
+	<div id="model" class="dropdown dropdown-select" style="background-color: white;height:35px;">
+		<a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ ddlProjectCategoryDefaultMessage }}<b class="caret"></b></a>
+		<ul class="dropdown-menu">			
+			<li ng-repeat="ProjectCategory in ProjectCategoryList_DataBinder">
+				<a href="#" ng-click="ddlProjectCategory_SelectedChange(ProjectCategory.ProjectCategoryID, ProjectCategory.ProjectCategoryName);">
+					{{ ProjectCategory.ProjectCategoryName }}
+				</a>
+				<div ng-switch on="ProjectCategory.Sub.length > 0">
+					<div ng-switch-when="true">
+						<div ng-init="ProjectCategoryList_DataBinder = ProjectCategory.Sub" ng-include="'PartialMenu_ProjectCategory'"></div>
+					</div>
+				</div>
+			</li>
+		</ul>
+	</div>
+  
+  
+  
+</script>
