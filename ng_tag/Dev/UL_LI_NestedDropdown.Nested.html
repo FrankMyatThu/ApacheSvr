@@ -26,7 +26,7 @@
 	<script>
 			angular.module('myApp', [])
 			.controller('MyCtrl', function($scope, $http) {
-				$scope.ddlProjectCategoryDefaultMessage = "";
+				$scope.ddlProjectCategoryDefaultMessage = "-- Select Category --";
 				$scope.SelectedKey = "";
 				$scope.SelectedValue = "";				
 				
@@ -99,8 +99,7 @@
 					"Description": "BTL Campaigns",
 					"ParentID": "B91CB192-3959-4F4E-B881-8C6E37004FF9",
 					"Sequent": 2
-				}];			
-				$scope.ProjectCategoryList_Searchable = $scope.ProjectCategoryList_DataBinder;				
+				}];								
 				
 				$scope.ddlProjectCategory_SelectedChange = function(Key, Value){
 					$scope.SelectedKey = Key;
@@ -108,20 +107,56 @@
 					$scope.ddlProjectCategoryDefaultMessage = Value;
 				}
 				
-				$scope.ddlProjectCategory_keyChange = function(){
-					//console.log("Change Value = ", $scope.ddlProjectCategoryDefaultMessage, " $scope.ProjectCategoryList_DataBinder.length = ", $scope.ProjectCategoryList_DataBinder.length);
-					$scope.ProjectCategoryList_Searchable = $scope.ProjectCategoryList_DataBinder.filter(
-						function(item){
-							return item.Value.toLowerCase().indexOf($scope.ddlProjectCategoryDefaultMessage.toLowerCase()) > -1;
-						}
-					);
-					//console.log("$scope.ProjectCategoryList_Searchable.length = ", $scope.ProjectCategoryList_Searchable.length);
-				}				
+				$scope.FlatToTreeConverter = function(Flat){
+				/// This function is come from http://stackoverflow.com/a/21343255/900284
+				/// Thank to http://stackoverflow.com/users/489307/treye
+				var Nodes = [];
+				var TopLevelNodes = [];
+				var LookupList = [];
+
+				console.log("Flat.length = ", Flat.length);
+				for (var i = 0; i < Flat.length; i++) {
+					var Row = {
+							ID: Flat[i].ID,
+							Name: Flat[i].Name,
+							ParentID: ((Flat[i].ParentID == 0) ? null : Flat[i].ParentID),
+							Sub: []
+						};
+					LookupList.push(Row); 
+					Nodes.push(Row);
+					if (Row.ParentID == null) {
+						TopLevelNodes.push(Row);
+					}
+					console.log("Fist TopLevelNodes = ", JSON.stringify(TopLevelNodes));
+				}
+
+				for (var i = 0; i < Nodes.length; i++) {
+				  var Row = Nodes[i];
+				  if (!(Row.ParentID == null)) {			  			  
+					  var LookupList_Row = LookupList.filter(function (x) { return x.ID === Row.ParentID; });
+					  LookupList_Row[0].Sub.push(Row); 
+				  }
+				}
+				
+				console.log("LookupList = ", JSON.stringify(LookupList));
+				
+				/// Below is my assumption.
+				/// Here, very very important concept is "var X" is reference type, 
+				/// so TopLevelNodes is automatically updated once after Row's Value was changed.
+				/// For more detail, see at http://stackoverflow.com/a/32793507/900284
+				return TopLevelNodes;
+			}
+			
+			console.log("Final TopLevelNodes = ", JSON.stringify($scope.FlatToTreeConverter($scope.ProjectCategoryList_DataBinder)));			
+			$scope.ProjectCategoryList_DataBinder = $scope.FlatToTreeConverter($scope.ProjectCategoryList_DataBinder);
+				
+								
 			});
 	</script>	
 </head>
-<body ng-app="myApp" ng-controller="MyCtrl">
+<body ng-app="myApp" ng-controller="MyCtrl">	
 	<div class="container">
+		ProjectCategoryList_DataBinder Length : {{ ProjectCategoryList_DataBinder.length }}
 		<div class="panel-group">
 			<div class="panel panel-primary">
 				<div class="panel-heading">Dropdown Testing</div>
@@ -131,41 +166,56 @@
 						<div class="col-md-2"><span class="text-muted">Key</span></div>
 						<div class="col-md-2"><span class="text-muted">Value</span></div>
 					</div>
+					
 					<div class="row">
 						<div class="col-md-3">
 							<!-- Dropdown Control Start -->
 							<div class="input-append btn-group">
 									
-									<input 
-										type="text"
-										id="ddlProjectCategory" 
-										placeholder="-- Select Project --" 
-										ng-model="ddlProjectCategoryDefaultMessage"
-										data-toggle="dropdown" 
-										aria-haspopup="true" 
-										aria-expanded="true" 
-										class="form-control"
-										style="text-align:left;width:230px;"										
-										ng-change="ddlProjectCategory_keyChange();" />
-									<span 
-										class="caret" 
-										data-toggle="dropdown" 
-										aria-haspopup="true" 
-										aria-expanded="true" 
-										style="position:absolute;left:90%;top:45%;"></span>										
-									<ul class="dropdown-menu scrollable-menu" aria-labelledby="ddlProjectCategory">
-										<li ng-repeat="ProjectCategory in ProjectCategoryList_Searchable">
-											<a href="#" ng-click="ddlProjectCategory_SelectedChange(ProjectCategory.ID, ProjectCategory.Name);">
-												{{ ProjectCategory.Name }}
-											</a>
-										</li>										
-									</ul>
+									<!-- project category start -->
+									<!--
+									<div ng-include="'PartialMenu_ProjectCategory'"></div>
+									<script type="text/ng-template" id="PartialMenu_ProjectCategory">
+										<div id="model" class="dropdown dropdown-select" style="background-color: white;height:35px;">
+											<a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ ddlProjectCategoryDefaultMessage }}<b class="caret"></b></a>
+											<ul class="dropdown-menu">
+												<li ng-repeat="ProjectCategory in ProjectCategoryList_DataBinder">
+													<a href="#" ng-click="ddlProjectCategory_SelectedChange(ProjectCategory.ID, ProjectCategory.Name);">
+														{{ ProjectCategory.Name }} &nbsp; {{ProjectCategory.Sub.length}} 
+													</a>													
+												</li>
+											</ul>
+										</div>
+									</script>
+									-->
+									<!-- project category end -->
+									
+									<!-- project category start -->
+									<div id="model" class="dropdown dropdown-select" style="background-color: white;height:35px;">
+										<a data-toggle="dropdown" class="dropdown-toggle" href="#" ng-include="'PartialMenu_ProjectCategory'" >{{ ddlProjectCategoryDefaultMessage }}<b class="caret"></b></a>										
+										<script type="text/ng-template" id="PartialMenu_ProjectCategory">	
+											<ul class="dropdown-menu" >
+												<li ng-repeat="ProjectCategory in ProjectCategoryList_DataBinder">
+													<a href="#" ng-click="ddlProjectCategory_SelectedChange(ProjectCategory.ID, ProjectCategory.Name);">
+														{{ ProjectCategory.Name }} &nbsp; {{ProjectCategory.Sub.length}} 
+													</a>
+													<div ng-switch on="ProjectCategory.Sub.length > 0">
+														<div ng-switch-when="true">
+															<div ng-init="ProjectCategoryList_DataBinder = ProjectCategory.Sub" ng-include="'PartialMenu_ProjectCategory'"></div>
+														</div>
+													</div>
+												</li>
+											</ul>	
+										</script>
+									</div>									
+									<!-- project category end -->
+									
 							</div>
 							<!-- Dropdown Control End   -->
 						</div>
 						<div class="col-md-2"><span class="text-muted">{{ SelectedKey }}</span></div>
 						<div class="col-md-2"><span class="text-muted">{{ SelectedValue }}</span></div>
-					</div>					
+					</div>
 				</div>
 			</div>
 		</div>
