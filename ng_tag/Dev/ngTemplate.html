@@ -11,6 +11,7 @@
 		.dropdown-submenu>a:after{display:block;content:" ";float:right;width:0;height:0;border-color:transparent;border-style:solid;border-width:5px 0 5px 5px;border-left-color:#cccccc;margin-top:5px;margin-right:-10px;}
 		.dropdown-submenu:hover>a:after{border-left-color:#ffffff;}
 		.dropdown-submenu.pull-left{float:none;}.dropdown-submenu.pull-left>.dropdown-menu{left:-100%;margin-left:10px;-webkit-border-radius:6px 0 6px 6px;-moz-border-radius:6px 0 6px 6px;border-radius:6px 0 6px 6px;}
+		.caret {position: absolute;left: 90%;top: 45%;}
 	</style>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
@@ -21,8 +22,15 @@
 				return {
 					link: function(scope, element, attributes) {
 						console.log("[nestedDropdown][link] scope.ProjectCategoryList_DataBinder = ", JSON.stringify(scope.ProjectCategoryList_DataBinder)); 
-						var InnerDropDownMenu = GetInnerDropDownMenu();
-						function GetInnerDropDownMenu(){
+						var InnerDropDownMenu = GetInnerDropDownMenu(scope.ProjectCategoryList_DataBinder);
+						
+						scope.ddlProjectCategory_SelectedChange = function(Key, Value){
+							console.log("ddlProjectCategory_SelectedChange");
+							scope.SelectedKey = Key;
+							scope.SelectedValue = Value;
+							scope.ddlProjectCategoryDefaultMessage = Value;
+						}
+						function GetInnerDropDownMenu(DataSource){
 							var ReturnInnerDropDownMenu = "";
 							/*
 							var ReturnInnerDropDownMenu =   '			<ul class="dropdown-menu"> '+
@@ -49,19 +57,25 @@
 							*/
 							
 							ReturnInnerDropDownMenu = '			<ul class="dropdown-menu"> ';
-							for(var i=0; i < scope.ProjectCategoryList_DataBinder.length; i++){								
-								var ProjectCategoryRow = scope.ProjectCategoryList_DataBinder[i];
-								console.log("ProjectCategoryRow.Name = ", ProjectCategoryRow.Name);	
-								
-								ReturnInnerDropDownMenu += '				<li><a href="#">'+ ProjectCategoryRow.Name +'</a></li> ';
+							for(var i=0; i < DataSource.length; i++){								
+								var ProjectCategoryRow = DataSource[i];
+								//console.log("ProjectCategoryRow.Name = ", ProjectCategoryRow.Name, ", ProjectCategoryRow.Sub.length = ", ProjectCategoryRow.Sub.length);
+								if(ProjectCategoryRow.Sub.length > 0){
+									ReturnInnerDropDownMenu += 
+																'				<li class="dropdown-submenu"> '+
+																'					<a tabindex="-1" href="#" ng-click="ddlProjectCategory_SelectedChange(ProjectCategoryRow.ID, ProjectCategoryRow.Name);"  >'+ ProjectCategoryRow.Name +'</a> '+	
+																'					    '+ GetInnerDropDownMenu(ProjectCategoryRow.Sub); +'     '+	
+																'				</li> ';									
+								}else{
+									ReturnInnerDropDownMenu += 	'				<li><a href="#" ng-click="ddlProjectCategory_SelectedChange(ProjectCategoryRow.ID, ProjectCategoryRow.Name);" >'+ ProjectCategoryRow.Name +'</a></li> ';
+								}
 							}
-							ReturnInnerDropDownMenu += '			</ul> ';
-							
+							ReturnInnerDropDownMenu += '			</ul> ';							
 							return ReturnInnerDropDownMenu;
 						};
 						var InnerHTMLElement =  '<ul class="nav nav-pills"> '+
 												'	<li class="dropdown"> '+
-												'		<a href="#" data-toggle="dropdown" class="dropdown-toggle">Dropdown<b class="caret"></b></a> '+ 
+												'		<a href="#" data-toggle="dropdown" class="dropdown-toggle" style="width:160px;">'+ scope.ddlProjectCategoryDefaultMessage +'<b class="caret"></b></a> '+ 
 														InnerDropDownMenu 
 											   +'	</li> '+
 												'</ul> ';
@@ -74,7 +88,14 @@
 					$scope.ddlProjectCategoryDefaultMessage = "-- Select Category --";
 					$scope.SelectedKey = "";
 					$scope.SelectedValue = "";				
-					
+					/*
+					function ProjectCategory_href_OnClick(key, value){
+						console.log("[ProjectCategory_href_OnClick] key = ", key, ", value = ", value);
+						$scope.SelectedKey = Key;
+						$scope.SelectedValue = Value;
+						$scope.ddlProjectCategoryDefaultMessage = Value;
+					}
+					*/
 					$scope.ProjectCategoryList_DataBinder = [{
 						"ID": "71A6821F-8D90-42CD-AF12-77BB77B75BA4",
 						"Name": "One Account",
@@ -145,13 +166,13 @@
 						"ParentID": "B91CB192-3959-4F4E-B881-8C6E37004FF9",
 						"Sequent": 2
 					}];								
-					
+					/*
 					$scope.ddlProjectCategory_SelectedChange = function(Key, Value){
 						$scope.SelectedKey = Key;
 						$scope.SelectedValue = Value;
 						$scope.ddlProjectCategoryDefaultMessage = Value;
 					}
-					
+					*/
 					$scope.FlatToTreeConverter = function(Flat){
 					/// This function is come from http://stackoverflow.com/a/21343255/900284
 					/// Thank to http://stackoverflow.com/users/489307/treye
