@@ -32,13 +32,12 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>		
 	<script>
 			angular.module('myApp', [])			
-			.directive('nestedDropdown', function() {
-				return {
-					link: function(scope, element, attributes) {						
-						var InnerHTMLElement = "<ul><li>I am list.......</li></ul>";
-						var ngElement = angular.element(InnerHTMLElement);
-						element.replaceWith(ngElement);						
-					}					
+			.directive('renderTemplate', function() {
+				return {					
+					replace: true,
+					restrict: 'E',  
+					templateUrl: 'PartialMenu_ProjectCategory.html',
+					link: function (scope, element, attrs) { console.log(" I am directive. "); }
 				};
 			})
 			.controller('MyCtrl', function($scope, $http) {
@@ -193,20 +192,6 @@
 									</li>
 								</ul>
 							</div>
-							<!-- project category end -->
-							<!-- Dropdown Control End   -->
-						</div>
-						<div class="col-md-2"><span class="text-muted">{{ SelectedKey }}</span></div>
-						<div class="col-md-2"><span class="text-muted">{{ SelectedValue }}</span></div>
-					</div>
-					<br>
-					<hr>
-					<br>
-					<div class="row">
-						<div class="col-md-3">
-							<!-- Dropdown Control Start -->
-							<!-- project category start -->
-							<nested-Dropdown></nested-Dropdown>
 							<!-- project category end -->
 							<!-- Dropdown Control End   -->
 						</div>
