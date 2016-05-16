@@ -1,0 +1,12 @@
+<ul class="dropdown-menu">
+	<li ng-repeat="ProjectCategory in ProjectCategoryList_DataBinder">
+		<a href="#" ng-click="ddlProjectCategory_SelectedChange(ProjectCategory.ID, ProjectCategory.Name);">
+			{{ ProjectCategory.Name }} &nbsp; {{ProjectCategory.Sub.length}} 
+		</a>
+		<ng-switch on="ProjectCategory.Sub.length > 0">
+			<div ng-switch-when="true">
+				<div ng-init="ProjectCategoryList_DataBinder = ProjectCategory.Sub" ng-include="'PartialMenu_ProjectCategory.html'"></div>
+			</div>
+		</ng-switch>
+	</li>
+</ul>
