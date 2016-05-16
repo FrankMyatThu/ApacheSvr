@@ -19,32 +19,39 @@
 			angular.module('myApp', [])			
 			.directive('nestedDropdown', function() {
 				return {
-					link: function(scope, element, attributes) {						
+					link: function(scope, element, attributes) {
+						var InnerDropDownMenu = GetInnerDropDownMenu();
+						function GetInnerDropDownMenu(){
+							console.log("GetInnerDropDownMenu");
+							var ReturnInnerDropDownMenu = '			<ul class="dropdown-menu"> '+
+															'				<li><a href="#">Action</a></li> '+
+															'				<li><a href="#">Another action</a></li> '+
+															'				<li><a href="#">Something else here</a></li> '+
+															'				<li class="divider"></li> '+
+															'				<li class="dropdown-submenu"> '+
+															'					<a tabindex="-1" href="#">More options</a> '+
+															'					<ul class="dropdown-menu"> '+
+															'						<li><a tabindex="-1" href="#">Second level</a></li> '+
+															'						<li class="dropdown-submenu"> '+
+															'							<a href="#">More..</a> '+
+															'							<ul class="dropdown-menu"> '+
+															'							<li><a href="#">3rd level</a></li> '+
+															'							<li><a href="#">3rd level</a></li> '+
+															'						</ul> '+
+															'						</li> '+
+															'						<li><a href="#">Second level1</a></li> '+
+															'						<li><a href="#">Second level2</a></li> '+
+															'					</ul> '+
+															'				</li> '+
+															'			</ul> ';
+						
+							return ReturnInnerDropDownMenu;
+						};
 						var InnerHTMLElement =  '<ul class="nav nav-pills"> '+
 												'	<li class="dropdown"> '+
-												'		<a href="#" data-toggle="dropdown" class="dropdown-toggle">Dropdown<b class="caret"></b></a> '+
-												'			<ul class="dropdown-menu"> '+
-												'				<li><a href="#">Action</a></li> '+
-												'				<li><a href="#">Another action</a></li> '+
-												'				<li><a href="#">Something else here</a></li> '+
-												'				<li class="divider"></li> '+
-												'				<li class="dropdown-submenu"> '+
-												'					<a tabindex="-1" href="#">More options</a> '+
-												'					<ul class="dropdown-menu"> '+
-												'						<li><a tabindex="-1" href="#">Second level</a></li> '+
-												'						<li class="dropdown-submenu"> '+
-												'							<a href="#">More..</a> '+
-												'							<ul class="dropdown-menu"> '+
-												'							<li><a href="#">3rd level</a></li> '+
-												'							<li><a href="#">3rd level</a></li> '+
-												'						</ul> '+
-												'						</li> '+
-												'						<li><a href="#">Second level</a></li> '+
-												'						<li><a href="#">Second level</a></li> '+
-												'					</ul> '+
-												'				</li> '+
-												'			</ul> '+
-												'	</li> '+
+												'		<a href="#" data-toggle="dropdown" class="dropdown-toggle">Dropdown<b class="caret"></b></a> '+ 
+														InnerDropDownMenu 
+											   +'	</li> '+
 												'</ul> ';
 						var ngElement = angular.element(InnerHTMLElement);
 						element.replaceWith(ngElement);						
