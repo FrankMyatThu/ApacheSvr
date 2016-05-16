@@ -20,10 +20,12 @@
 			.directive('nestedDropdown', function() {
 				return {
 					link: function(scope, element, attributes) {
+						console.log("[nestedDropdown][link] scope.ProjectCategoryList_DataBinder = ", JSON.stringify(scope.ProjectCategoryList_DataBinder)); 
 						var InnerDropDownMenu = GetInnerDropDownMenu();
 						function GetInnerDropDownMenu(){
-							console.log("GetInnerDropDownMenu");
-							var ReturnInnerDropDownMenu = '			<ul class="dropdown-menu"> '+
+							var ReturnInnerDropDownMenu = "";
+							/*
+							var ReturnInnerDropDownMenu =   '			<ul class="dropdown-menu"> '+
 															'				<li><a href="#">Action</a></li> '+
 															'				<li><a href="#">Another action</a></li> '+
 															'				<li><a href="#">Something else here</a></li> '+
@@ -44,7 +46,17 @@
 															'					</ul> '+
 															'				</li> '+
 															'			</ul> ';
-						
+							*/
+							
+							ReturnInnerDropDownMenu = '			<ul class="dropdown-menu"> ';
+							for(var i=0; i < scope.ProjectCategoryList_DataBinder.length; i++){								
+								var ProjectCategoryRow = scope.ProjectCategoryList_DataBinder[i];
+								console.log("ProjectCategoryRow.Name = ", ProjectCategoryRow.Name);	
+								
+								ReturnInnerDropDownMenu += '				<li><a href="#">'+ ProjectCategoryRow.Name +'</a></li> ';
+							}
+							ReturnInnerDropDownMenu += '			</ul> ';
+							
 							return ReturnInnerDropDownMenu;
 						};
 						var InnerHTMLElement =  '<ul class="nav nav-pills"> '+
@@ -147,7 +159,7 @@
 					var TopLevelNodes = [];
 					var LookupList = [];
 
-					console.log("Flat.length = ", Flat.length);
+					//console.log("Flat.length = ", Flat.length);
 					for (var i = 0; i < Flat.length; i++) {
 						var Row = {
 								ID: Flat[i].ID,
@@ -160,7 +172,7 @@
 						if (Row.ParentID == null) {
 							TopLevelNodes.push(Row);
 						}
-						console.log("Fist TopLevelNodes = ", JSON.stringify(TopLevelNodes));
+						//console.log("Fist TopLevelNodes = ", JSON.stringify(TopLevelNodes));
 					}
 
 					for (var i = 0; i < Nodes.length; i++) {
@@ -171,7 +183,7 @@
 					  }
 					}
 					
-					console.log("LookupList = ", JSON.stringify(LookupList));
+					//console.log("LookupList = ", JSON.stringify(LookupList));
 					
 					/// Below is my assumption.
 					/// Here, very very important concept is "var X" is reference type, 
@@ -180,7 +192,7 @@
 					return TopLevelNodes;
 				}
 				
-				console.log("Final TopLevelNodes = ", JSON.stringify($scope.FlatToTreeConverter($scope.ProjectCategoryList_DataBinder)));			
+				//console.log("Final TopLevelNodes = ", JSON.stringify($scope.FlatToTreeConverter($scope.ProjectCategoryList_DataBinder)));			
 				$scope.ProjectCategoryList_DataBinder = $scope.FlatToTreeConverter($scope.ProjectCategoryList_DataBinder);				
 			});
 	</script>	
