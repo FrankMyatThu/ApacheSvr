@@ -52,6 +52,13 @@
 						"Sequent": 2
 					},
 					{
+						"ID": "DA9CB604-0AE3-4C5C-A16F-3DBD2447FAA9",
+						"Name": "PA Child",
+						"Description": "PA Child",
+						"ParentID": "1A9CB604-0AE3-4C5C-A16F-3DBD2447FAA8",
+						"Sequent": 2
+					},
+					{
 						"ID": "3FECA7D2-C5B5-4F59-8119-D6C2E60437DA",
 						"Name": "TVC",
 						"Description": "TVC",
@@ -140,8 +147,7 @@
 			.directive('nestedDropdown', function($compile) {
 				return {					
 					scope: false,
-					link: function(scope, element, attributes) {
-						//console.log("[nestedDropdown][link] scope.ProjectCategoryList_DataBinder = ", JSON.stringify(scope.ProjectCategoryList_DataBinder)); 
+					link: function(scope, element, attributes) {						
 						var InnerDropDownMenu = GetInnerDropDownMenu(scope.ProjectCategoryList_DataBinder);						
 						scope.ddlProjectCategory_SelectedChange = function(Key, Value){
 							scope.SelectedKey = Key;
@@ -150,7 +156,7 @@
 						}
 						function GetInnerDropDownMenu(DataSource){
 							var ReturnInnerDropDownMenu = "";
-							ReturnInnerDropDownMenu = '			<ul class="dropdown-menu"> ';
+							ReturnInnerDropDownMenu = '			<ul class="dropdown-menu" style="right: auto;"> ';
 							for(var i=0; i < DataSource.length; i++){								
 								var ProjectCategoryRow = DataSource[i];								
 								if(ProjectCategoryRow.Sub.length > 0){
@@ -166,7 +172,8 @@
 							ReturnInnerDropDownMenu += '			</ul> ';							
 							return ReturnInnerDropDownMenu;
 						};
-						var InnerHTMLElement =  '<ul class="nav nav-pills"> '+
+						
+						var InnerHTMLElement =  '<ul class="nav"> '+
 												'	<li class="dropdown"> '+
 												'		<a href="#" data-toggle="dropdown" class="dropdown-toggle" style="width:160px;">{{ ddlProjectCategoryDefaultMessage }}<b class="caret"></b></a> '+ 
 														InnerDropDownMenu 
@@ -174,7 +181,21 @@
 												'</ul> ';
 						element.html(InnerHTMLElement);						
 						var CompiledOutput = $compile(element.contents())(scope);						
-						element.replaceWith(CompiledOutput);	
+						element.replaceWith(CompiledOutput);
+						
+						/// http://stackoverflow.com/a/17985676/900284
+						$(function () {							
+							$('.dropdown-submenu').parent().hover(function() {
+								console.log("hover over sub-menu");
+								var menu = $(this).find("ul");
+								var menupos = $(menu).offset();
+
+								if (menupos.left + menu.width() > $(window).width()) {
+									var newpos = -$(menu).width();
+									menu.css({ left: newpos });    
+								}
+							});
+						});						
 					}					
 				};
 			});
