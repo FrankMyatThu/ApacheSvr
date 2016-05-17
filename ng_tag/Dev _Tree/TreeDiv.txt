@@ -1,0 +1,29 @@
+<ul class="nav">
+	<li class="dropdown">
+		<a href="#" data-toggle="dropdown" class="dropdown-toggle" style="width:160px;"> Combo <b class="caret"></b></a>			
+		<ul class="dropdown-menu tree" >
+			<li>
+				<span><i class="glyphicon glyphicon-folder-open"></i>All</span>	
+				<ul>						
+					<li>
+						<span><i class="glyphicon glyphicon-folder-open"></i>Parent</span>
+						<ul>
+							<li>
+								<span><i class="glyphicon glyphicon-minus-sign"></i>Child</span>
+								<ul>
+									<li><span><i class="glyphicon glyphicon-leaf"></i>Grand Child</span></li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<span><i class="glyphicon glyphicon-folder-open"></i>Parent2</span>
+						<ul>
+							<li><span><i class="glyphicon glyphicon-leaf"></i>Child</span></li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</li>
+</ul>

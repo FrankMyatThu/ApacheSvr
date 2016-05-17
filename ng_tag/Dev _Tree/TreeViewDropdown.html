@@ -1,0 +1,241 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">	
+	<style>
+		.dropdown-submenu{position:relative;}
+		.dropdown-submenu>.dropdown-menu{top:0;left:100%;margin-top:-6px;margin-left:-1px;-webkit-border-radius:0 6px 6px 6px;-moz-border-radius:0 6px 6px 6px;border-radius:0 6px 6px 6px;}
+		.dropdown-submenu:hover>.dropdown-menu{display:block;}
+		.dropdown-submenu>a:after{display:block;content:" ";float:right;width:0;height:0;border-color:transparent;border-style:solid;border-width:5px 0 5px 5px;border-left-color:#cccccc;margin-top:5px;margin-right:-10px;}
+		.dropdown-submenu:hover>a:after{border-left-color:#ffffff;}
+		.dropdown-submenu.pull-left{float:none;}.dropdown-submenu.pull-left>.dropdown-menu{left:-100%;margin-left:10px;-webkit-border-radius:6px 0 6px 6px;-moz-border-radius:6px 0 6px 6px;border-radius:6px 0 6px 6px;}
+		.caret {position: absolute;left: 90%;top: 45%;}
+	</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>		
+	<script>
+			angular.module('myApp', [])
+			.controller('MyCtrl', function($scope, $http) {
+					$scope.ddlProjectCategoryDefaultMessage = "-- Select Category --";
+					$scope.SelectedKey = "";
+					$scope.SelectedValue = "";				
+					
+					$scope.ProjectCategoryList_DataBinder = [{
+						"ID": "71A6821F-8D90-42CD-AF12-77BB77B75BA4",
+						"Name": "One Account",
+						"Description": "One Account",
+						"ParentID": "",
+						"Sequent": 1
+					},
+					{
+						"ID": "B91CB192-3959-4F4E-B881-8C6E37004FF9",
+						"Name": "Savings/Uniplus Account",
+						"Description": "Savings/Uniplus Account",
+						"ParentID": "",
+						"Sequent": 2
+					},
+					{
+						"ID": "3FA5048C-671A-450E-B1AB-884FE0DFAD0D",
+						"Name": "Branding Campaign",
+						"Description": "Branding Campaign",
+						"ParentID": "",
+						"Sequent": 3
+					},
+					{
+						"ID": "1A9CB604-0AE3-4C5C-A16F-3DBD2447FAA8",
+						"Name": "Press Ad",
+						"Description": "Press Ad",
+						"ParentID": "B41D0651-066E-46DF-832C-37D63096A47F",
+						"Sequent": 2
+					},
+					{
+						"ID": "DA9CB604-0AE3-4C5C-A16F-3DBD2447FAA9",
+						"Name": "PA Child",
+						"Description": "PA Child",
+						"ParentID": "1A9CB604-0AE3-4C5C-A16F-3DBD2447FAA8",
+						"Sequent": 2
+					},
+					{
+						"ID": "3FECA7D2-C5B5-4F59-8119-D6C2E60437DA",
+						"Name": "TVC",
+						"Description": "TVC",
+						"ParentID": "B41D0651-066E-46DF-832C-37D63096A47F",
+						"Sequent": 2
+					},
+					{
+						"ID": "B41D0651-066E-46DF-832C-37D63096A47F",
+						"Name": "ATL Campaigns",
+						"Description": "ATL Campaigns",
+						"ParentID": "71A6821F-8D90-42CD-AF12-77BB77B75BA4",
+						"Sequent": 1
+					},
+					{
+						"ID": "79B74587-D435-4F38-9DCE-9A5F46CCB511",
+						"Name": "BTL Campaigns",
+						"Description": "BTL Campaigns",
+						"ParentID": "71A6821F-8D90-42CD-AF12-77BB77B75BA4",
+						"Sequent": 2
+					},
+					{
+						"ID": "B3805919-469A-418A-8525-43418D9D1FB2",
+						"Name": "ATL Campaigns",
+						"Description": "ATL Campaigns",
+						"ParentID": "3FA5048C-671A-450E-B1AB-884FE0DFAD0D",
+						"Sequent": 1
+					},
+					{
+						"ID": "2DFCC4DE-EF7A-4713-8BFA-1CE306B55BD5",
+						"Name": "ATL Campaigns",
+						"Description": "ATL Campaigns",
+						"ParentID": "B91CB192-3959-4F4E-B881-8C6E37004FF9",
+						"Sequent": 1
+					},
+					{
+						"ID": "5E67EC6F-DEDD-4C30-BCEF-F0D43404FA48",
+						"Name": "BTL Campaigns",
+						"Description": "BTL Campaigns",
+						"ParentID": "B91CB192-3959-4F4E-B881-8C6E37004FF9",
+						"Sequent": 2
+					}];		
+					
+					$scope.FlatToTreeConverter = function(Flat){
+						/// This function is come from http://stackoverflow.com/a/21343255/900284
+						/// Thank to http://stackoverflow.com/users/489307/treye
+						var Nodes = [];
+						var TopLevelNodes = [];
+						var LookupList = [];
+
+						//console.log("Flat.length = ", Flat.length);
+						for (var i = 0; i < Flat.length; i++) {
+							var Row = {
+									ID: Flat[i].ID,
+									Name: Flat[i].Name,
+									ParentID: ((Flat[i].ParentID == 0) ? null : Flat[i].ParentID),
+									Sub: []
+								};
+							LookupList.push(Row); 
+							Nodes.push(Row);
+							if (Row.ParentID == null) {
+								TopLevelNodes.push(Row);
+							}
+							//console.log("Fist TopLevelNodes = ", JSON.stringify(TopLevelNodes));
+						}
+
+						for (var i = 0; i < Nodes.length; i++) {
+						  var Row = Nodes[i];
+						  if (!(Row.ParentID == null)) {			  			  
+							  var LookupList_Row = LookupList.filter(function (x) { return x.ID === Row.ParentID; });
+							  LookupList_Row[0].Sub.push(Row); 
+						  }
+						}
+						
+						//console.log("LookupList = ", JSON.stringify(LookupList));
+						
+						/// Below is my assumption.
+						/// Here, very very important concept is "var X" is reference type, 
+						/// so TopLevelNodes is automatically updated once after Row's Value was changed.
+						/// For more detail, see at http://stackoverflow.com/a/32793507/900284
+						return TopLevelNodes;
+					}
+				
+				//console.log("Final TopLevelNodes = ", JSON.stringify($scope.FlatToTreeConverter($scope.ProjectCategoryList_DataBinder)));			
+				$scope.ProjectCategoryList_DataBinder = $scope.FlatToTreeConverter($scope.ProjectCategoryList_DataBinder);				
+			})
+			.directive('nestedDropdown', function($compile) {
+				return {					
+					scope: false,
+					link: function(scope, element, attributes) {						
+						var InnerDropDownMenu = GetInnerDropDownMenu(scope.ProjectCategoryList_DataBinder);						
+						scope.ddlProjectCategory_SelectedChange = function(Key, Value){
+							scope.SelectedKey = Key;
+							scope.SelectedValue = Value;
+							scope.ddlProjectCategoryDefaultMessage = Value;
+						}
+						function GetInnerDropDownMenu(DataSource){
+							var ReturnInnerDropDownMenu = "";
+							ReturnInnerDropDownMenu = '			<ul class="dropdown-menu" style="right: auto;"> ';
+							for(var i=0; i < DataSource.length; i++){								
+								var ProjectCategoryRow = DataSource[i];								
+								if(ProjectCategoryRow.Sub.length > 0){
+									ReturnInnerDropDownMenu += 
+																'				<li class="dropdown-submenu"> '+
+																'					<a tabindex="-1" href="#" ng-click="ddlProjectCategory_SelectedChange(\''+ProjectCategoryRow.ID +'\', \''+ProjectCategoryRow.Name +'\');"  >'+ ProjectCategoryRow.Name +'</a> '+	
+																'					    '+ GetInnerDropDownMenu(ProjectCategoryRow.Sub); +'     '+	
+																'				</li> ';									
+								}else{
+									ReturnInnerDropDownMenu += 	'				<li><a href="#" ng-click="ddlProjectCategory_SelectedChange(\''+ProjectCategoryRow.ID +'\', \''+ProjectCategoryRow.Name +'\');" >'+ ProjectCategoryRow.Name +'</a></li> ';
+								}
+							}
+							ReturnInnerDropDownMenu += '			</ul> ';							
+							return ReturnInnerDropDownMenu;
+						};
+						
+						var InnerHTMLElement =  '<ul class="nav"> '+
+												'	<li class="dropdown"> '+
+												'		<a href="#" data-toggle="dropdown" class="dropdown-toggle" style="width:160px;">{{ ddlProjectCategoryDefaultMessage }}<b class="caret"></b></a> '+ 
+														InnerDropDownMenu 
+											   +'	</li> '+
+												'</ul> ';
+						element.html(InnerHTMLElement);						
+						var CompiledOutput = $compile(element.contents())(scope);						
+						element.replaceWith(CompiledOutput);
+						
+						/// http://stackoverflow.com/a/17985676/900284
+						/*
+						$(function () {	
+							var HoverCount = 0;
+							$('.dropdown-submenu').parent().hover(function() {
+								HoverCount++;
+								console.log("hover over sub-menu", HoverCount);
+								var menu = $(this).find("ul");
+								var menupos = $(menu).offset();
+
+								console.log("Menu width = ", menupos.left + menu.width() ,", Window width = ", $(window).width());
+								
+								if (menupos.left + menu.width() > $(window).width()) {
+									var newpos = -$(menu).width();
+									menu.css({ left: newpos });    
+								}
+							});
+						});	
+						*/	
+					}					
+				};
+			});
+			
+	</script>	
+</head>
+<body ng-app="myApp" ng-controller="MyCtrl">	
+	<div class="container">
+		ProjectCategoryList_DataBinder Length ::: {{ ProjectCategoryList_DataBinder.length }}
+		<div class="panel-group">
+			<div class="panel panel-primary">
+				<div class="panel-heading">Dropdown Testing</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-md-3"><span class="text-muted">Control</span></div>
+						<div class="col-md-2"><span class="text-muted">Key</span></div>
+						<div class="col-md-2"><span class="text-muted">Value</span></div>
+					</div>
+					
+					<div class="row">
+						<div class="col-md-3">
+							<!-- Dropdown Control Start -->
+							<!-- project category start -->
+							<nested-Dropdown></nested-Dropdown>
+							<!-- project category end -->
+							<!-- Dropdown Control End   -->
+						</div>
+						<div class="col-md-2"><span class="text-muted">{{ SelectedKey }}</span></div>
+						<div class="col-md-2"><span class="text-muted">{{ SelectedValue }}</span></div>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
