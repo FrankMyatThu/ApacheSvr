@@ -17,85 +17,12 @@
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>		
 	<script>
-			angular.module('myApp', [])			
-			.directive('nestedDropdown', function() {
-				return {
-					link: function(scope, element, attributes) {
-						console.log("[nestedDropdown][link] scope.ProjectCategoryList_DataBinder = ", JSON.stringify(scope.ProjectCategoryList_DataBinder)); 
-						var InnerDropDownMenu = GetInnerDropDownMenu(scope.ProjectCategoryList_DataBinder);
-						
-						scope.ddlProjectCategory_SelectedChange = function(Key, Value){
-							console.log("ddlProjectCategory_SelectedChange");
-							scope.SelectedKey = Key;
-							scope.SelectedValue = Value;
-							scope.ddlProjectCategoryDefaultMessage = Value;
-						}
-						function GetInnerDropDownMenu(DataSource){
-							var ReturnInnerDropDownMenu = "";
-							/*
-							var ReturnInnerDropDownMenu =   '			<ul class="dropdown-menu"> '+
-															'				<li><a href="#">Action</a></li> '+
-															'				<li><a href="#">Another action</a></li> '+
-															'				<li><a href="#">Something else here</a></li> '+
-															'				<li class="divider"></li> '+
-															'				<li class="dropdown-submenu"> '+
-															'					<a tabindex="-1" href="#">More options</a> '+
-															'					<ul class="dropdown-menu"> '+
-															'						<li><a tabindex="-1" href="#">Second level</a></li> '+
-															'						<li class="dropdown-submenu"> '+
-															'							<a href="#">More..</a> '+
-															'							<ul class="dropdown-menu"> '+
-															'							<li><a href="#">3rd level</a></li> '+
-															'							<li><a href="#">3rd level</a></li> '+
-															'						</ul> '+
-															'						</li> '+
-															'						<li><a href="#">Second level1</a></li> '+
-															'						<li><a href="#">Second level2</a></li> '+
-															'					</ul> '+
-															'				</li> '+
-															'			</ul> ';
-							*/
-							
-							ReturnInnerDropDownMenu = '			<ul class="dropdown-menu"> ';
-							for(var i=0; i < DataSource.length; i++){								
-								var ProjectCategoryRow = DataSource[i];
-								//console.log("ProjectCategoryRow.Name = ", ProjectCategoryRow.Name, ", ProjectCategoryRow.Sub.length = ", ProjectCategoryRow.Sub.length);
-								if(ProjectCategoryRow.Sub.length > 0){
-									ReturnInnerDropDownMenu += 
-																'				<li class="dropdown-submenu"> '+
-																'					<a tabindex="-1" href="#" ng-click="ddlProjectCategory_SelectedChange(ProjectCategoryRow.ID, ProjectCategoryRow.Name);"  >'+ ProjectCategoryRow.Name +'</a> '+	
-																'					    '+ GetInnerDropDownMenu(ProjectCategoryRow.Sub); +'     '+	
-																'				</li> ';									
-								}else{
-									ReturnInnerDropDownMenu += 	'				<li><a href="#" ng-click="ddlProjectCategory_SelectedChange(ProjectCategoryRow.ID, ProjectCategoryRow.Name);" >'+ ProjectCategoryRow.Name +'</a></li> ';
-								}
-							}
-							ReturnInnerDropDownMenu += '			</ul> ';							
-							return ReturnInnerDropDownMenu;
-						};
-						var InnerHTMLElement =  '<ul class="nav nav-pills"> '+
-												'	<li class="dropdown"> '+
-												'		<a href="#" data-toggle="dropdown" class="dropdown-toggle" style="width:160px;">'+ scope.ddlProjectCategoryDefaultMessage +'<b class="caret"></b></a> '+ 
-														InnerDropDownMenu 
-											   +'	</li> '+
-												'</ul> ';
-						var ngElement = angular.element(InnerHTMLElement);
-						element.replaceWith(ngElement);						
-					}					
-				};
-			})
+			angular.module('myApp', [])
 			.controller('MyCtrl', function($scope, $http) {
 					$scope.ddlProjectCategoryDefaultMessage = "-- Select Category --";
 					$scope.SelectedKey = "";
 					$scope.SelectedValue = "";				
-					/*
-					function ProjectCategory_href_OnClick(key, value){
-						console.log("[ProjectCategory_href_OnClick] key = ", key, ", value = ", value);
-						$scope.SelectedKey = Key;
-						$scope.SelectedValue = Value;
-						$scope.ddlProjectCategoryDefaultMessage = Value;
-					}
-					*/
+					
 					$scope.ProjectCategoryList_DataBinder = [{
 						"ID": "71A6821F-8D90-42CD-AF12-77BB77B75BA4",
 						"Name": "One Account",
@@ -165,62 +92,98 @@
 						"Description": "BTL Campaigns",
 						"ParentID": "B91CB192-3959-4F4E-B881-8C6E37004FF9",
 						"Sequent": 2
-					}];								
-					/*
-					$scope.ddlProjectCategory_SelectedChange = function(Key, Value){
-						$scope.SelectedKey = Key;
-						$scope.SelectedValue = Value;
-						$scope.ddlProjectCategoryDefaultMessage = Value;
-					}
-					*/
+					}];		
+					
 					$scope.FlatToTreeConverter = function(Flat){
-					/// This function is come from http://stackoverflow.com/a/21343255/900284
-					/// Thank to http://stackoverflow.com/users/489307/treye
-					var Nodes = [];
-					var TopLevelNodes = [];
-					var LookupList = [];
+						/// This function is come from http://stackoverflow.com/a/21343255/900284
+						/// Thank to http://stackoverflow.com/users/489307/treye
+						var Nodes = [];
+						var TopLevelNodes = [];
+						var LookupList = [];
 
-					//console.log("Flat.length = ", Flat.length);
-					for (var i = 0; i < Flat.length; i++) {
-						var Row = {
-								ID: Flat[i].ID,
-								Name: Flat[i].Name,
-								ParentID: ((Flat[i].ParentID == 0) ? null : Flat[i].ParentID),
-								Sub: []
-							};
-						LookupList.push(Row); 
-						Nodes.push(Row);
-						if (Row.ParentID == null) {
-							TopLevelNodes.push(Row);
+						//console.log("Flat.length = ", Flat.length);
+						for (var i = 0; i < Flat.length; i++) {
+							var Row = {
+									ID: Flat[i].ID,
+									Name: Flat[i].Name,
+									ParentID: ((Flat[i].ParentID == 0) ? null : Flat[i].ParentID),
+									Sub: []
+								};
+							LookupList.push(Row); 
+							Nodes.push(Row);
+							if (Row.ParentID == null) {
+								TopLevelNodes.push(Row);
+							}
+							//console.log("Fist TopLevelNodes = ", JSON.stringify(TopLevelNodes));
 						}
-						//console.log("Fist TopLevelNodes = ", JSON.stringify(TopLevelNodes));
-					}
 
-					for (var i = 0; i < Nodes.length; i++) {
-					  var Row = Nodes[i];
-					  if (!(Row.ParentID == null)) {			  			  
-						  var LookupList_Row = LookupList.filter(function (x) { return x.ID === Row.ParentID; });
-						  LookupList_Row[0].Sub.push(Row); 
-					  }
+						for (var i = 0; i < Nodes.length; i++) {
+						  var Row = Nodes[i];
+						  if (!(Row.ParentID == null)) {			  			  
+							  var LookupList_Row = LookupList.filter(function (x) { return x.ID === Row.ParentID; });
+							  LookupList_Row[0].Sub.push(Row); 
+						  }
+						}
+						
+						//console.log("LookupList = ", JSON.stringify(LookupList));
+						
+						/// Below is my assumption.
+						/// Here, very very important concept is "var X" is reference type, 
+						/// so TopLevelNodes is automatically updated once after Row's Value was changed.
+						/// For more detail, see at http://stackoverflow.com/a/32793507/900284
+						return TopLevelNodes;
 					}
-					
-					//console.log("LookupList = ", JSON.stringify(LookupList));
-					
-					/// Below is my assumption.
-					/// Here, very very important concept is "var X" is reference type, 
-					/// so TopLevelNodes is automatically updated once after Row's Value was changed.
-					/// For more detail, see at http://stackoverflow.com/a/32793507/900284
-					return TopLevelNodes;
-				}
 				
 				//console.log("Final TopLevelNodes = ", JSON.stringify($scope.FlatToTreeConverter($scope.ProjectCategoryList_DataBinder)));			
 				$scope.ProjectCategoryList_DataBinder = $scope.FlatToTreeConverter($scope.ProjectCategoryList_DataBinder);				
+			})
+			.directive('nestedDropdown', function($compile) {
+				return {					
+					scope: false,
+					link: function(scope, element, attributes) {
+						//console.log("[nestedDropdown][link] scope.ProjectCategoryList_DataBinder = ", JSON.stringify(scope.ProjectCategoryList_DataBinder)); 
+						var InnerDropDownMenu = GetInnerDropDownMenu(scope.ProjectCategoryList_DataBinder);						
+						scope.ddlProjectCategory_SelectedChange = function(Key, Value){
+							scope.SelectedKey = Key;
+							scope.SelectedValue = Value;
+							scope.ddlProjectCategoryDefaultMessage = Value;
+						}
+						function GetInnerDropDownMenu(DataSource){
+							var ReturnInnerDropDownMenu = "";
+							ReturnInnerDropDownMenu = '			<ul class="dropdown-menu"> ';
+							for(var i=0; i < DataSource.length; i++){								
+								var ProjectCategoryRow = DataSource[i];								
+								if(ProjectCategoryRow.Sub.length > 0){
+									ReturnInnerDropDownMenu += 
+																'				<li class="dropdown-submenu"> '+
+																'					<a tabindex="-1" href="#" ng-click="ddlProjectCategory_SelectedChange(\''+ProjectCategoryRow.ID +'\', \''+ProjectCategoryRow.Name +'\');"  >'+ ProjectCategoryRow.Name +'</a> '+	
+																'					    '+ GetInnerDropDownMenu(ProjectCategoryRow.Sub); +'     '+	
+																'				</li> ';									
+								}else{
+									ReturnInnerDropDownMenu += 	'				<li><a href="#" ng-click="ddlProjectCategory_SelectedChange(\''+ProjectCategoryRow.ID +'\', \''+ProjectCategoryRow.Name +'\');" >'+ ProjectCategoryRow.Name +'</a></li> ';
+								}
+							}
+							ReturnInnerDropDownMenu += '			</ul> ';							
+							return ReturnInnerDropDownMenu;
+						};
+						var InnerHTMLElement =  '<ul class="nav nav-pills"> '+
+												'	<li class="dropdown"> '+
+												'		<a href="#" data-toggle="dropdown" class="dropdown-toggle" style="width:160px;">{{ ddlProjectCategoryDefaultMessage }}<b class="caret"></b></a> '+ 
+														InnerDropDownMenu 
+											   +'	</li> '+
+												'</ul> ';
+						element.html(InnerHTMLElement);						
+						var CompiledOutput = $compile(element.contents())(scope);						
+						element.replaceWith(CompiledOutput);	
+					}					
+				};
 			});
+			
 	</script>	
 </head>
 <body ng-app="myApp" ng-controller="MyCtrl">	
 	<div class="container">
-		ProjectCategoryList_DataBinder Length : {{ ProjectCategoryList_DataBinder.length }}
+		ProjectCategoryList_DataBinder Length ::: {{ ProjectCategoryList_DataBinder.length }}
 		<div class="panel-group">
 			<div class="panel panel-primary">
 				<div class="panel-heading">Dropdown Testing</div>
@@ -235,27 +198,6 @@
 						<div class="col-md-3">
 							<!-- Dropdown Control Start -->
 							<!-- project category start -->
-							<div id="divProjectCategory">
-								<ul class="nav nav-pills">
-									<li class="dropdown">
-										<a href="#" data-toggle="dropdown" class="dropdown-toggle">{{ ddlProjectCategoryDefaultMessage }} <b class="caret"></b></a>
-										<render-Template></render-Template>
-									</li>
-								</ul>
-							</div>
-							<!-- project category end -->
-							<!-- Dropdown Control End   -->
-						</div>
-						<div class="col-md-2"><span class="text-muted">{{ SelectedKey }}</span></div>
-						<div class="col-md-2"><span class="text-muted">{{ SelectedValue }}</span></div>
-					</div>
-					
-					<hr>
-					
-					<div class="row">
-						<div class="col-md-3">
-							<!-- Dropdown Control Start -->
-							<!-- project category start -->
 							<nested-Dropdown></nested-Dropdown>
 							<!-- project category end -->
 							<!-- Dropdown Control End   -->
@@ -263,6 +205,7 @@
 						<div class="col-md-2"><span class="text-muted">{{ SelectedKey }}</span></div>
 						<div class="col-md-2"><span class="text-muted">{{ SelectedValue }}</span></div>
 					</div>
+					
 				</div>
 			</div>
 		</div>
