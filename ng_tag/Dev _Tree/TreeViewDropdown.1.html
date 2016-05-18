@@ -86,74 +86,11 @@
 						"Sequent": 1
 					},
 					{
-						"ID": "B91CB192-3959-4F4E-B881-8C6E37004FF9",
-						"Name": "Savings/Uniplus Account",
-						"Description": "Savings/Uniplus Account",
-						"ParentID": "",
-						"Sequent": 2
-					},
-					{
-						"ID": "3FA5048C-671A-450E-B1AB-884FE0DFAD0D",
-						"Name": "Branding Campaign",
-						"Description": "Branding Campaign",
-						"ParentID": "",
-						"Sequent": 3
-					},
-					{
-						"ID": "1A9CB604-0AE3-4C5C-A16F-3DBD2447FAA8",
-						"Name": "Press Ad",
-						"Description": "Press Ad",
-						"ParentID": "B41D0651-066E-46DF-832C-37D63096A47F",
-						"Sequent": 2
-					},
-					{
-						"ID": "DA9CB604-0AE3-4C5C-A16F-3DBD2447FAA9",
-						"Name": "PA Child",
-						"Description": "PA Child",
-						"ParentID": "1A9CB604-0AE3-4C5C-A16F-3DBD2447FAA8",
-						"Sequent": 2
-					},
-					{
-						"ID": "3FECA7D2-C5B5-4F59-8119-D6C2E60437DA",
-						"Name": "TVC",
-						"Description": "TVC",
-						"ParentID": "B41D0651-066E-46DF-832C-37D63096A47F",
-						"Sequent": 2
-					},
-					{
 						"ID": "B41D0651-066E-46DF-832C-37D63096A47F",
 						"Name": "ATL Campaigns",
 						"Description": "ATL Campaigns",
 						"ParentID": "71A6821F-8D90-42CD-AF12-77BB77B75BA4",
 						"Sequent": 1
-					},
-					{
-						"ID": "79B74587-D435-4F38-9DCE-9A5F46CCB511",
-						"Name": "BTL Campaigns",
-						"Description": "BTL Campaigns",
-						"ParentID": "71A6821F-8D90-42CD-AF12-77BB77B75BA4",
-						"Sequent": 2
-					},
-					{
-						"ID": "B3805919-469A-418A-8525-43418D9D1FB2",
-						"Name": "ATL Campaigns",
-						"Description": "ATL Campaigns",
-						"ParentID": "3FA5048C-671A-450E-B1AB-884FE0DFAD0D",
-						"Sequent": 1
-					},
-					{
-						"ID": "2DFCC4DE-EF7A-4713-8BFA-1CE306B55BD5",
-						"Name": "ATL Campaigns",
-						"Description": "ATL Campaigns",
-						"ParentID": "B91CB192-3959-4F4E-B881-8C6E37004FF9",
-						"Sequent": 1
-					},
-					{
-						"ID": "5E67EC6F-DEDD-4C30-BCEF-F0D43404FA48",
-						"Name": "BTL Campaigns",
-						"Description": "BTL Campaigns",
-						"ParentID": "B91CB192-3959-4F4E-B881-8C6E37004FF9",
-						"Sequent": 2
 					}];		
 					
 					$scope.FlatToTreeConverter = function(Flat){
@@ -221,7 +158,7 @@
 																'					    '+ GetInnerDropDownMenu(ProjectCategoryRow.Sub); +'     '+	
 																'				</li> ';									
 								}else{
-									ReturnInnerDropDownMenu += 	'				<li><span><a href="#" ng-click="ddlProjectCategory_SelectedChange(\''+ProjectCategoryRow.ID +'\', \''+ProjectCategoryRow.Name +'\');">'+ ProjectCategoryRow.Name +'</a></span></li>	 ';
+									ReturnInnerDropDownMenu += 	'				<li><span><i class="glyphicon glyphicon-leaf"></i><a href="#" ng-click="ddlProjectCategory_SelectedChange(\''+ProjectCategoryRow.ID +'\', \''+ProjectCategoryRow.Name +'\');">'+ ProjectCategoryRow.Name +'</a></span></li>	 ';
 								}
 							}
 							ReturnInnerDropDownMenu += '			</ul> ';							
@@ -246,12 +183,13 @@
 							$('.tree li:has(ul)').addClass('parent_li').find(' > span > i').attr('title', 'Collapse this branch');
 							$('.tree li.parent_li > span > i').on('click', function (e) {
 								var children = $(this).closest('span').parent('li.parent_li').find(' > ul > li');
-								if (children.is(":visible")) {
+								
+								if (children.is(":visible")) {									
 									children.hide('fast');
-									$(this).attr('title', 'Expand').find(' > i').addClass('glyphicon-plus-sign').removeClass('glyphicon-minus-sign');
-								} else {
+									$(this).closest('span').attr('title', 'Expand').find(' > i').addClass('glyphicon-plus-sign').removeClass('glyphicon-minus-sign');
+								} else {									
 									children.show('fast');
-									$(this).attr('title', 'Collapse').find(' > i').addClass('glyphicon-minus-sign').removeClass('glyphicon-plus-sign');
+									$(this).closest('span').attr('title', 'Collapse').find(' > i').addClass('glyphicon-minus-sign').removeClass('glyphicon-plus-sign');
 								}
 								e.stopPropagation();
 							});
