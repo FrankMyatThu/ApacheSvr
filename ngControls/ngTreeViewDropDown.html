@@ -217,11 +217,11 @@
 								var ProjectCategoryRow = DataSource[i];								
 								if(ProjectCategoryRow.Sub.length > 0){
 									ReturnInnerDropDownMenu += 
-																'				<li><span><i class="glyphicon glyphicon-minus-sign"></i><a href="#" ng-click="ddlProjectCategory_SelectedChange(\''+ProjectCategoryRow.ID +'\', \''+ProjectCategoryRow.Name +'\');">'+ ProjectCategoryRow.Name +'</a></span> '+																
+																'				<li><span style="white-space: nowrap;" ><i class="glyphicon glyphicon-minus-sign"></i><a href="#" ng-click="ddlProjectCategory_SelectedChange(\''+ProjectCategoryRow.ID +'\', \''+ProjectCategoryRow.Name +'\');">'+ ProjectCategoryRow.Name +'</a></span> '+																
 																'					    '+ GetInnerDropDownMenu(ProjectCategoryRow.Sub); +'     '+	
 																'				</li> ';									
 								}else{
-									ReturnInnerDropDownMenu += 	'				<li><span style="white-space: nowrap;" ><i class="glyphicon glyphicon-leaf"></i><a href="#" ng-click="ddlProjectCategory_SelectedChange(\''+ProjectCategoryRow.ID +'\', \''+ProjectCategoryRow.Name +'\');">'+ ProjectCategoryRow.Name +'</a></span></li>	 ';
+									ReturnInnerDropDownMenu += 	'				<li><span style="white-space: nowrap;" ><a href="#" ng-click="ddlProjectCategory_SelectedChange(\''+ProjectCategoryRow.ID +'\', \''+ProjectCategoryRow.Name +'\');">'+ ProjectCategoryRow.Name +'</a></span></li>	 ';
 								}
 							}
 							ReturnInnerDropDownMenu += '			</ul> ';							
