@@ -1,0 +1,247 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">	
+	<style>		
+		.caret {position: absolute;left: 90%;top: 45%;}
+		.tree {
+			min-height:20px;
+			padding:19px;
+			margin-bottom:20px;
+			background-color:#fbfbfb;
+			border:1px solid #999;
+			-webkit-border-radius:4px;
+			-moz-border-radius:4px;
+			border-radius:4px;
+			-webkit-box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.05);
+			-moz-box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.05);
+			box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.05)
+		}
+		.tree li {
+			list-style-type:none;
+			margin:0;
+			padding:10px 5px 0 5px;
+			position:relative
+		}
+		.tree li::before, .tree li::after {
+			content:'';
+			left:-20px;
+			position:absolute;
+			right:auto
+		}
+		.tree li::before {
+			border-left:1px solid #999;
+			bottom:50px;
+			height:100%;
+			top:0;
+			width:1px
+		}
+		.tree li::after {
+			border-top:1px solid #999;
+			height:20px;
+			top:25px;
+			width:25px
+		}
+		.tree li span {
+			-moz-border-radius:5px;
+			-webkit-border-radius:5px;
+			border:1px solid #999;
+			border-radius:5px;
+			display:inline-block;
+			padding:3px 8px;
+			text-decoration:none
+		}
+		.tree li.parent_li>span {
+			cursor:pointer
+		}
+		.tree>ul>li::before, .tree>ul>li::after {
+			border:0
+		}
+		.tree li:last-child::before {
+			height:30px
+		}
+		.tree li.parent_li>span:hover, .tree li.parent_li>span:hover+ul li span {
+			background:#eee;
+			border:1px solid #94a0b4;
+			color:#000
+		}		
+	</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>		
+	<script>
+			angular.module('myApp', [])
+			.factory('ProjectCategoryDataFactory', function ($http) {
+				var ProjectCategoryDataFactory = {
+					selectprojectcategory: selectprojectcategory					
+				};
+				return ProjectCategoryDataFactory;
+
+				//////////////////////////////////
+				function selectprojectcategory(_product_Criteria_Model) {
+					return $http({
+						method: 'POST',
+						url: 'http://localhost/RestApi/ProjectCategory/SelectProjectCategory',						
+						data: _product_Criteria_Model
+					});
+				};
+			})
+			.controller('MyCtrl', function($scope, $http, ProjectCategoryDataFactory) {
+					$scope.ProjectCategoryList_DataBinder = "";
+					$scope.ddlProjectCategoryDefaultMessage = "-- Select Category --";
+					$scope.SelectedKey = "";
+					$scope.SelectedValue = "";				
+					
+					$scope.FlatToTreeConverter = function(Flat){
+						/// This function is come from http://stackoverflow.com/a/21343255/900284
+						/// Thank to http://stackoverflow.com/users/489307/treye
+						var Nodes = [];
+						var TopLevelNodes = [];
+						var LookupList = [];
+
+						//console.log("Flat.length = ", Flat.length);
+						for (var i = 0; i < Flat.length; i++) {
+							var Row = {
+									ID: Flat[i].ID,
+									Name: Flat[i].Name,
+									ParentID: ((Flat[i].ParentID == 0) ? null : Flat[i].ParentID),
+									Sub: []
+								};
+							LookupList.push(Row); 
+							Nodes.push(Row);
+							if (Row.ParentID == null) {
+								TopLevelNodes.push(Row);
+							}
+							//console.log("Fist TopLevelNodes = ", JSON.stringify(TopLevelNodes));
+						}
+
+						for (var i = 0; i < Nodes.length; i++) {
+						  var Row = Nodes[i];
+						  if (!(Row.ParentID == null)) {			  			  
+							  var LookupList_Row = LookupList.filter(function (x) { return x.ID === Row.ParentID; });
+							  LookupList_Row[0].Sub.push(Row); 
+						  }
+						}
+						
+						//console.log("LookupList = ", JSON.stringify(LookupList));
+						
+						/// Below is my assumption.
+						/// Here, very very important concept is "var X" is reference type, 
+						/// so TopLevelNodes is automatically updated once after Row's Value was changed.
+						/// For more detail, see at http://stackoverflow.com/a/32793507/900284
+						return TopLevelNodes;
+					}
+					
+					//#region GetProjectCategory
+					$scope.GetProjectCategory = function () {
+						ProjectCategoryDataFactory.selectprojectcategory("")
+						.success(function (data, status, headers, config) {														
+							$scope.ProjectCategoryList_DataBinder = $scope.FlatToTreeConverter(data);	
+							console.log("scope.ProjectCategoryList_DataBinder = ", JSON.stringify($scope.ProjectCategoryList_DataBinder));
+						}).error(function (data, status, headers, config) {
+							$scope.errorHandler(data, status, headers, config);
+						});
+					}
+					//#endregion
+				
+					$scope.GetProjectCategory();
+				
+			})
+			.directive('nestedDropdown', function($compile) {
+				return {					
+					scope: false,
+					link: function(scope, element, attributes) {												
+						if(scope.ProjectCategoryList_DataBinder.length <=0 )return;						
+						var InnerDropDownMenu = GetInnerDropDownMenu(scope.ProjectCategoryList_DataBinder);						
+						scope.ddlProjectCategory_SelectedChange = function(Key, Value){
+							scope.SelectedKey = Key;
+							scope.SelectedValue = Value;
+							scope.ddlProjectCategoryDefaultMessage = Value;
+						}
+						function GetInnerDropDownMenu(DataSource){
+							var ReturnInnerDropDownMenu = "";
+							ReturnInnerDropDownMenu = '			<ul> ';
+							for(var i=0; i < DataSource.length; i++){								
+								var ProjectCategoryRow = DataSource[i];								
+								if(ProjectCategoryRow.Sub.length > 0){
+									ReturnInnerDropDownMenu += 
+																'				<li><span style="white-space: nowrap;" ><i class="glyphicon glyphicon-minus-sign"></i><a href="#" ng-click="ddlProjectCategory_SelectedChange(\''+ProjectCategoryRow.ID +'\', \''+ProjectCategoryRow.Name +'\');">'+ ProjectCategoryRow.Name +'</a></span> '+																
+																'					    '+ GetInnerDropDownMenu(ProjectCategoryRow.Sub); +'     '+	
+																'				</li> ';									
+								}else{
+									ReturnInnerDropDownMenu += 	'				<li><span style="white-space: nowrap;" ><a href="#" ng-click="ddlProjectCategory_SelectedChange(\''+ProjectCategoryRow.ID +'\', \''+ProjectCategoryRow.Name +'\');">'+ ProjectCategoryRow.Name +'</a></span></li>	 ';
+								}
+							}
+							ReturnInnerDropDownMenu += '			</ul> ';							
+							return ReturnInnerDropDownMenu;
+						};
+						
+						var InnerHTMLElement =  '<ul class="nav"> '+
+												'	<li class="dropdown">  '+
+												'		<a href="#" data-toggle="dropdown" class="dropdown-toggle" style="width:160px;">{{ddlProjectCategoryDefaultMessage}}<b class="caret"></b></a> '+
+												'		<ul class="dropdown-menu tree" > '+
+												'			<li><span><i class="glyphicon glyphicon-minus-sign"></i><a href="#" ng-click="ddlProjectCategory_SelectedChange(\'All\', \'All\');">All</a></span> '+
+																InnerDropDownMenu
+												+'			</li> '+
+												'		</ul> '+
+												'	</li> '+
+												'</ul> ';
+						element.html(InnerHTMLElement);						
+						var CompiledOutput = $compile(element.contents())(scope);						
+						element.replaceWith(CompiledOutput);
+												
+						$(function () {	
+							$('.tree li:has(ul)').addClass('parent_li').find(' > span > i').attr('title', 'Collapse this branch');
+							$('.tree li.parent_li > span > i').on('click', function (e) {
+								var children = $(this).closest('span').parent('li.parent_li').find(' > ul > li');
+								
+								if (children.is(":visible")) {									
+									children.hide('fast');
+									$(this).closest('span').attr('title', 'Expand').find(' > i').addClass('glyphicon-plus-sign').removeClass('glyphicon-minus-sign');
+								} else {									
+									children.show('fast');
+									$(this).closest('span').attr('title', 'Collapse').find(' > i').addClass('glyphicon-minus-sign').removeClass('glyphicon-plus-sign');
+								}
+								e.stopPropagation();
+							});
+						});	
+							
+					}					
+				};
+			});
+			
+	</script>	
+</head>
+<body ng-app="myApp" ng-controller="MyCtrl">	
+	<div class="container">
+		ProjectCategoryList_DataBinder Length ::: {{ ProjectCategoryList_DataBinder.length }}
+		<div class="panel-group">
+			<div class="panel panel-primary">
+				<div class="panel-heading">Dropdown Testing</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-md-3"><span class="text-muted">Control</span></div>
+						<div class="col-md-2"><span class="text-muted">Key</span></div>
+						<div class="col-md-2"><span class="text-muted">Value</span></div>
+					</div>
+					
+					<div class="row">
+						<div class="col-md-3">
+							<!-- Dropdown Control Start -->
+							<!-- project category start -->
+							<nested-Dropdown></nested-Dropdown>
+							<!-- project category end -->
+							<!-- Dropdown Control End   -->
+						</div>
+						<div class="col-md-2"><span class="text-muted">{{ SelectedKey }}</span></div>
+						<div class="col-md-2"><span class="text-muted">{{ SelectedValue }}</span></div>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

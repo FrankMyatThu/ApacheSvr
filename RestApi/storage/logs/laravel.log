@@ -1,122 +1,21 @@
-[2016-05-04 10:35:07] local.INFO: [OrderController/UpdateOrder]  
-[2016-05-04 10:35:07] local.INFO: [OrderViewModel_Binding/validate] validate function start  
-[2016-05-04 10:35:07] local.INFO: [Order_BL/UpdateOrder] Start ........  
-[2016-05-04 10:35:07] local.INFO: Query Log = Array
-(
-    [0] => Array
-        (
-            [query] => update `Orders` set `Description` = ?, `OrderDate` = ? where (`OrderId` = ?)
-            [bindings] => Array
-                (
-                    [0] => Order Three Updated
-                    [1] => 2016/05/04
-                    [2] => 7
-                )
-
-            [time] => 0
-        )
-
-    [1] => Array
-        (
-            [query] => delete from `OrderDetails` where (`OrderId` = ?)
-            [bindings] => Array
-                (
-                    [0] => 7
-                )
-
-            [time] => 0
-        )
-
-    [2] => Array
-        (
-            [query] => insert into `OrderDetails` (`OrderId`, `ProductID`, `Quantity`, `Total`, `TotalGST`) values (?, ?, ?, ?, ?)
-            [bindings] => Array
-                (
-                    [0] => 7
-                    [1] => 5
-                    [2] => 4
-                    [3] => 27796
-                    [4] => 1945.72
-                )
-
-            [time] => 0
-        )
-
-    [3] => Array
-        (
-            [query] => insert into `OrderDetails` (`OrderId`, `ProductID`, `Quantity`, `Total`, `TotalGST`) values (?, ?, ?, ?, ?)
-            [bindings] => Array
-                (
-                    [0] => 7
-                    [1] => 7
-                    [2] => 2
-                    [3] => 9730
-                    [4] => 681.1
-                )
-
-            [time] => 0
-        )
-
-)
-  
-[2016-05-04 10:41:52] local.INFO: [OrderController/UpdateOrder]  
-[2016-05-04 10:41:52] local.INFO: [OrderViewModel_Binding/validate] validate function start  
-[2016-05-04 10:41:52] local.INFO: [Order_BL/UpdateOrder] Start ........  
-[2016-05-04 10:41:52] local.INFO: Query Log = Array
-(
-    [0] => Array
-        (
-            [query] => update `Orders` set `Description` = ?, `OrderDate` = ? where (`OrderId` = ?)
-            [bindings] => Array
-                (
-                    [0] => Order Three Updated again
-                    [1] => 2016/05/04
-                    [2] => 7
-                )
-
-            [time] => 0
-        )
-
-    [1] => Array
-        (
-            [query] => delete from `OrderDetails` where (`OrderId` = ?)
-            [bindings] => Array
-                (
-                    [0] => 7
-                )
-
-            [time] => 0
-        )
-
-    [2] => Array
-        (
-            [query] => insert into `OrderDetails` (`OrderId`, `ProductID`, `Quantity`, `Total`, `TotalGST`) values (?, ?, ?, ?, ?)
-            [bindings] => Array
-                (
-                    [0] => 7
-                    [1] => 5
-                    [2] => 4
-                    [3] => 27796
-                    [4] => 1945.72
-                )
-
-            [time] => 46.8
-        )
-
-    [3] => Array
-        (
-            [query] => insert into `OrderDetails` (`OrderId`, `ProductID`, `Quantity`, `Total`, `TotalGST`) values (?, ?, ?, ?, ?)
-            [bindings] => Array
-                (
-                    [0] => 7
-                    [1] => 7
-                    [2] => 2
-                    [3] => 9730
-                    [4] => 681.1
-                )
-
-            [time] => 0
-        )
-
-)
-  
+[2016-05-19 02:35:52] local.INFO: [ProjectCategoryController/SelectProjectCategory]  
+[2016-05-19 02:37:04] local.INFO: [ProjectCategoryController/SelectProjectCategory]  
+[2016-05-19 02:37:31] local.INFO: [ProjectCategoryController/SelectProjectCategory]  
+[2016-05-19 02:37:33] local.INFO: [ProjectCategoryController/SelectProjectCategory]  
+[2016-05-19 03:25:12] local.INFO: [ProjectCategoryController/SelectProjectCategory]  
+[2016-05-19 03:44:22] local.INFO: [ProjectCategoryController/SelectProjectCategory]  
+[2016-05-19 03:44:41] local.INFO: [ProjectCategoryController/SelectProjectCategory]  
+[2016-05-19 03:44:53] local.INFO: [ProjectCategoryController/SelectProjectCategory]  
+[2016-05-19 03:48:17] local.INFO: [ProjectCategoryController/SelectProjectCategory]  
+[2016-05-19 03:49:25] local.INFO: [ProjectCategoryController/SelectProjectCategory]  
+[2016-05-19 03:49:50] local.INFO: [ProjectCategoryController/SelectProjectCategory]  
+[2016-05-19 03:52:30] local.INFO: [ProjectCategoryController/SelectProjectCategory]  
+[2016-05-19 03:58:23] local.INFO: [ProjectCategoryController/SelectProjectCategory]  
+[2016-05-19 04:00:10] local.INFO: [ProjectCategoryController/SelectProjectCategory]  
+[2016-05-19 07:23:30] local.INFO: [ProjectCategoryController/SelectProjectCategory]  
+[2016-05-19 07:24:05] local.INFO: [ProjectCategoryController/SelectProjectCategory]  
+[2016-05-19 07:24:46] local.INFO: [ProjectCategoryController/SelectProjectCategory]  
+[2016-05-19 07:25:34] local.INFO: [ProjectCategoryController/SelectProjectCategory]  
+[2016-05-19 07:25:55] local.INFO: [ProjectCategoryController/SelectProjectCategory]  
+[2016-05-19 07:27:10] local.INFO: [ProjectCategoryController/SelectProjectCategory]  
+[2016-05-19 08:13:59] local.INFO: [ProjectCategoryController/SelectProjectCategory]  

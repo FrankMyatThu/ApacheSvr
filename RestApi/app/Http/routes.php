@@ -28,6 +28,9 @@ Route::post('/order/SelectOrderWithPager', array('as' => 'SelectOrderWithPager',
 Route::post('/order/UpdateOrder', array('as' => 'UpdateOrder', 'uses' => 'OrderController@UpdateOrder'));
 Route::post('/order/DeleteOrder', array('as' => 'DeleteOrder', 'uses' => 'OrderController@DeleteOrder'));
 
+
+Route::post('/ProjectCategory/SelectProjectCategory', array('as' => 'SelectProjectCategory', 'uses' => 'ProjectCategoryController@SelectProjectCategory'));
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
